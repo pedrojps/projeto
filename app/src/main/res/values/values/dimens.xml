@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fwandroid_horizontal_small_margin">8dp</dimen>
+    <dimen name="fwandroid_horizontal_medium_margin">16dp</dimen>
+    <dimen name="fwandroid_horizontal_large_margin">32dp</dimen>
+
+    <dimen name="fwandroid_vertical_small_margin">8dp</dimen>
+    <dimen name="fwandroid_vertical_medium_margin">16dp</dimen>
+    <dimen name="fwandroid_vertical_large_margin">32dp</dimen>
+
+    <dimen name="fwandroid_margin_small">8dp</dimen>
+    <dimen name="fwandroid_margin_medium">16dp</dimen>
+    <dimen name="fwandroid_margin_large">32dp</dimen>
+
+    <dimen name="fwandroid_padding_tiny">2dp</dimen>
+    <dimen name="fwandroid_padding_small">4dp</dimen>
+    <dimen name="fwandroid_padding_medium">8dp</dimen>
+    <dimen name="fwandroid_padding_large">16dp</dimen>
+    <dimen name="fwandroid_padding_extra_large">32dp</dimen>
+
+    <dimen name="fwandroid_text_small">12sp</dimen>
+    <dimen name="fwandroid_text_medium">14sp</dimen>
+    <dimen name="fwandroid_text_large">16sp</dimen>
+    <dimen name="fwandroid_text_extra_large">24sp</dimen>
+
+    <dimen name="fwandroid_button_small_raise">4dp</dimen>
+    <dimen name="fwandroid_button_medium_raise">6dp</dimen>
+
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_extra_large">32dp</dimen>
+
+    <dimen name="padding_small">2dp</dimen>
+    <dimen name="padding_medium">4dp</dimen>
+    <dimen name="padding_large">8dp</dimen>
+    <dimen name="padding_large1">12dp</dimen>
+    <dimen name="padding_extra_large">16dp</dimen>
+
+    <dimen name="raised_small">2dp</dimen>
+    <dimen name="raised_medium">4dp</dimen>
+    <dimen name="raised_large">6dp</dimen>
+
+    <dimen name="text_tiny">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_extra_large_1">20sp</dimen>
+    <dimen name="text_extra_large_2">22sp</dimen>
+    <dimen name="text_extra_large_3">24sp</dimen>
+</resources>

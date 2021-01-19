@@ -1,0 +1,108 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdkVersion 16
+        targetSdkVersion 30
+        multiDexEnabled true
+
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Used by Room to test migrations
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+            sourceSets {
+                androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix '-debug'
+            applicationIdSuffix '.debug'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled  true
+    }
+}
+
+dependencies {
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation "com.android.support:multidex:$rootProject.verMultiDexSipportLib"
+
+    // Support Lib Components
+    implementation "com.android.support:appcompat-v7:$rootProject.verSupportLib"
+    implementation "com.android.support:design:$rootProject.verSupportLib"
+    implementation "com.android.support:recyclerview-v7:$rootProject.verSupportLib"
+    implementation "com.android.support:cardview-v7:$rootProject.verSupportLib"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.verConstraintLayout"
+
+    // RxJava2 RxAndroid2
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.verRxAndroid"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.verRxJava"
+
+    // LiveData, ViewModel
+    implementation "android.arch.lifecycle:extensions:$rootProject.verArchComponentLifecycleExtensions"
+
+    // ReactiveStreams support for LiveData
+    implementation "android.arch.lifecycle:reactivestreams:$rootProject.verArchComponentReactiveStreams"
+
+    // Lifecycle Java8 Support
+    implementation "android.arch.lifecycle:common-java8:$rootProject.verArchComponentJava8Lib"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:$rootProject.verRoom"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.verRoom"
+
+    // RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.verRxRoom"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$rootProject.verGson"
+
+    // Retrofit
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.verOkHttp"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.verRetrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.verRetrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.verRetrofit"
+
+    // Flexible adapter for recyclerview
+    implementation "eu.davidea:flexible-adapter:$rootProject.verFlexibleAdapter"
+
+    // Guava utils lib
+    implementation "com.google.guava:guava:$rootProject.verGuava"
+
+    // Timber log for errors
+    implementation "com.jakewharton.timber:timber:$rootProject.verTimber"
+    testImplementation 'junit:junit:4.12'
+
+    // Test helpers for Room
+    testImplementation "android.arch.persistence.room:testing:$rootProject.verRoom"
+
+}

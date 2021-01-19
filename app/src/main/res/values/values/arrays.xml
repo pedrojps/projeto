@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="app_environment_array">
+        <item>Construção</item>
+        <item>Coleta de lixo</item>
+        <item>Fazenda</item>
+    </array>
+    <array name="app_servico_array">
+        <item>Serviço Padrão</item>
+        <item>Serviço Especificos (Produção Coletiva)</item>
+        <item>Serviço Especificos (Produção Individual)</item>
+        <item>Nenhum</item>
+    </array>
+    <array name="storage_device_array">
+        <item>Armazenamento externo</item>
+        <item>Armazenamento interno</item>
+    </array>
+
+    <string-array name="propriedades_array">
+        <item>Próprio</item>
+        <item>Locado</item>
+        <item>Produção</item>
+    </string-array>
+
+    <string-array name="lados_estaca_array">
+        <item>Eixo</item>
+        <item>Direita</item>
+        <item>Esquerda</item>
+    </string-array>
+
+    <string-array name="select_apropriacao_options_dialog">
+        <item>Servico Padrão(produção coletiva opcional)</item>
+        <item>Serviço com produção coletiva</item>
+        <item>Serviço com produção individual</item>
+        <item>Nenhum</item>
+    </string-array>
+
+    <string-array name="select_apropriacao_equipamento_options_dialog">
+        <item>Servico Padrão(produção coletiva opcional)</item>
+        <item>Serviço com produção coletiva</item>
+        <item>Nenhum</item>
+    </string-array>
+</resources>

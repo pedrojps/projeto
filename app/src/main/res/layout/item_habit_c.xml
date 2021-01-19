@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="habit"
+            type="com.example.myapplication.data.entities.HabitCategoria"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_large"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{habit.getNome(), default=@string/default_string_small}"
+            android:maxLines="1"
+            android:ellipsize="end"
+            style="@style/Text.Medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:text="@{@string/format_date_item(habit.getDataCriat()), default=`Criado em : 65437`}"
+            style="@style/Text.Small"/>
+
+    </LinearLayout>
+</layout>
