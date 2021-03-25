@@ -52,7 +52,13 @@ public class HabitEnty implements Parcelable {
         this.observacao = observacao;
         this.exportado = exportado;
     }
-
+    @Ignore
+    public HabitEnty( long categoriaID, @NonNull LocalDate data, LocalTime hora, String observacao) {
+        this.categoriaId = categoriaID;
+        this.data = data;
+        this.hora = hora;
+        this.observacao = observacao;
+    }
     @Override
     public int describeContents() {
         return 0;

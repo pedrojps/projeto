@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.data.repository.HabitCategoriRepository;
+import com.example.myapplication.data.repository.VariavelCategoriRepository;
 import com.example.myapplication.data.source.local.database.AppDatabase;
 
 public class Injection {
@@ -15,7 +16,12 @@ public class Injection {
 
     public static HabitCategoriRepository HabitCategoriRepository(@NonNull Context context) {
         AppDatabase appDatabase = provideDatabase(context);
-        return HabitCategoriRepository.getInstance(appDatabase.habitCategoriDao());
+        return HabitCategoriRepository.getInstance(appDatabase.habitCategoriDao(),appDatabase.habitEntyDao());
+    }
+
+    public static VariavelCategoriRepository VariavelCategoriRepository(@NonNull Context context) {
+        AppDatabase appDatabase = provideDatabase(context);
+        return VariavelCategoriRepository.getInstance(appDatabase.variavelCategoriDao(),appDatabase.variavelEntyDao());
     }
 
 

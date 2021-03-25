@@ -17,6 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.addEdithabit.AddEditHabitoCategoriaActivity"
+            android:label="@string/habit_categoria"/>
+        <activity android:name=".ui.dialog.DialogActivity"
+            android:theme="@style/Dialog.NoTitle"
+            android:excludeFromRecents="true"/>
+
+        <activity android:name=".ui.habitCategoriDetali.ApontEquipamentoDetailActivity"
+            android:label="@string/habit_categoria_detalhe"
+            />
+        <activity android:name=".ui.entidadeHabitoAdd.AddEditHabitoCategoriaActivity"/>
     </application>
 
 </manifest>

@@ -8,6 +8,8 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
+import com.example.myapplication.data.entities.ItemCategoria;
+
 import java.util.ArrayList;
 import java.util.List;
 

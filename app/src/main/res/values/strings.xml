@@ -155,7 +155,7 @@
     <string name="servicos">Serviços</string>
     <string name="servicos_padrao">Serviços padrão</string>
     <string name="servicos_executados">Serviços executados</string>
-    <string name="horas">Horas</string>
+    <string name="hora">Hora</string>
     <string name="horas_perdida">Div. % de horas paradas</string>
     <string name="data_a">Data apresentada: </string>
     <string name="item_producao_valor_unidade">Produção: %1$.2f</string>
@@ -317,6 +317,7 @@
     <string name="date_delete_dialog_warning">Apontamentos não exportados também serão excluídos.</string>
     <string name="date_delete_dialog_from">De:</string>
     <string name="date_delete_dialog_to">Até:</string>
+    <string name="date">Data</string>
 
     <string name="main_equipamento_note">
         Gerenciar cadastros e apontamentos da frota.
@@ -638,8 +639,12 @@
     <!--Equipe end-->
 
     <!--Equipamento start-->
-    <string name="error_insert_equipamento_message">Já existe um equipamento com o prefixo informado</string>
+    <string name="error_insert_equipamento_message">Não foi possivel cadastra o habito</string>
+    <string name="carrega_habyto">não foi possivel carrega habito</string>
     <string name="error_delete_equipamento_message">Não foi possível excluir, verifique se este possui apontamentos</string>
+
+
+    <string name="error_delet_variavel_message">Não foi possivel deletar variavel</string>
 
     <string name="successfully_saved_equipamento_message">Equipamento salvo</string>
     <string name="successfully_added_equipamento_message">Equipamento adicionado</string>
@@ -748,4 +753,10 @@
     <string name="order_by_codigo">Ordenar por código</string>
     <string name="order_by_codigo_short">Ord. por cód.</string>
 
+    <string name="habit_categoria">Categoria de Habito</string>
+    <string name="habit_categoria_detalhe">Habito </string>
+    <string name="item_categoria">Variavel adicional</string>
+    <string name="time_s">TIME</string>
+    <string name="string_s">STRING</string>
+    <string name="valor_s">VALOR</string>
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/fwandroid_month_year_picker_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@string/fwandroid_month_year_picker_title"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:background="@drawable/shape_bottom_line"/>
+
+        <NumberPicker
+            android:id="@+id/fwandroid_month_year_picker_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/fwandroid_month_year_picker_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/fwandroid_month_year_picker_year"
+            app:layout_constraintHorizontal_chainStyle="packed">
+        </NumberPicker>
+
+        <NumberPicker
+            android:id="@+id/fwandroid_month_year_picker_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fwandroid_margin_large"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fwandroid_month_year_picker_title"
+            app:layout_constraintLeft_toRightOf="@+id/fwandroid_month_year_picker_month"
+            app:layout_constraintRight_toRightOf="parent">
+        </NumberPicker>
+
+        <Button
+            android:id="@+id/fwandroid_month_year_picker_button_done"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fwandroid_month_year_picker_month"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@string/fwandroid_dialog_button_done"
+            android:background="@drawable/shape_top_line"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

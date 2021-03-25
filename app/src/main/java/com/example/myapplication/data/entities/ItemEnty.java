@@ -33,7 +33,7 @@ public class ItemEnty implements Parcelable {
     private String valor;
 
 
-    protected ItemEnty() {}
+    public ItemEnty() {}
     @Ignore
     public ItemEnty(long habitEntyID, DateTime exportado,
                     String valor
@@ -99,7 +99,6 @@ public class ItemEnty implements Parcelable {
     public String getValor(){return this.valor;}
 
     public void setValor(String valor){this.valor = valor;}
-
 
 
     @Ignore

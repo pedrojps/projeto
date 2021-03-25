@@ -3,6 +3,7 @@ package com.example.myapplication.data.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.databinding.ObservableField;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -10,6 +11,12 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.myapplication.common.time.DateTime;
+import com.example.myapplication.common.time.LocalDate;
+import com.example.myapplication.common.time.LocalTime;
+import com.example.myapplication.data.entities.types.TipoVariavel;
+import com.example.myapplication.ui.dialog.SimpleDateDialog;
+
+import java.util.Date;
 
 @Entity(tableName = "CATEGORIA_I",
         foreignKeys = {
@@ -29,8 +36,13 @@ public class ItemCategoria implements Parcelable {
 
     private int tipo;
 
+    @Ignore
+    public String valor;
+    @Ignore
+    public final ObservableField<LocalTime> time = new ObservableField<>(new LocalTime());
 
-    protected ItemCategoria() {}
+    public ItemCategoria() {
+    }
     @Ignore
     public ItemCategoria(long categoriID, DateTime exportado,
                          String nome
@@ -47,6 +59,10 @@ public class ItemCategoria implements Parcelable {
         this.exportado = exportado;
         this.nome = nome;
         this.tipo = tipo;
+    }
+
+    public String tipo(){
+        return TipoVariavel.valueOf(tipo).toString();
     }
 
     public static final Creator<ItemCategoria> CREATOR = new Creator<ItemCategoria>() {

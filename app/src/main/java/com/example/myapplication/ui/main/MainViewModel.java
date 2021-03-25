@@ -42,8 +42,12 @@ public class MainViewModel extends AndroidViewModel {
 
     private final SingleLiveEvent<Resource<Integer>> mProjetosDeleted = new SingleLiveEvent<>();
 
+    private final SingleLiveEvent<Void> mHabitAdd = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> mHabitEdit = new SingleLiveEvent<>();
+
     private LiveData<Resource<List<HabitCategoriViewItem>>> mItems;
 
+    //public long selecionar=-1;
     public MainViewModel(@NonNull Application application,
                          @NonNull HabitCategoriRepository habitCategoriRepository) {
         super(application);
@@ -100,7 +104,7 @@ public class MainViewModel extends AndroidViewModel {
     }
     /////
     public void teste (){
-        mHabitCategoriRepository.insert(new HabitCategoria("teste 2",new LocalDate(new Date("12/12/2000")),"teste 1"))
+        mHabitCategoriRepository.insert(new HabitCategoria("teste 2",new LocalDate(),"teste 1"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
@@ -133,7 +137,23 @@ public class MainViewModel extends AndroidViewModel {
         return Long.compare(projeto1.getId(), projeto2.getId());
     }
 
-    public static class Factory implements ViewModelProvider.Factory {
+    public SingleLiveEvent<Void> getHabitAdd() {
+        return mHabitAdd;
+    }
+
+    public void openAddHabit() {
+        mHabitAdd.call();
+    }
+/*
+
+    public SingleLiveEvent<Void> getHabitEdit() {
+        return mHabitEdit;
+    }
+
+    public void openEditHabit() {
+        mHabitEdit.call();
+    }
+  */  public static class Factory implements ViewModelProvider.Factory {
 
         private final Application mApplication;
 

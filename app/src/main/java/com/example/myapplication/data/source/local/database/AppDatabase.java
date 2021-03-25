@@ -13,6 +13,9 @@ import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.entities.ItemEnty;
 import com.example.myapplication.data.source.local.database.dao.HabitCategoriDao;
+import com.example.myapplication.data.source.local.database.dao.HabitEntyDao;
+import com.example.myapplication.data.source.local.database.dao.VariavelCategoriDao;
+import com.example.myapplication.data.source.local.database.dao.VariavelEntyDao;
 import com.example.myapplication.data.source.local.database.typeConverter.BooleanTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.DatetimeTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.LocalDateTypeConverter;
@@ -53,5 +56,12 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract HabitCategoriDao habitCategoriDao();
+
+    public abstract VariavelCategoriDao variavelCategoriDao();
+
+    public abstract HabitEntyDao habitEntyDao();
+
+    public abstract VariavelEntyDao variavelEntyDao();
+
 
 }

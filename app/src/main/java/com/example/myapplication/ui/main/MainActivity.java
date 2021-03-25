@@ -5,23 +5,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.myapplication.R;
 import com.example.myapplication.common.adapter.HideFabOnScrollRecyclerViewListener;
-import com.example.myapplication.common.time.LocalDate;
-import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.network.Status;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.di.Injection;
+import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
 import com.example.myapplication.ui.factory.DialogFactory;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
+import com.example.myapplication.ui.habitCategoriDetali.ApontEquipamentoDetailActivity;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.ObjectUtils;
 
@@ -29,17 +26,14 @@ import java.util.ArrayList;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.OnItemClickListener {
 
     private MainViewModel mViewModel;
 
     private ActivityMainBinding mBinding;
 
     private FlexibleAdapter<HabitCategoriViewItem> mAdapter;
-
 
     private HideFabOnScrollRecyclerViewListener mScrollStateListener;
     @Override
@@ -68,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         mBinding.habitList.addOnScrollListener(mScrollStateListener);
 
         subscribeItems();
+        subscribeHabitAdd();
+        //subscribeHabitEdit();
     }
 
     @Override
@@ -118,11 +114,47 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void subscribeHabitAdd() {
+        mViewModel.getHabitAdd().observe(this, aVoid -> openAddHabit());
+    }
+
+    public void openAddHabit() {
+        Intent it = AddEditHabitoCategoriaActivity.getNewIntent(this);
+        startActivity(it);
+    }
+/*
+    private void subscribeHabitEdit() {
+        mViewModel.getHabitEdit().observe(this, aVoid -> openEditHabit());
+    }
+
+    public void openEditHabit() {
+        Intent it = AddEditEquipamentoActivity.getNewIntent(this,mViewModel.selecionar+"");
+        startActivity(it);
+    }*/
+
     private MainViewModel findOrCreateViewModel() {
         MainViewModel.Factory factory = new MainViewModel.Factory(
                 getApplication(),
                 Injection.HabitCategoriRepository(this)
         );
         return ViewModelProviders.of(this, factory).get(MainViewModel.class);
+    }
+
+    @Override
+    public boolean onItemClick(int position) {
+        int viewType = mAdapter.getItemViewType(position);
+
+        if(viewType == R.layout.item_habit_c){
+            HabitCategoriViewItem viewItem = mAdapter.getItem(position);
+
+            if (ObjectUtils.nonNull(viewItem)) {
+               // mViewModel.selecionar = ;
+                Intent it = ApontEquipamentoDetailActivity.getNewIntent(this,viewItem.getModel().getId());
+                startActivity(it);
+
+                return true;
+            }
+        }
+        return false;
     }
 }
