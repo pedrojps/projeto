@@ -111,6 +111,32 @@
             </LinearLayout>
 
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/observacao"
+                    style="@style/Header.Small.Colored"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="@{vm.modeloError != null}"
+                    app:error="@{vm.modeloError}"
+                    android:labelFor="@+id/add_equipamento_modelos">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/add_equipamento_modelos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={vm.modelo}"
+                        android:textSize="@dimen/text_medium"
+                        android:maxLines="1"
+                        android:maxLength="30"
+                        android:inputType="text"
+                        android:imeOptions="actionNext" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <LinearLayout
                     android:id="@+id/projeto_list_bottom_sheet"
                     android:orientation="vertical"

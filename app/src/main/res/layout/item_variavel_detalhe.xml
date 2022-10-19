@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="var"
+            type="com.example.myapplication.data.entities.ItemCategoria"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/fwandroid_text_extra_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:text="@={var.nome}"
+            style="@style/Header.Small.Colored"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/add_equipamento_modelos"
+            app:showView="@{var.tipo==1}">
+
+            <TextView
+                android:id="@+id/add_string"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={var.valor}"
+                android:textSize="@dimen/text_medium"
+                android:maxLines="1"
+                android:maxLength="30"
+                android:inputType="text"
+                android:imeOptions="actionNext" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/add_equipamento_modelos"
+            app:showView="@{var.tipo==2}">
+
+            <TextView
+                android:id="@+id/add_int"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={var.valor}"
+                android:textSize="@dimen/text_medium"
+                android:maxLines="1"
+                android:maxLength="30"
+                android:inputType="number"
+                android:imeOptions="actionNext" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/add_equipamento_modelos"
+            app:showView="@{var.tipo==0}">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/data_export_get_start_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/data_export_period_title"
+                app:layout_constraintLeft_toRightOf="@+id/data_export_start_period"
+                app:layout_constraintBottom_toTopOf="@+id/data_export_get_end_period"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/fwandroid_text_medium"
+                        android:text="@{@string/format_time(var.time)}"
+                        style="@style/Text.Medium"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+</layout>

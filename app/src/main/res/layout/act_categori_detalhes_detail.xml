@@ -21,38 +21,24 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_extra_large">
 
-
-
-
-
-            <CalendarView
+            <org.naishadhparmar.zcustomcalendar.CustomCalendar
                 android:id="@+id/simpleCalendarView"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
+                android:id="@+id/projeto_list_bottom_sheet"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/observacao"
-                    style="@style/Header.Small.Colored"/>
-
-                <TextView
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/habit_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{vm.observacao ?? @string/no_observations}"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    style="@style/Text.Medium"
-                    tools:text="@tools:sample/lorem/random"/>
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/item_habit_c"/>
+
             </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>

@@ -33,6 +33,11 @@
     <color name="dark_red_accent">#D50000</color>
     <color name="red_servix_medicao">#FF7F7F</color>
 
+    <color name="pink">#8C9EFF</color>
+    <color name="green">#1A237E</color>
+    <color name="grey">#1A237E</color>
+    <color name="calendar_number">#212122</color>
+
     <color name="textPrimaryColor">#212121</color>
     <color name="textSecondaryColor">#757575</color>
 

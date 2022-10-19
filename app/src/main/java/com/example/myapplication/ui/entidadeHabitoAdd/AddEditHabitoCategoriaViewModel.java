@@ -75,8 +75,6 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 
     private final VariavelCategoriRepository mVariavelCategoriRepository;
 
-    private HabitEnty mHabitEnty;
-
     private List<ItemCategoria> mVariaveis=new ArrayList<>();
 
     private boolean mIsNewEquipamento = false;
@@ -190,11 +188,11 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 
         if (equipamento != null) {
             id.set(equipamento.getId()+"");
-            modelo.set(equipamento.getNome());
+           // modelo.set(equipamento.getNome());
             descricao.set(equipamento.getDiscricao());
         } else {
             id.set("0");
-            modelo.set(getApplication().getString(R.string.no_data_avaliable));
+            //modelo.set(getApplication().getString(R.string.no_data_avaliable));
             descricao.set(getApplication().getString(R.string.no_data_avaliable));
             propriedade.set(0);
         }
@@ -238,16 +236,11 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
             else
                 itens.add(new ItemEnty(0,v.getModel().getId(),null,v.getModel().valor));
         }
-//long habitEntyID, long itemCategoriID, DateTime exportado,
-//                    String valor
 
         HabitEnty equipamento = new HabitEnty(
-               Integer.parseInt(this.id.get()),this.startDate.get(),new LocalTime(this.startTime.get().getTime()), "");
-
-
+               Integer.parseInt(this.id.get()),this.startDate.get(),new LocalTime(this.startTime.get().getTime()), modelo.get());
 
         insert(equipamento,itens);
-        
     }
 
     public void variavelAdd() {

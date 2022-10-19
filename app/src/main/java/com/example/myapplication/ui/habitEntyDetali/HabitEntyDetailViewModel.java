@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.habitCategoriDetali;
+package com.example.myapplication.ui.habitEntyDetali;
 
 import android.app.Application;
 
@@ -11,13 +11,18 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.myapplication.common.lifecycle.ErrorDialogMessage;
 import com.example.myapplication.common.lifecycle.SingleLiveEvent;
 import com.example.myapplication.common.time.LocalDate;
-import com.example.myapplication.data.entities.HabitCategoria;
+import com.example.myapplication.common.time.LocalTime;
 import com.example.myapplication.data.entities.HabitEnty;
+import com.example.myapplication.data.entities.ItemCategoria;
+import com.example.myapplication.data.entities.ItemEnty;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
-import com.example.myapplication.ui.entidadeHabitoAdd.HabitEntyViewItem;
+import com.example.myapplication.data.source.local.projection.HabitEntyDetails;
+import com.example.myapplication.data.source.local.projection.ItensEntyProject;
+import com.example.myapplication.ui.variaeisCategoriy.variaveisCategoriyDetalhe.VarCategoriDetalheViewItem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +31,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
+public class HabitEntyDetailViewModel extends AndroidViewModel {
 
     public final ObservableField<String> observacao = new ObservableField<>();
 
@@ -38,107 +43,85 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
 
     private final SingleLiveEvent<Void> mCarregaEnty = new SingleLiveEvent<>();
 
-    private final SingleLiveEvent<Void> mCarregaMes = new SingleLiveEvent<>();
+    private final HabitCategoriRepository mHabitCategoriRepository;
 
-    private final HabitCategoriRepository mApontEquipamentoRepository;
+    public final ObservableField<LocalDate> startDate = new ObservableField<>(new LocalDate());
+
+    public final ObservableField<LocalTime> startTime = new ObservableField<>(new LocalTime());
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    private List<HabitEnty> mListVariaveis =new ArrayList<>();
+    private List<ItensEntyProject> mVariaveis=new ArrayList<>();
 
-    private List<HabitEnty> mListVariaveisMes =new ArrayList<>();
+    private List<ItemEnty> mValores=new ArrayList<>();
 
-    private HabitCategoria mApontamento;
+    private HabitEntyDetails mApontamento;
 
     private long idHabit = 0;
 
-    public LocalDate date = new LocalDate();
-
     private final SingleLiveEvent<Void> mHabitAdd = new SingleLiveEvent<>();
 
-    public ApontEquipamentoDetailViewModel(
+    public HabitEntyDetailViewModel(
             @NonNull Application application,
-            @NonNull HabitCategoriRepository apontEquipamentoRepository,
-            long apontamentoId
+            @NonNull HabitCategoriRepository habitCategoriRepository,
+           // @NonNull VariavelCategoriRepository variavelCategoriRepository,
+            long habitEntyId
     ) {
         super(application);
-        mApontEquipamentoRepository = apontEquipamentoRepository;
-       // mResourceProvider = new ResourceProvider(getApplication());
-        idHabit = apontamentoId;
-        loadApontamento(apontamentoId);
+        mHabitCategoriRepository = habitCategoriRepository;
+        //mVariavelCategoriRepository = variavelCategoriRepository;
+        idHabit = habitEntyId;
+        loadHabitEnty(habitEntyId);
     }
 
-    private void loadApontamento(long apontamentoId) {
-        mApontEquipamentoRepository.findById(apontamentoId)
+    private void loadHabitEnty(long habitEntyId) {
+        mHabitCategoriRepository.findWithDetails(habitEntyId)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apontWithDetails -> {
-                    mApontamento= apontWithDetails;
+                .subscribe(habiyEntyWithDetails -> {
+                    setEnty(habiyEntyWithDetails);
                 }, this::showError);
-        loadEnty(new LocalDate());
+        //loadEnty();
     }
 
-    public void loadEnty(LocalDate date){
-        this.date = date;
-        mApontEquipamentoRepository.findByIdAndData(idHabit,this.date)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(this::addDisposable)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apontWithDetails -> {
-                    mListVariaveis = apontWithDetails;
-                    mCarregaEnty.call();
-                }, this::showError);
+
+
+
+    public void setEnty(HabitEntyDetails habiyEntyWithDetails){
+        mApontamento= habiyEntyWithDetails;
+        startDate.set(habiyEntyWithDetails.habitEnty.getData());
+        startTime.set(habiyEntyWithDetails.habitEnty.getHora());
+        observacao.set(habiyEntyWithDetails.habitEnty.getObservacao());
+        mVariaveis= habiyEntyWithDetails.itensEntyProjects;
+        mCarregaEnty.call();
     }
 
-    public void loadEntyStart(LocalDate date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int YEAR = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),1);
-        LocalDate start = new LocalDate(calendar.getTime());
-
-
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        Calendar end =  Calendar.getInstance();
-        end.set(YEAR,month,day);
-
-        mApontEquipamentoRepository.findByIdAndDataPeriod(idHabit,start,new LocalDate(end.getTime()))
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(this::addDisposable)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apontWithDetails -> {
-                    mListVariaveisMes = apontWithDetails;
-                    mCarregaMes.call();
-                }, this::showError);
-    }
-
-    public List<HabitEntyViewItem> getVariaveis() {
-        List<HabitEntyViewItem> list = new ArrayList<>();
-        for (HabitEnty i : mListVariaveis){
-            list.add(new HabitEntyViewItem(i));
+    public List<VarCategoriDetalheViewItem> getVariaveis() {
+        List<VarCategoriDetalheViewItem> list = new ArrayList<>();
+        for (ItensEntyProject i : mApontamento.itensEntyProjects){
+            ItemCategoria c = i.getItemEnty();
+            c.valor = i.itemEnty.getValor();
+            if(c.getTipo()==0){
+                SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+                Date date = null;
+                try {
+                    date = dateFormat.parse(i.itemEnty.getValor());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                c.time.set(new LocalTime(date));
+            }
+            list.add(new VarCategoriDetalheViewItem(c));
         }
         return list;
     }
 
-    public List<HabitEnty> getVariaveisMes() {
-        return mListVariaveisMes;
-    }
-
-
     public  SingleLiveEvent<Void> getCarregaEnty(){
         return mCarregaEnty;
     }
-
-    public  SingleLiveEvent<Void> getCarregaMes(){
-        return mCarregaMes;
-    }
-
-    public HabitCategoria getApontamento() {
-        return mApontamento;
+    public HabitEnty getApontamento() {
+        return mApontamento.habitEnty;
     }
 
     public SingleLiveEvent<Void> getHabitAdd() {
@@ -154,7 +137,7 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
     }
 
     public void editApontamento() {
-        mEditApontamento.setValue(mApontamento.getId());
+        mEditApontamento.setValue(mApontamento.habitEnty.getId());
     }
 
     public SingleLiveEvent<Void> getApontamentoDeleted() {
@@ -162,7 +145,7 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
     }
 
     public void delete() {
-        mApontEquipamentoRepository.delete(mApontamento)
+        mHabitCategoriRepository.deleteEnty(this.mApontamento.habitEnty)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -208,7 +191,7 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new ApontEquipamentoDetailViewModel(mApplication, mApontEquipamentoRepository, mApontamentoId);
+            return (T) new HabitEntyDetailViewModel(mApplication, mApontEquipamentoRepository, mApontamentoId);
         }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
@@ -12,20 +13,47 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.common.time.LocalDate;
+import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.databinding.ActCategoriDetalhesDetailBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
+import com.example.myapplication.ui.entidadeHabitoAdd.HabitEntyViewItem;
 import com.example.myapplication.ui.factory.DialogFactory;
+import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
+import com.example.myapplication.ui.habitEntyDetali.HabitEntyDetailActivity;
+import com.example.myapplication.ui.variaeisCategoriy.variaeisCategoriyCrieteRegistro.VarCategoriCriateViewItem;
 import com.example.myapplication.utils.DialogUtils;
+import com.example.myapplication.utils.ObjectUtils;
 
-import java.util.EventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 
 import static com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity.REQUEST_EDIT_CODE;
 
+import static org.naishadhparmar.zcustomcalendar.CustomCalendar.NEXT;
+import static org.naishadhparmar.zcustomcalendar.CustomCalendar.PREVIOUS;
+
+import org.naishadhparmar.zcustomcalendar.CustomCalendar;
+import org.naishadhparmar.zcustomcalendar.OnDateSelectedListener;
+import org.naishadhparmar.zcustomcalendar.OnNavigationButtonClickedListener;
+import org.naishadhparmar.zcustomcalendar.Property;
+
 public class ApontEquipamentoDetailActivity
-        extends AppCompatActivity{
+        extends AppCompatActivity implements FlexibleAdapter.OnItemClickListener {
 
     public static final int REQUEST_DETAIL_CODE = 4;
 
@@ -35,7 +63,9 @@ public class ApontEquipamentoDetailActivity
 
     public static final String EXTRA_APONTAMENTO_ID = "EXTRA_APONTAMENTO_ID";
 
-    private CalendarView calendarView;
+    private CustomCalendar calendarView;
+
+    private FlexibleAdapter<HabitEntyViewItem> mAdapter;
 
     private ActCategoriDetalhesDetailBinding mBinding;
 
@@ -53,18 +83,133 @@ public class ApontEquipamentoDetailActivity
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.act_categori_detalhes_detail);
         mBinding.setVm(mViewModel);
-        calendarView = (CalendarView) findViewById(R.id.simpleCalendarView);
-       // calendarView.addView();
+        calendarView = (CustomCalendar) findViewById(R.id.simpleCalendarView);
+
+        HashMap<Integer,Object> dateHashmap=new HashMap<>();
+
+        // initialize calendar
+        Calendar calendar =  Calendar.getInstance();
+        calendarView.setDate(calendar,dateHashmap);
+
+        // Put values
+       // dateHashmap.put(calendar.get(Calendar.DAY_OF_MONTH),"current");
+       // dateHashmap.put(1,"present");
+
+        dateHashmap.put(2, "unavailable");
+        dateHashmap.put(5, "holiday");
+        dateHashmap.put(10, "default"); //You don't need to explicitly mention "default" description dates.
+        dateHashmap.put(11, "unavailable");
+        dateHashmap.put(19, "holiday");
+        dateHashmap.put(20, "holiday");
+        dateHashmap.put(24, "unavailable");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        setupAdapters();
         subscribeApontamentoDeleted();
+        subscribeCaregaVariaveis();
+        subscribeCaregaMes();
         subscribeEditApontamento();
         subscribeErrorMessage();
         subscribeHabitAdd();
+        setupCalendareObserve();
+
+
+        HashMap<Object, Property> mapDescToProp = new HashMap<>();
+
+        Property propDefault = new Property();
+        propDefault.layoutResource = R.layout.default_view;
+        propDefault.dateTextViewResource = R.id.default_datetextview;
+        mapDescToProp.put("check", propDefault);
+
+        Property propUnavailable = new Property();
+        propUnavailable.layoutResource = R.layout.unavailable_view;
+        //You can leave the text view field blank. Custom calendar won't try to set a date on such views
+        propUnavailable.enable = false;
+        mapDescToProp.put("unavailable", propUnavailable);
+
+        Property propHoliday = new Property();
+        propHoliday.layoutResource = R.layout.holiday_view;
+        propHoliday.dateTextViewResource = R.id.holiday_datetextview;
+        mapDescToProp.put("holiday", propHoliday);
+
+        calendarView.setMapDescToProp(mapDescToProp);
+
+        calendarView.setOnNavigationButtonClickedListener(PREVIOUS,
+                new OnNavigationButtonClickedListener() {
+                    @Override
+                    public Map<Integer, Object>[] onNavigationButtonClicked(int whichButton, Calendar newMonth) {
+                        Map<Integer, Object>[] arr = new Map[2];
+
+                        arr[0] = new HashMap<>(); //This is the map linking a date to its description
+                        mViewModel.loadEntyStart(new LocalDate(newMonth.getTime()));
+                        return arr;
+                    }
+                });
+        calendarView.setOnNavigationButtonClickedListener(NEXT,
+                new OnNavigationButtonClickedListener() {
+                    @Override
+                    public Map<Integer, Object>[] onNavigationButtonClicked(int whichButton, Calendar newMonth) {
+                        Map<Integer, Object>[] arr = new Map[2];
+
+                        arr[0] = new HashMap<>(); //This is the map linking a date to its description
+                        mViewModel.loadEntyStart(new LocalDate(newMonth.getTime()));
+
+                        return arr;
+                    }
+                });
     }
 
+    private void setupCalendareObserve(){
+
+        calendarView.setOnDateSelectedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(View view, Calendar selectedDate, Object desc) {
+                String sDate = selectedDate.get(Calendar.YEAR)
+                        +"-" +(selectedDate.get(Calendar.MONTH)+1)
+                        +"-" + selectedDate.get(Calendar.DAY_OF_MONTH) ;
+
+                mViewModel.loadEnty(new LocalDate(selectedDate.getTime()));
+            }
+
+        });
+
+    }
+
+    private void carrega(){
+        mViewModel.loadEntyStart(new LocalDate(mViewModel.date));
+    }
+
+    private void setupAdapters() {
+
+        mAdapter = new FlexibleAdapter<>(new ArrayList<>(), this, true);
+
+        FlexibleItemDecoration itemDecoration = new FlexibleItemDecoration(this)
+                .withDefaultDivider(R.layout.item_habit_e);
+
+        mBinding.habitList.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.habitList.setAdapter(mAdapter);
+        mBinding.habitList.addItemDecoration(itemDecoration);
+    }
+
+
+    private void carregaVariavei(){
+        mAdapter.addItems(0,mViewModel.getVariaveis());
+    }
+
+    private void carregaMes(){
+        HashMap<Integer,Object> dateHashmap=new HashMap<>();
+
+        // initialize calendar
+        Calendar calendar =  Calendar.getInstance();
+
+        List<HabitEnty> variaveis = mViewModel.getVariaveisMes();
+        for (int i = 0 ; variaveis.size() > i; i++){
+            dateHashmap.put(variaveis.get(i).getData().getDate(), "check");
+        }
+        calendarView.setDate(calendarView.getSelectedDate(),dateHashmap);
+    }
 
 
     @Override
@@ -114,6 +259,20 @@ public class ApontEquipamentoDetailActivity
                 .show();
     }
 
+    private void subscribeCaregaVariaveis() {
+        mViewModel.getCarregaEnty().observe(this,  aVoid -> {
+            mAdapter.clear();
+            carregaVariavei();
+        });
+    }
+
+    private void subscribeCaregaMes() {
+        mViewModel.getCarregaMes().observe(this,  aVoid -> {
+            mAdapter.clear();
+            carregaMes();
+        });
+    }
+
     private void subscribeApontamentoDeleted() {
         mViewModel.getApontamentoDeleted().observe(this, aVoid -> {
             setResult(RESULT_DELETE_OK);
@@ -149,4 +308,29 @@ public class ApontEquipamentoDetailActivity
 
         return ViewModelProviders.of(this, factory).get(ApontEquipamentoDetailViewModel.class);
     }
+
+    @Override
+    public boolean onItemClick(int position) {
+        int viewType = mAdapter.getItemViewType(position);
+
+        if(viewType == R.layout.item_habit_e){
+            HabitEntyViewItem viewItem = mAdapter.getItem(position);
+
+            if (ObjectUtils.nonNull(viewItem)) {
+                // mViewModel.selecionar = ;
+                Intent it = HabitEntyDetailActivity.getNewIntent(this,viewItem.getModel().getId());
+                startActivity(it);
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void onResume() {
+        carrega();
+        super.onResume();
+    }
+
 }

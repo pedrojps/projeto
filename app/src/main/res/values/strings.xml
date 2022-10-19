@@ -292,6 +292,7 @@
     <string name="print_double">%1$.2f</string>
     <string name="format_date">%1$td/%1$tm/%1$tY</string>
     <string name="format_date_item">Criado em :%1$td/%1$tm/%1$tY</string>
+    <string name="format_time_item">Criado em :%1$tH:%1$tM</string>
     <string name="format_time">%1$tH:%1$tM</string>
     <string name="format_datetime">%1$td/%1$tm/%1$tY %1$tH:%1$tM</string>
     <string name="format_datetime_2_args">%1$td/%1$tm/%1$tY %2$tH:%2$tM</string>
