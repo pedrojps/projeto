@@ -94,7 +94,7 @@ public class ApontEquipamentoDetailActivity
         // Put values
        // dateHashmap.put(calendar.get(Calendar.DAY_OF_MONTH),"current");
        // dateHashmap.put(1,"present");
-
+/*
         dateHashmap.put(2, "unavailable");
         dateHashmap.put(5, "holiday");
         dateHashmap.put(10, "default"); //You don't need to explicitly mention "default" description dates.
@@ -102,7 +102,7 @@ public class ApontEquipamentoDetailActivity
         dateHashmap.put(19, "holiday");
         dateHashmap.put(20, "holiday");
         dateHashmap.put(24, "unavailable");
-
+*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -121,7 +121,7 @@ public class ApontEquipamentoDetailActivity
         Property propDefault = new Property();
         propDefault.layoutResource = R.layout.default_view;
         propDefault.dateTextViewResource = R.id.default_datetextview;
-        mapDescToProp.put("check", propDefault);
+        mapDescToProp.put("default", propDefault);
 
         Property propUnavailable = new Property();
         propUnavailable.layoutResource = R.layout.unavailable_view;
@@ -132,7 +132,7 @@ public class ApontEquipamentoDetailActivity
         Property propHoliday = new Property();
         propHoliday.layoutResource = R.layout.holiday_view;
         propHoliday.dateTextViewResource = R.id.holiday_datetextview;
-        mapDescToProp.put("holiday", propHoliday);
+        mapDescToProp.put("check", propHoliday);
 
         calendarView.setMapDescToProp(mapDescToProp);
 
@@ -144,6 +144,7 @@ public class ApontEquipamentoDetailActivity
 
                         arr[0] = new HashMap<>(); //This is the map linking a date to its description
                         mViewModel.loadEntyStart(new LocalDate(newMonth.getTime()));
+
                         return arr;
                     }
                 });
@@ -268,7 +269,6 @@ public class ApontEquipamentoDetailActivity
 
     private void subscribeCaregaMes() {
         mViewModel.getCarregaMes().observe(this,  aVoid -> {
-            mAdapter.clear();
             carregaMes();
         });
     }

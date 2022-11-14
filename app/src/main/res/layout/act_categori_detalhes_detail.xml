@@ -11,35 +11,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_extra_large">
-
-            <org.naishadhparmar.zcustomcalendar.CustomCalendar
-                android:id="@+id/simpleCalendarView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
-                android:id="@+id/projeto_list_bottom_sheet"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/habit_list"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_extra_large">
+
+                <org.naishadhparmar.zcustomcalendar.CustomCalendar
+                    android:id="@+id/simpleCalendarView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/item_habit_c"/>
+                    android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/projeto_list_bottom_sheet"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/habit_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:listitem="@layout/item_habit_c"/>
 
-
+                </LinearLayout>
         </LinearLayout>
     </ScrollView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton

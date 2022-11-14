@@ -114,6 +114,7 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
                     mListVariaveisMes = apontWithDetails;
                     mCarregaMes.call();
                 }, this::showError);
+        loadEnty(date);
     }
 
     public List<HabitEntyViewItem> getVariaveis() {

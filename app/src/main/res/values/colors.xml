@@ -19,6 +19,10 @@
 
     <color name="light_green">#8BC34A</color>
 
+    <color name="black_green">#4e6e2a</color>
+
+    <color name="text_green">#121909</color>
+
     <color name="light_orange">#FFB74D</color>
     <color name="orange">#FF9800</color>
     <color name="dark_orange">#F57C00</color>

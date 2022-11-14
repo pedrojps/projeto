@@ -7,9 +7,9 @@
         android:bottom="2dp">
         <shape android:shape="rectangle" >
             <corners
-                android:radius="2dp"/>
+                android:radius="5dp"/>
             <solid
-                android:color="@color/colorPrimaryDark"/>
+                android:color="@color/black_green"/>
         </shape>
     </item>
 </layer-list>
