@@ -10,6 +10,8 @@ public class HabitCategoriViewHolder extends FlexibleItemViewHolder<HabitCategor
 
     private final ItemHabitCBinding mBinding;
 
+    public HabitCategoria mItem;
+
     public HabitCategoriViewHolder(ItemHabitCBinding binding, FlexibleAdapter adapter) {
         super(binding.getRoot(), adapter);
         mBinding = binding;
@@ -17,6 +19,7 @@ public class HabitCategoriViewHolder extends FlexibleItemViewHolder<HabitCategor
 
     @Override
     public void bind(HabitCategoria item) {
+        mItem = item;
         mBinding.setHabit(item);
     }
 }

@@ -15,13 +15,13 @@ import com.example.myapplication.common.time.LocalTime;
 
 @Entity(tableName = "CATEGORIA_H")
 public class HabitCategoria implements Parcelable {
-//transforma em itens habito
+
     @PrimaryKey(autoGenerate = true)
     private long id;
 
     @NonNull
     @ColumnInfo(index = true)
-    private LocalDate dataCriat;//quando foi criado
+    private LocalDate dataCriat;
 
     private String discricao;
 
@@ -113,12 +113,10 @@ public class HabitCategoria implements Parcelable {
 
     @Ignore
     protected HabitCategoria(Parcel in) {
-        //A ordem de leitura é CRÍTICA para o parcelable, cuidado
+
         id = in.readLong();
         nome = in.readString();
         dataCriat = new LocalDate(in.readLong());
-
-        long horaValue = in.readLong();
 
         discricao = in.readString();
 
@@ -130,7 +128,7 @@ public class HabitCategoria implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
         dest.writeString(nome);
-        dest.writeLong(dataCriat.getTime()); //data is NonNull
+        dest.writeLong(dataCriat.getTime());
         dest.writeString(discricao);
         dest.writeLong(exportado == null ? -1 : exportado.getTime());
     }

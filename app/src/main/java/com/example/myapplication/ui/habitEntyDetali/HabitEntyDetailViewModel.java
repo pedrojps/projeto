@@ -59,8 +59,6 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
 
     private long idHabit = 0;
 
-    private final SingleLiveEvent<Void> mHabitAdd = new SingleLiveEvent<>();
-
     public HabitEntyDetailViewModel(
             @NonNull Application application,
             @NonNull HabitCategoriRepository habitCategoriRepository,
@@ -71,22 +69,17 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
         mHabitCategoriRepository = habitCategoriRepository;
         //mVariavelCategoriRepository = variavelCategoriRepository;
         idHabit = habitEntyId;
-        loadHabitEnty(habitEntyId);
     }
 
-    private void loadHabitEnty(long habitEntyId) {
-        mHabitCategoriRepository.findWithDetails(habitEntyId)
+    void loadHabitEnty() {
+        mHabitCategoriRepository.findWithDetails(idHabit)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(habiyEntyWithDetails -> {
                     setEnty(habiyEntyWithDetails);
                 }, this::showError);
-        //loadEnty();
     }
-
-
-
 
     public void setEnty(HabitEntyDetails habiyEntyWithDetails){
         mApontamento= habiyEntyWithDetails;
@@ -122,14 +115,6 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
     }
     public HabitEnty getApontamento() {
         return mApontamento.habitEnty;
-    }
-
-    public SingleLiveEvent<Void> getHabitAdd() {
-        return mHabitAdd;
-    }
-
-    public void openAddHabit() {
-        mHabitAdd.call();
     }
 
     public SingleLiveEvent<Long> getEditApontamento() {

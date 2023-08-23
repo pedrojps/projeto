@@ -14,17 +14,21 @@
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/selected_circle.xml" value="0.11" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_categori_detalhes_detail.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_enty_detalhes_detail.xml" value="0.17831813576494426" />
-        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_habit_categoria_add_edit.xml" value="0.17831813576494426" />
-        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_habit_entidade_add_edit.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_habit_categoria_add_edit.xml" value="0.33" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_habit_entidade_add_edit.xml" value="0.33" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/default_view.xml" value="1.0" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/dialog_caminho.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/holiday_view.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_habit_e.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_variavel_c.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_variavel_criate.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_variavel_detalhe.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/simple_calendar.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/simple_list_item_1.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/unavailable_view.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/menu/menu_equipamento_detail.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/menu/menu_home.xml" value="0.21388888888888888" />
       </map>
     </option>
   </component>

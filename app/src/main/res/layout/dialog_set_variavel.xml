@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="@={vm.requisitante}"
+                    android:text="@={vm.nameVarialvel}"
                     android:maxLines="1"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/salvar"
-                android:enabled="@{vm.pernitiOk}"
+                android:enabled="@{vm.salva}"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:onClick="@{() -> vm.save()}"/>
         </LinearLayout>

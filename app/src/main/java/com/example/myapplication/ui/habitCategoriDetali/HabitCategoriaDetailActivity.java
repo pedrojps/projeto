@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,24 +16,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.common.time.LocalDate;
+import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.databinding.ActCategoriDetalhesDetailBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
+import com.example.myapplication.ui.entidadeHabitoAdd.AddEditHabitoEntidadeActivity;
 import com.example.myapplication.ui.entidadeHabitoAdd.HabitEntyViewItem;
 import com.example.myapplication.ui.factory.DialogFactory;
-import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
 import com.example.myapplication.ui.habitEntyDetali.HabitEntyDetailActivity;
-import com.example.myapplication.ui.variaeisCategoriy.variaeisCategoriyCrieteRegistro.VarCategoriCriateViewItem;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.ObjectUtils;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,16 +48,15 @@ import org.naishadhparmar.zcustomcalendar.OnDateSelectedListener;
 import org.naishadhparmar.zcustomcalendar.OnNavigationButtonClickedListener;
 import org.naishadhparmar.zcustomcalendar.Property;
 
-public class ApontEquipamentoDetailActivity
+public class HabitCategoriaDetailActivity
         extends AppCompatActivity implements FlexibleAdapter.OnItemClickListener {
 
-    public static final int REQUEST_DETAIL_CODE = 4;
 
     public static final int RESULT_EDIT_OK = RESULT_FIRST_USER + 6;
 
     public static final int RESULT_DELETE_OK = RESULT_EDIT_OK + 7;
 
-    public static final String EXTRA_APONTAMENTO_ID = "EXTRA_APONTAMENTO_ID";
+    public static final String EXTRA_HABIT = "EXTRA_HABIT";
 
     private CustomCalendar calendarView;
 
@@ -69,11 +64,11 @@ public class ApontEquipamentoDetailActivity
 
     private ActCategoriDetalhesDetailBinding mBinding;
 
-    private ApontEquipamentoDetailViewModel mViewModel;
+    private HabitCategoriaDetailViewModel mViewModel;
 
-    public static Intent getNewIntent(@NonNull Context context, long apontamentoId) {
-        return new Intent(context, ApontEquipamentoDetailActivity.class)
-                .putExtra(EXTRA_APONTAMENTO_ID, apontamentoId);
+    public static Intent getNewIntent(@NonNull Context context, HabitCategoria HabitCategoria) {
+        return new Intent(context, HabitCategoriaDetailActivity.class)
+                .putExtra(EXTRA_HABIT, HabitCategoria);
     }
 
     @Override
@@ -91,18 +86,6 @@ public class ApontEquipamentoDetailActivity
         Calendar calendar =  Calendar.getInstance();
         calendarView.setDate(calendar,dateHashmap);
 
-        // Put values
-       // dateHashmap.put(calendar.get(Calendar.DAY_OF_MONTH),"current");
-       // dateHashmap.put(1,"present");
-/*
-        dateHashmap.put(2, "unavailable");
-        dateHashmap.put(5, "holiday");
-        dateHashmap.put(10, "default"); //You don't need to explicitly mention "default" description dates.
-        dateHashmap.put(11, "unavailable");
-        dateHashmap.put(19, "holiday");
-        dateHashmap.put(20, "holiday");
-        dateHashmap.put(24, "unavailable");
-*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -113,6 +96,7 @@ public class ApontEquipamentoDetailActivity
         subscribeEditApontamento();
         subscribeErrorMessage();
         subscribeHabitAdd();
+        subscribeGrafic();
         setupCalendareObserve();
 
 
@@ -163,19 +147,12 @@ public class ApontEquipamentoDetailActivity
     }
 
     private void setupCalendareObserve(){
-
         calendarView.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(View view, Calendar selectedDate, Object desc) {
-                String sDate = selectedDate.get(Calendar.YEAR)
-                        +"-" +(selectedDate.get(Calendar.MONTH)+1)
-                        +"-" + selectedDate.get(Calendar.DAY_OF_MONTH) ;
-
                 mViewModel.loadEnty(new LocalDate(selectedDate.getTime()));
             }
-
         });
-
     }
 
     private void carrega(){
@@ -225,10 +202,10 @@ public class ApontEquipamentoDetailActivity
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.menu_equipamento_detail_delete:
+            case R.id.menu_equipamento_detail_edit:
                 mViewModel.editApontamento();
                 return true;
-            case R.id.menu_equipamento_detail_edit:
+            case R.id.menu_equipamento_detail_delete:
                 deleteApontamento();
                 return true;
         }
@@ -244,14 +221,14 @@ public class ApontEquipamentoDetailActivity
         }
     }
 
-    public void editApontamento(long id) {
-        Intent it = AddEditHabitoCategoriaActivity.getNewIntent(this, id+"");
+    public void editApontamento(HabitCategoria id) {
+        Intent it = AddEditHabitoCategoriaActivity.getNewIntent(this, id);
         startActivityForResult(it, REQUEST_EDIT_CODE);
     }
 
     public void deleteApontamento() {
 
-        DialogFactory.createDialog(this, getString(R.string.confirmation_delete_apontamento_message))
+        DialogFactory.createDialog(this, getString(R.string.confirmar_delete_habito))
                 .setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss())
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
                     mViewModel.delete();
@@ -293,20 +270,29 @@ public class ApontEquipamentoDetailActivity
         mViewModel.getHabitAdd().observe(this, aVoid -> openAddHabit());
     }
 
+    private void subscribeGrafic() {
+        mViewModel.getGrafic().observe(this, aVoid -> openGrafic());
+    }
+
+    public void openGrafic() {
+        //Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getApontamento().getId()+"");
+        //startActivity(it);
+    }
+
     public void openAddHabit() {
-        Intent it = com.example.myapplication.ui.entidadeHabitoAdd.AddEditHabitoCategoriaActivity.getNewIntent(this,mViewModel.getApontamento().getId()+"");
+        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getApontamento().getId()+"");
         startActivity(it);
     }
-    private ApontEquipamentoDetailViewModel findOrCreateViewModel() {
-        long apontamentoId = getIntent().getLongExtra(EXTRA_APONTAMENTO_ID, 0);
+    private HabitCategoriaDetailViewModel findOrCreateViewModel() {
+        HabitCategoria habitCategoria = getIntent().getParcelableExtra(EXTRA_HABIT);
 
-        ApontEquipamentoDetailViewModel.Factory factory = new ApontEquipamentoDetailViewModel.Factory(
+        HabitCategoriaDetailViewModel.Factory factory = new HabitCategoriaDetailViewModel.Factory(
                 getApplication(),
                 Injection.HabitCategoriRepository(getApplicationContext()),
-                apontamentoId
+                habitCategoria
         );
 
-        return ViewModelProviders.of(this, factory).get(ApontEquipamentoDetailViewModel.class);
+        return ViewModelProviders.of(this, factory).get(HabitCategoriaDetailViewModel.class);
     }
 
     @Override

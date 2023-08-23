@@ -61,10 +61,6 @@ public class HabitCategoriRepository {
         return mHabitCategoriDao.list();
     }
 
-    //public Completable insert(@NonNull HabitCategoria projeto){
-   //     return Completable.fromAction(() -> mProjetoDao.insert(projeto));
-    //}
-
     public Single<HabitCategoria> insert(@NonNull HabitCategoria habitCategoria) {
         return Single.fromCallable(() -> {
             long rowId = mHabitCategoriDao.insert(habitCategoria);
@@ -73,11 +69,20 @@ public class HabitCategoriRepository {
         });
     }
 
-    public Single<HabitEnty> insertEnty(@NonNull HabitEnty habitCategoria) {
+    public Single<HabitEnty> insertEnty(@NonNull HabitEnty habitEnty) {
         return Single.fromCallable(() -> {
-            long rowId = mHabitEntyDao.insert(habitCategoria);
-            habitCategoria.setId(rowId);
-            return habitCategoria;
+            long rowId = mHabitEntyDao.insert(habitEnty);
+            habitEnty.setId(rowId);
+            return habitEnty;
+        });
+    }
+
+    public Single<HabitEnty> UpdateEnty(@NonNull HabitEnty habitEnty) {
+        return Single.fromCallable(() -> {
+            mHabitEntyDao.deleteEnty(habitEnty);
+            long rowId = mHabitEntyDao.insert(habitEnty);
+            habitEnty.setId(rowId);
+            return habitEnty;
         });
     }
 

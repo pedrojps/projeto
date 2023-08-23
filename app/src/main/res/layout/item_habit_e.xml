@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{habit.getObservacao(), default=@string/default_string_small}"
+           android:text="@{@string/format_time_item(habit.getHora()), default=`Criado em : 65437`}"
             android:maxLines="1"
             android:ellipsize="end"
             style="@style/Text.Medium"/>
@@ -24,9 +24,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{habit.getObservacao()}"
             android:layout_marginTop="@dimen/margin_tiny"
-            android:text="@{@string/format_time_item(habit.getHora()), default=`Criado em : 65437`}"
             style="@style/Text.Small"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
     </LinearLayout>
 </layout>

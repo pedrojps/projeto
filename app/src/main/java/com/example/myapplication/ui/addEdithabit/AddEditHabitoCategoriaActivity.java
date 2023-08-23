@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.common.adapter.HideFabOnScrollRecyclerViewListener;
+import com.example.myapplication.data.entities.HabitCategoria;
+import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.databinding.ActHabitCategoriaAddEditBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.dialog.DialogActivity;
@@ -41,15 +43,13 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
 
     private FlexibleAdapter<VarCategoriViewItem> mAdapter;
 
-    private HideFabOnScrollRecyclerViewListener mScrollStateListener;
-
     @NonNull
     public static Intent getNewIntent(Context context) {
         return new Intent(context, AddEditHabitoCategoriaActivity.class);
     }
 
     @NonNull
-    public static Intent getNewIntent(Context context, @NonNull String equipamentoId) {
+    public static Intent getNewIntent(Context context, @NonNull HabitCategoria equipamentoId) {
         return new Intent(context, AddEditHabitoCategoriaActivity.class)
                 .putExtra(EXTRA_HABITY_CATEGORI_ID, equipamentoId);
     }
@@ -76,9 +76,10 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
 
     private void initViewData() {
         boolean isUpdate = getIntent().hasExtra(EXTRA_HABITY_CATEGORI_ID);
-        //mAdapter.addItem(new VarCategoriViewItem(new ItemCategoria(0,new DateTime(),"teste")));
+
         if (isUpdate) {
-            mViewModel.start(getIntent().getStringExtra(EXTRA_HABITY_CATEGORI_ID));
+            HabitCategoria c = getIntent().getParcelableExtra(EXTRA_HABITY_CATEGORI_ID);
+            mViewModel.start(c);
         } else {
             mViewModel.start();
         }
@@ -121,6 +122,10 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
         mViewModel.getDeletVariavelAntiga().observe(this, aVoid -> mAdapter.removeItem(mViewModel.posisaoAdapt));
     }
 
+    private void subscribeFalha(){
+        mViewModel.getFalha().observe(this, aVoid ->falha());
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -140,6 +145,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
         subscribeAddVariavel();
         subscribeCarregaVariavel();
         subscribeDeletVarivaelAntiga();
+        subscribeFalha();
     }
 
     private void setupAdapters() {
@@ -163,6 +169,18 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
         return ViewModelProviders.of(this, factory).get(AddEditHabitoCategoriaViewModel.class);
     }
 
+    private void falha(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.excluir);
+        builder.setMessage("Falha ao carregar/salvar dados");
+        builder.setPositiveButton(R.string.fwandroid_dialog_button_ok, (dialogInterface, i) -> {
+            onBackPressed();
+            dialogInterface.dismiss();
+        });
+        builder.setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.show();
+    }
+
     @Override
     public boolean onItemClick(int position) {
         int viewType = mAdapter.getItemViewType(position);
@@ -172,18 +190,9 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
 
             if (ObjectUtils.nonNull(viewItem)) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.excluir);
-                if(!mViewModel.isNewEquipamento())
-                builder.setMessage("Variaveis antigas escluidas aqui não votarão mesmo cancelando edição");
-                builder.setPositiveButton(R.string.excluir, (dialogInterface, i) -> {
-                    if(mViewModel.isNewEquipamento())
-                        mAdapter.removeItem(position);
-                    mViewModel.removerItens(viewItem.getModel(),position);
-                    dialogInterface.dismiss();
-                });
-                builder.setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss());
-                builder.show();
+                if(mViewModel.isNewEquipamento())
+                    mAdapter.removeItem(position);
+                mViewModel.removerItens(viewItem.getModel(),position);
 
                 return false;
             }

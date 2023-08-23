@@ -15,6 +15,20 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <android.widget.SearchView
+                android:id="@+id/search_view"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:iconifiedByDefault="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:closeIcon="@drawable/ic_clear_white_18dp"
+                app:searchIcon="@drawable/ic_search_white_24dp"
+                app:iconifiedByDefault="false"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/habit_list"
                 android:layout_width="match_parent"

@@ -18,7 +18,6 @@ import com.example.myapplication.ui.entidadeHabitoAdd.HabitEntyViewItem;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,13 +25,13 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
+public class HabitCategoriaDetailViewModel extends AndroidViewModel {
 
     public final ObservableField<String> observacao = new ObservableField<>();
 
     private final ErrorDialogMessage mErrorDialogMessage = new ErrorDialogMessage();
 
-    private final SingleLiveEvent<Long> mEditApontamento = new SingleLiveEvent<>();
+    private final SingleLiveEvent<HabitCategoria> mEditApontamento = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<Void> mApontamentoDeleted = new SingleLiveEvent<>();
 
@@ -48,7 +47,7 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
 
     private List<HabitEnty> mListVariaveisMes =new ArrayList<>();
 
-    private HabitCategoria mApontamento;
+    private HabitCategoria mHabitCategoria;
 
     private long idHabit = 0;
 
@@ -56,26 +55,17 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
 
     private final SingleLiveEvent<Void> mHabitAdd = new SingleLiveEvent<>();
 
-    public ApontEquipamentoDetailViewModel(
+    private final SingleLiveEvent<Void> mGrafic = new SingleLiveEvent<>();
+
+    public HabitCategoriaDetailViewModel(
             @NonNull Application application,
             @NonNull HabitCategoriRepository apontEquipamentoRepository,
-            long apontamentoId
+            HabitCategoria habitCategoria
     ) {
         super(application);
         mApontEquipamentoRepository = apontEquipamentoRepository;
-       // mResourceProvider = new ResourceProvider(getApplication());
-        idHabit = apontamentoId;
-        loadApontamento(apontamentoId);
-    }
-
-    private void loadApontamento(long apontamentoId) {
-        mApontEquipamentoRepository.findById(apontamentoId)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(this::addDisposable)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apontWithDetails -> {
-                    mApontamento= apontWithDetails;
-                }, this::showError);
+        idHabit = habitCategoria.getId();
+        mHabitCategoria = habitCategoria;
         loadEnty(new LocalDate());
     }
 
@@ -139,7 +129,7 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
     }
 
     public HabitCategoria getApontamento() {
-        return mApontamento;
+        return mHabitCategoria;
     }
 
     public SingleLiveEvent<Void> getHabitAdd() {
@@ -150,12 +140,20 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
         mHabitAdd.call();
     }
 
-    public SingleLiveEvent<Long> getEditApontamento() {
+    public SingleLiveEvent<Void> getGrafic() {
+        return mHabitAdd;
+    }
+
+    public void openGrafic() {
+        mGrafic.call();
+    }
+
+    public SingleLiveEvent<HabitCategoria> getEditApontamento() {
         return mEditApontamento;
     }
 
     public void editApontamento() {
-        mEditApontamento.setValue(mApontamento.getId());
+        mEditApontamento.setValue(mHabitCategoria);
     }
 
     public SingleLiveEvent<Void> getApontamentoDeleted() {
@@ -163,7 +161,7 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
     }
 
     public void delete() {
-        mApontEquipamentoRepository.delete(mApontamento)
+        mApontEquipamentoRepository.delete(mHabitCategoria)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -193,23 +191,22 @@ public class ApontEquipamentoDetailViewModel extends AndroidViewModel {
 
         private final HabitCategoriRepository mApontEquipamentoRepository;
 
-        private final long mApontamentoId;
+        private final HabitCategoria mHabitCategoria;
 
         public Factory(
                 @NonNull Application application,
                 @NonNull HabitCategoriRepository apontEquipamentoRepository,
-                long apontamentoId
+                HabitCategoria habitCategoria
         ) {
             mApplication = application;
             mApontEquipamentoRepository = apontEquipamentoRepository;
-            mApontamentoId = apontamentoId;
+            mHabitCategoria = habitCategoria;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            //noinspection unchecked
-            return (T) new ApontEquipamentoDetailViewModel(mApplication, mApontEquipamentoRepository, mApontamentoId);
+            return (T) new HabitCategoriaDetailViewModel(mApplication, mApontEquipamentoRepository, mHabitCategoria);
         }
     }
 }

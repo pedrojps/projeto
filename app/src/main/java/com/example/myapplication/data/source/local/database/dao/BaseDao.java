@@ -9,20 +9,20 @@ import java.util.List;
 
 public interface BaseDao<T> {
 
+    @Update
+    int update(T entity);
+
     @Insert
     long insert(T entity);
+
+    @Delete
+    void delete(T entity);
 
     @Insert
     long[] insert(List<T> entity);
 
     @Update
-    int update(T entity);
-
-    @Update
     int update(List<T> entity);
-
-    @Delete
-    void delete(T entity);
 
     @Delete
     void delete(List<T> entity);

@@ -27,23 +27,4 @@ public enum Status {
         this.value = value;
     }
 
-    public static Status valueOf(int value){
-        for (Status status : Status.values()) {
-            if (value == status.value){
-                return status;
-            }
-        }
-
-        throw new IllegalArgumentException("The Status enum has no entry that match for the value informed.");
-    }
-
-    public static Status parse(String value){
-        for (Status status : Status.values()) {
-            if(status.toString().equalsIgnoreCase(value)){
-                return status;
-            }
-        }
-
-        throw new IllegalArgumentException("The Status enum has no entry that match for the value informed.");
-    }
 }

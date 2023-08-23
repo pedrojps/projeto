@@ -13,37 +13,25 @@ import com.example.myapplication.common.lifecycle.SingleLiveEvent;
 
 public class DialogViewModel extends AndroidViewModel {
 
-    public final ObservableField<String> requisitante = new ObservableField<>("");
+    public final ObservableField<String> nameVarialvel = new ObservableField<>("");
 
     public final ObservableField<Integer> tipo = new ObservableField<>(-1);
 
-    public final ObservableBoolean pernitiOk = new ObservableBoolean(false);
+    public final ObservableBoolean salva = new ObservableBoolean(false);
 
-    private final SingleLiveEvent<String> mRequisitante = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mNameVarialvel = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<Void> mCanceled = new SingleLiveEvent<>();
 
     public DialogViewModel(
-            @NonNull Application application//,
-            //@NonNull String requisitante
+            @NonNull Application application
     ) {
         super(application);
-       // setRequisitante(requisitante);
     }
-
-    private void setRequisitante(String requisitante) {
-        this.requisitante.set(requisitante);
-    }
-
-//    public void start(String serverHost, int serverPort, boolean isDefaultPort) {
-//        estabelecimento.set(serverHost);
-//        port.set(serverPort);
-//        useDefaultPort.set(isDefaultPort);
-//    }
 
     public void save() {
-        String requisitante = this.requisitante.get();
-        mRequisitante.setValue(requisitante);
+        String requisitante = this.nameVarialvel.get();
+        mNameVarialvel.setValue(requisitante);
     }
 
     public void cancel() {
@@ -51,7 +39,7 @@ public class DialogViewModel extends AndroidViewModel {
     }
 
     public SingleLiveEvent<String> getHostSaved() {
-        return mRequisitante;
+        return mNameVarialvel;
     }
 
     public SingleLiveEvent<Void> getCanceled() {
@@ -61,28 +49,24 @@ public class DialogViewModel extends AndroidViewModel {
     public Integer getTipo() {
         return tipo.get();
     }
+
     public void setTipo(int tipo) {
-        if(tipo!=this.tipo.get()){
-            this.tipo.set(tipo);
-            pernitiOk.set(true&&requisitante.get().length()!=0);
-        }
+        this.tipo.set(tipo);
+        salva.set(true&& nameVarialvel.get().length()!=0);
     }
     public static class Factory implements ViewModelProvider.Factory {
 
         private final Application mApplication;
 
-       // private final String mRequisitante;
 
-        public Factory(Application application/*, String requisitante*/) {
+        public Factory(Application application) {
             mApplication = application;
-            //mRequisitante = requisitante;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            //noinspection unchecked
-            return (T) new DialogViewModel(mApplication/*, mRequisitante*/);
+            return (T) new DialogViewModel(mApplication);
         }
     }
 }

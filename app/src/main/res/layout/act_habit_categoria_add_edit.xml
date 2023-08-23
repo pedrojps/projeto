@@ -42,15 +42,15 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:errorEnabled="@{vm.modeloError != null}"
-                    app:error="@{vm.modeloError}"
+                    app:errorEnabled="@{vm.nameError != null}"
+                    app:error="@{vm.nameError}"
                     android:labelFor="@+id/add_equipamento_modelos">
 
                     <AutoCompleteTextView
                         android:id="@+id/add_equipamento_modelos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={vm.modelo}"
+                        android:text="@={vm.name}"
                         android:textSize="@dimen/text_medium"
                         android:maxLines="1"
                         android:maxLength="30"
@@ -102,7 +102,6 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/medicao"
                             android:layout_gravity="right"
                             android:src="@drawable/ic_add_box_black_24dp"
                             android:tint="@color/colorPrimary"

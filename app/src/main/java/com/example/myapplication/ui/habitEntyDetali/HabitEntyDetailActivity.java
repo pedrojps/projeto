@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActEntyDetalhesDetailBinding;
 import com.example.myapplication.di.Injection;
-import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
-import com.example.myapplication.ui.entidadeHabitoAdd.HabitEntyViewItem;
+import com.example.myapplication.ui.entidadeHabitoAdd.AddEditHabitoEntidadeActivity;
 import com.example.myapplication.ui.factory.DialogFactory;
 import com.example.myapplication.ui.variaeisCategoriy.variaveisCategoriyDetalhe.VarCategoriDetalheViewItem;
 import com.example.myapplication.utils.DialogUtils;
@@ -28,7 +26,7 @@ import java.util.ArrayList;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 
-import static com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity.REQUEST_EDIT_CODE;
+import static com.example.myapplication.ui.entidadeHabitoAdd.AddEditHabitoEntidadeActivity.REQUEST_EDIT_CODE;
 
 public class HabitEntyDetailActivity
         extends AppCompatActivity {
@@ -40,8 +38,6 @@ public class HabitEntyDetailActivity
     public static final int RESULT_DELETE_OK = RESULT_EDIT_OK + 7;
 
     public static final String EXTRA_APONTAMENTO_ID = "EXTRA_APONTAMENTO_ID";
-
-    private CalendarView calendarView;
 
     private FlexibleAdapter<VarCategoriDetalheViewItem> mAdapter;
 
@@ -61,8 +57,6 @@ public class HabitEntyDetailActivity
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.act_enty_detalhes_detail);
         mBinding.setVm(mViewModel);
-        calendarView = (CalendarView) findViewById(R.id.simpleCalendarView);
-       // calendarView.addView();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -72,12 +66,8 @@ public class HabitEntyDetailActivity
         subscribeCaregaVariaveis();
         subscribeEditApontamento();
         subscribeErrorMessage();
-        subscribeHabitAdd();
-
 
     }
-
-
 
     private void setupAdapters() {
 
@@ -93,10 +83,9 @@ public class HabitEntyDetailActivity
 
 
     private void carregaVariavei(){
+        mAdapter.clear();
         mAdapter.addItems(0,mViewModel.getVariaveis());
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,7 +100,7 @@ public class HabitEntyDetailActivity
                 onBackPressed();
                 return true;
             case R.id.menu_equipamento_detail_edit:
-                //mViewModel.editApontamento();
+                mViewModel.editApontamento();
                 return true;
             case R.id.menu_equipamento_detail_delete:
                 deleteApontamento();
@@ -130,13 +119,13 @@ public class HabitEntyDetailActivity
     }
 
     public void editApontamento(long id) {
-        Intent it = AddEditHabitoCategoriaActivity.getNewIntent(this, id+"");
+        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getApontamento());
         startActivityForResult(it, REQUEST_EDIT_CODE);
     }
 
     public void deleteApontamento() {
 
-        DialogFactory.createDialog(this, getString(R.string.confirmation_delete_apontamento_message))
+        DialogFactory.createDialog(this, getString(R.string.confirmar_delete_habito))
                 .setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss())
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
                     mViewModel.delete();
@@ -167,14 +156,7 @@ public class HabitEntyDetailActivity
                 DialogUtils.showDialog(this, header, message)
         );
     }
-    private void subscribeHabitAdd() {
-        mViewModel.getHabitAdd().observe(this, aVoid -> openAddHabit());
-    }
 
-    public void openAddHabit() {
-        Intent it = com.example.myapplication.ui.entidadeHabitoAdd.AddEditHabitoCategoriaActivity.getNewIntent(this,mViewModel.getApontamento().getId()+"");
-        startActivity(it);
-    }
     private HabitEntyDetailViewModel findOrCreateViewModel() {
         long apontamentoId = getIntent().getLongExtra(EXTRA_APONTAMENTO_ID, 0);
 
@@ -185,5 +167,11 @@ public class HabitEntyDetailActivity
         );
 
         return ViewModelProviders.of(this, factory).get(HabitEntyDetailViewModel.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mViewModel.loadHabitEnty();
     }
 }

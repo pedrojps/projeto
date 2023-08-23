@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
@@ -14,29 +13,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.common.adapter.HideFabOnScrollRecyclerViewListener;
-import com.example.myapplication.common.time.DateTime;
-import com.example.myapplication.common.time.LocalDate;
 import com.example.myapplication.common.time.LocalTime;
+import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.databinding.ActHabitEntidadeAddEditBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.dialog.DialogActivity;
 import com.example.myapplication.ui.dialog.SimpleDateDialog;
 import com.example.myapplication.ui.dialog.SimpleTimeDialog;
-import com.example.myapplication.ui.variaeisCategoriy.VarCategoriViewItem;
 import com.example.myapplication.ui.variaeisCategoriy.variaeisCategoriyCrieteRegistro.VarCategoriCriateViewItem;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.ObjectUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 
 
-public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements FlexibleAdapter.OnItemClickListener  {
+public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements FlexibleAdapter.OnItemClickListener  {
 
     public static final int REQUEST_ADD_CODE = 17;
 
@@ -44,7 +40,9 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
 
     private static final String EXTRA_HABITY_CATEGORI = "EXTRA_HABITY_CATEGORI";
 
-    private AddEditHabitoCategoriaViewModel mViewModel;
+    private static final String EXTRA_HABITY_EDIT = "EXTRA_HABITY_EDIT";
+
+    private AddEditHabitoEntidadeViewModel mViewModel;
 
     private ActHabitEntidadeAddEditBinding mBinding;
 
@@ -53,14 +51,15 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     private HideFabOnScrollRecyclerViewListener mScrollStateListener;
 
     @NonNull
-    public static Intent getNewIntent(Context context) {
-        return new Intent(context, AddEditHabitoCategoriaActivity.class);
+    public static Intent getNewIntent(Context context, @NonNull String equipamentoId) {
+        return new Intent(context, AddEditHabitoEntidadeActivity.class)
+                .putExtra(EXTRA_HABITY_CATEGORI, equipamentoId);
     }
 
     @NonNull
-    public static Intent getNewIntent(Context context, @NonNull String equipamentoId) {
-        return new Intent(context, AddEditHabitoCategoriaActivity.class)
-                .putExtra(EXTRA_HABITY_CATEGORI, equipamentoId);
+    public static Intent getNewIntent(Context context, @NonNull HabitEnty habitEnty) {
+        return new Intent(context, AddEditHabitoEntidadeActivity.class)
+                .putExtra(EXTRA_HABITY_EDIT, habitEnty);
     }
 
     @Override
@@ -71,11 +70,8 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
         mBinding = DataBindingUtil.setContentView(this, R.layout.act_habit_entidade_add_edit);
         mBinding.setVm(mViewModel);
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
 
         setupAdapters();
         subscribeViewChanges();
@@ -84,12 +80,13 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     }
 
     private void initViewData() {
-        boolean isUpdate = getIntent().hasExtra(EXTRA_HABITY_CATEGORI);
+        boolean isUpdate = getIntent().hasExtra(EXTRA_HABITY_EDIT);
         //mAdapter.addItem(new VarCategoriViewItem(new ItemCategoria(0,new DateTime(),"teste")));
         if (isUpdate) {
-            mViewModel.start(getIntent().getStringExtra(EXTRA_HABITY_CATEGORI));
+            HabitEnty h =getIntent().getParcelableExtra(EXTRA_HABITY_EDIT);
+            mViewModel.start(h);
         } else {
-            mViewModel.start();
+            mViewModel.start(getIntent().getStringExtra(EXTRA_HABITY_CATEGORI));
         }
     }
 
@@ -184,13 +181,13 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
 
     }
 
-    private AddEditHabitoCategoriaViewModel findOrCreateViewModel() {
-        AddEditHabitoCategoriaViewModel.Factory factory = new AddEditHabitoCategoriaViewModel.Factory(
+    private AddEditHabitoEntidadeViewModel findOrCreateViewModel() {
+        AddEditHabitoEntidadeViewModel.Factory factory = new AddEditHabitoEntidadeViewModel.Factory(
                 getApplication(),
                 Injection.HabitCategoriRepository(getApplicationContext()),
                 Injection.VariavelCategoriRepository(getApplicationContext())
         );
-        return ViewModelProviders.of(this, factory).get(AddEditHabitoCategoriaViewModel.class);
+        return ViewModelProviders.of(this, factory).get(AddEditHabitoEntidadeViewModel.class);
     }
 
     @Override

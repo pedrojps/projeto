@@ -12,24 +12,23 @@ import androidx.databinding.Observable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
-import com.example.myapplication.databinding.DialogCaminhoBinding;
+import com.example.myapplication.databinding.DialogSetVariavelBinding;
 
 public class DialogActivity
         extends AppCompatActivity {
 
-    public static final String CAMINHO_KEY = "CAMINHO_KEY";
+    public static final String NAME_KEY = "NAME_KEY";
 
     public static final String TIPO_KEY = "TIPO_KEY";
 
     public static final int REQUEST_SELECT_CAMINHO = 166;
 
-    private DialogCaminhoBinding mBinding;
+    private DialogSetVariavelBinding mBinding;
 
     private DialogViewModel mViewModel;
 
-    public static Intent getNewIntent(@NonNull Context context/*, String requisitante*/){
+    public static Intent getNewIntent(@NonNull Context context){
         return new Intent(context, DialogActivity.class);
-                //.putExtra(CAMINHO_KEY, requisitante);
     }
 
     @Override
@@ -37,20 +36,20 @@ public class DialogActivity
         super.onCreate(savedInstanceState);
         mViewModel = findOrCreateViewModel();
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.dialog_caminho);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.dialog_set_variavel);
         mBinding.setVm(mViewModel);
 
         subscribeCancel();
         subscribeSave();
 
-        mViewModel.requisitante.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        mViewModel.nameVarialvel.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                String valido = mViewModel.requisitante.get();
+                String valido = mViewModel.nameVarialvel.get();
                 if(valido!=null && !valido.isEmpty())
-                    mViewModel.pernitiOk.set(mViewModel.getTipo()!=-1&&true);
+                    mViewModel.salva.set(mViewModel.getTipo()!=-1&&true);
                 else
-                    mViewModel.pernitiOk.set(false);
+                    mViewModel.salva.set(false);
             }
         });
     }
@@ -64,7 +63,6 @@ public class DialogActivity
     }
 
     private DialogViewModel findOrCreateViewModel(){
-       // String requsisitante = getIntent().getStringExtra(CAMINHO_KEY);
 
         DialogViewModel.Factory factory = new DialogViewModel.Factory(
                 getApplication()
@@ -73,9 +71,9 @@ public class DialogActivity
         return ViewModelProviders.of(this, factory).get(DialogViewModel.class);
     }
 
-    public void hostSaved(String hostAndPort) {
+    public void hostSaved(String name) {
         Intent it = new Intent();
-        it.putExtra(CAMINHO_KEY, hostAndPort);
+        it.putExtra(NAME_KEY, name);
         it.putExtra(TIPO_KEY, mViewModel.getTipo()+"");
         setResult(RESULT_OK, it);
         finish();

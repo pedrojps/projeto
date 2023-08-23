@@ -2,8 +2,6 @@ package com.example.myapplication.ui.entidadeHabitoAdd;
 
 import android.app.Application;
 import android.content.Intent;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -26,7 +24,6 @@ import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.entities.ItemEnty;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.data.repository.VariavelCategoriRepository;
-import com.example.myapplication.data.types.TipoEquipamento;
 import com.example.myapplication.ui.variaeisCategoriy.variaeisCategoriyCrieteRegistro.VarCategoriCriateViewItem;
 import com.example.myapplication.utils.ObjectUtils;
 import com.google.common.base.Strings;
@@ -40,16 +37,14 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.myapplication.ui.dialog.DialogActivity.CAMINHO_KEY;
+import static com.example.myapplication.ui.dialog.DialogActivity.NAME_KEY;
 import static com.example.myapplication.ui.dialog.DialogActivity.TIPO_KEY;
 
-public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
+public class AddEditHabitoEntidadeViewModel extends AndroidViewModel {
 
-    public final ObservableField<String> id = new ObservableField<>();
+    public final ObservableField<String> idCategoria = new ObservableField<>();
 
     public final ObservableField<String> modelo = new ObservableField<>();
-
-    public final ObservableField<String> descricao = new ObservableField<>();
 
     public final ObservableInt propriedade = new ObservableInt(0);
 
@@ -90,9 +85,11 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
     private final SingleLiveEvent<Void> mChangeStartDate = new SingleLiveEvent<>();
 
     public final ObservableField<LocalDate> startDate = new ObservableField<>(new LocalDate());
-    public final ObservableField<LocalDate> startTime = new ObservableField<>(new LocalDate());
+    public final ObservableField<LocalTime> startTime = new ObservableField<>(new LocalTime());
 
-    public AddEditHabitoCategoriaViewModel(
+    private long idEdit = -1;
+
+    public AddEditHabitoEntidadeViewModel(
             @NonNull Application application,
             @NonNull HabitCategoriRepository habitCategoriRepository,
             @NonNull VariavelCategoriRepository variavelCategoriRepository
@@ -111,36 +108,65 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         buttonEnabled.set(enabled);
     }
 
-    public void start() {
-        start(null);
+    public void start(String equipamentoId) {
+        mIsNewEquipamento = false;
+        loadCategoria(Integer.parseInt(equipamentoId));
     }
 
-    public void start(String equipamentoId) {
-        if (Strings.isNullOrEmpty(equipamentoId)) {
+    public void start(HabitEnty habitEnty) {
+        if (habitEnty == null) {
             mIsNewEquipamento = true;
             return;
         }
 
         mIsNewEquipamento = false;
-        loadEquipamento(Integer.parseInt(equipamentoId));
+        startDate.set(habitEnty.getData());
+        startTime.set(habitEnty.getHora());
+        modelo.set(habitEnty.getObservacao());
+        idEdit = habitEnty.getId();
+        loadCategoria(habitEnty.getCategoriaId());
+        loadEdit(habitEnty.getId());
     }
 
-    private void loadEquipamento(@NonNull long equipamentoId) {
+    private void loadCategoria(@NonNull long equipamentoId) {
         mHabitCategoriRepository.findById(equipamentoId)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(mCompositeDisposable::add)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(habitCategoria -> {
-                    this.setEquipamento(habitCategoria);
+                    this.setCategoria(habitCategoria);
 
                 }, this::showError);
 
-        mVariavelCategoriRepository.findByHabit(equipamentoId).subscribeOn(Schedulers.io())
+        mVariavelCategoriRepository.findByHabit(equipamentoId)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(var->{
                     this.setVariaveis(var);variavelCarrega();
+                    if (!isNewEquipamento()){
+                        mVariavelCategoriRepository.findByHabitEnty(idEdit)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe( e ->{
+                                    setValorVariaveis(e);
+                                },throwable -> {setPrefixoError(R.string.carrega_habyto);});
+                    }
                     },
                         throwable -> {setPrefixoError(R.string.carrega_habyto);});
+    }
+
+    private void loadEdit(@NonNull long equipamentoId) {
+        //load de entidade
+    }
+
+    private void setValorVariaveis(List<ItemEnty> iv){
+        for(int i = 0; iv.size() > i; i++){
+            for (int k = 0; mVariaveis.size() > k; k++){
+                if (mVariaveis.get(k).getId() == iv.get(i).getItemCategoriID()){
+                    mVariaveis.get(k).valor = iv.get(i).getValor();
+                }
+            }
+        }
     }
 
 
@@ -168,7 +194,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         return mChangeStartTime;
     }
     public void setStartTime(Date newDate){
-        startTime.set(new LocalDate(newDate));
+        startTime.set(new LocalTime(newDate));
     }
 
     public void setVariaveis(List<ItemCategoria> mVariaveis) {
@@ -183,17 +209,13 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         return list;
     }
 
-    private void setEquipamento(HabitCategoria equipamento) {
+    private void setCategoria(HabitCategoria equipamento) {
         //mHabitCategoriaOld = equipamento;
 
         if (equipamento != null) {
-            id.set(equipamento.getId()+"");
-           // modelo.set(equipamento.getNome());
-            descricao.set(equipamento.getDiscricao());
+            idCategoria.set(equipamento.getId()+"");
         } else {
-            id.set("0");
-            //modelo.set(getApplication().getString(R.string.no_data_avaliable));
-            descricao.set(getApplication().getString(R.string.no_data_avaliable));
+            idCategoria.set("0");
             propriedade.set(0);
         }
     }
@@ -220,14 +242,6 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         mErrorDialogMessage.setValue("Erro", throwable.getMessage());
     }
 
-    /**
-     * O index dos botões do {@link RadioGroup} na view deve estar sincronizado com {@link TipoEquipamento}
-     */
-    public void onSelectProprietario(RadioGroup radioGroup, int checkedId) {
-        RadioButton radioButton = radioGroup.findViewById(checkedId);
-        propriedade.set(radioGroup.indexOfChild(radioButton));
-    }
-
     public void save(List<VarCategoriCriateViewItem> vari) {
         List<ItemEnty> itens  = new ArrayList<>();
         for(VarCategoriCriateViewItem v:vari){
@@ -238,7 +252,13 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         }
 
         HabitEnty equipamento = new HabitEnty(
-               Integer.parseInt(this.id.get()),this.startDate.get(),new LocalTime(this.startTime.get().getTime()), modelo.get());
+               Integer.parseInt(this.idCategoria.get()),this.startDate.get(),new LocalTime(this.startTime.get().getTime()), modelo.get());
+
+        if (idEdit>=0){
+            equipamento = new HabitEnty(idEdit,
+                    Integer.parseInt(this.idCategoria.get()),this.startDate.get(),new LocalTime(this.startTime.get().getTime()), modelo.get(),null);
+            update(equipamento, itens);
+        }
 
         insert(equipamento,itens);
     }
@@ -252,7 +272,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 
     public VarCategoriCriateViewItem handleEditRequisitanteResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            String requisitante = data.getStringExtra(CAMINHO_KEY);
+            String requisitante = data.getStringExtra(NAME_KEY);
 
             int tipo = Integer.parseInt(data.getStringExtra(TIPO_KEY));
             ItemCategoria variavel=new ItemCategoria(0,null,requisitante,tipo);
@@ -269,7 +289,6 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
                 .doOnSubscribe(mCompositeDisposable::add)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(habitEnty -> {
-                   // mHabitEnty = habitEnty;
                     List<ItemEnty> lis = new ArrayList<>();
                     for (int i=0;itens.size()>i;i++){
                         ItemEnty ic = itens.get(i);
@@ -279,29 +298,36 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
                     if(lis.size()!=0)
                     mVariavelCategoriRepository.insertEnty(lis).subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(()->{mEquipamentoSaved.call();},throwable -> {setPrefixoError(R.string.error_insert_equipamento_message);});
+                            .subscribe(()->{mEquipamentoSaved.call();},throwable -> {setPrefixoError(R.string.error_criacao_habito);});
                     else
                         mEquipamentoSaved.call();
                 }, throwable -> {
-                    setPrefixoError(R.string.error_insert_equipamento_message);
+                    setPrefixoError(R.string.error_criacao_habito);
                 });
     }
 
-    private void update(@NonNull HabitCategoria equipamento) {
-        List<ItemCategoria> lis = new ArrayList<>();
-        for (int i=0;mVariaveis.size()>i;i++){
-            ItemCategoria ic = mVariaveis.get(i);
-            ic.setCategoriID(equipamento.getId());
-            if(ic.getId()==0)
-                lis.add(ic);
-        }
+    private void update(@NonNull HabitEnty equipamento, List<ItemEnty> itens) {
 
-        mHabitCategoriRepository.update(equipamento).andThen(mVariavelCategoriRepository.insert(lis))
+
+        mHabitCategoriRepository.UpdateEnty(equipamento)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(mCompositeDisposable::add)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mEquipamentoSaved::call, throwable -> {
-                    setPrefixoError(R.string.error_insert_equipamento_message);
+                .subscribe(habitEnty -> {
+                    List<ItemEnty> lis = new ArrayList<>();
+                    for (int i=0;itens.size()>i;i++){
+                        ItemEnty ic = itens.get(i);
+                        ic.setHabitEntyID(habitEnty.getId());
+                        lis.add(ic);
+                    }
+                    if(lis.size()!=0)
+                        mVariavelCategoriRepository.insertEnty(lis).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(()->{mEquipamentoSaved.call();},throwable -> {setPrefixoError(R.string.error_criacao_habito);});
+                    else
+                        mEquipamentoSaved.call();
+                }, throwable -> {
+                    setPrefixoError(R.string.error_criacao_habito);
                 });
     }
 
@@ -311,17 +337,9 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 
     private void validatePrefixo(String prefixo) {
         if (Strings.isNullOrEmpty(prefixo)) {
-            setPrefixoError(R.string.required_field);
+            setPrefixoError(R.string.src_campo_obrigatorio);
         } else {
             setPrefixoError(null);
-        }
-    }
-
-    private void validateDescricao(String descricao) {
-        if (Strings.isNullOrEmpty(descricao)) {
-            setDescricaoError(R.string.required_field);
-        } else {
-            setDescricaoError(null);
         }
     }
 
@@ -334,48 +352,19 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         updateButtonState();
     }
 
-    private void setDescricaoError(@StringRes Integer errorResId) {
-        if (ObjectUtils.nonNull(errorResId)) {
-            descricaoError.set(getApplication().getString(errorResId));
-        } else {
-            descricaoError.set(null);
-        }
-        updateButtonState();
-    }
-
-    public void removerItens(ItemCategoria i,int posisao){
-        if(!isNewEquipamento()){
-            mVariavelCategoriRepository.delete(i).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(()->{
-                        posisaoAdapt=(posisao);
-                        mVariaveis.remove(i);
-                        mDeletVariavelAntiga.call();
-                    },throwable -> {setPrefixoError(R.string.error_delet_variavel_message);});;
-        }else
-            mVariaveis.remove(i);
-    }
-
     public SingleLiveEvent<Integer> getDeletVariavelAntiga() {
         return mDeletVariavelAntiga;
     }
 
     private void setupObservables() {
-        id.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        idCategoria.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable observable, int i) {
-                String value = id.get();
+                String value = idCategoria.get();
                 validatePrefixo(value);
             }
         });
 
-        descricao.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable observable, int i) {
-                String value = descricao.get();
-                validateDescricao(value);
-            }
-        });
     }
 
 
@@ -404,7 +393,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new AddEditHabitoCategoriaViewModel(
+            return (T) new AddEditHabitoEntidadeViewModel(
                     mApplication, mHabitCategoriRepository,mVariavelCategoriRepository
             );
         }

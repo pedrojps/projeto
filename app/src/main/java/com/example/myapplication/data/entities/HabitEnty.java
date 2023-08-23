@@ -18,7 +18,7 @@ import com.example.myapplication.common.time.LocalTime;
         @ForeignKey(entity = HabitCategoria.class, parentColumns = {"id"},
                 childColumns = {"categori_h"})})
 public class HabitEnty implements Parcelable {
-//transforma em itens habito
+
     @PrimaryKey(autoGenerate = true)
     private long id;
 
@@ -132,7 +132,7 @@ public class HabitEnty implements Parcelable {
 
     @Ignore
     protected HabitEnty(Parcel in) {
-        //A ordem de leitura é CRÍTICA para o parcelable, cuidado
+
         id = in.readLong();
         categoriaId = in.readLong();
         data = new LocalDate(in.readLong());
@@ -150,7 +150,7 @@ public class HabitEnty implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
         dest.writeLong(categoriaId);
-        dest.writeLong(data.getTime()); //data is NonNull
+        dest.writeLong(data.getTime());
         dest.writeLong(hora == null ? -1 : hora.getTime());
         dest.writeString(observacao);
         dest.writeLong(exportado == null ? -1 : exportado.getTime());

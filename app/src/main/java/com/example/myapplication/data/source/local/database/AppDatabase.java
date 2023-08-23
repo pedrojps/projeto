@@ -16,7 +16,6 @@ import com.example.myapplication.data.source.local.database.dao.HabitCategoriDao
 import com.example.myapplication.data.source.local.database.dao.HabitEntyDao;
 import com.example.myapplication.data.source.local.database.dao.VariavelCategoriDao;
 import com.example.myapplication.data.source.local.database.dao.VariavelEntyDao;
-import com.example.myapplication.data.source.local.database.typeConverter.BooleanTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.DatetimeTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.LocalDateTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.LocalTimeTypeConverter;
@@ -24,8 +23,7 @@ import com.example.myapplication.data.source.local.database.typeConverter.LocalT
 @TypeConverters({
         LocalDateTypeConverter.class,
         LocalTimeTypeConverter.class,
-        DatetimeTypeConverter.class,
-        BooleanTypeConverter.class
+        DatetimeTypeConverter.class
 })
 @Database(entities = {
         HabitCategoria.class,

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.myapplication"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 32
         multiDexEnabled true
 
@@ -112,6 +112,7 @@ dependencies {
 
     implementation 'org.naishadhparmar.zcustomcalendar:zcustomcalendar:1.0.1'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
 }
 repositories {
     mavenCentral()

@@ -30,28 +30,12 @@ public class Resource<T> {
         return new Resource<>(Status.SUCCESS, data, Message.empty());
     }
 
-    public static <T> Resource<T> error(Message message, @Nullable T data){
-        return new Resource<>(Status.ERROR, data, message);
-    }
-
     public static <T> Resource<T> error(Throwable throwable){
         return new Resource<>(Status.ERROR, null, Message.error(throwable.getMessage()));
-    }
-
-    public static <T> Resource<T> unexpected(){
-        return new Resource<>(Status.ERROR, null, Message.error("Ocorreu um erro inesperado."));
     }
 
     public static <T> Resource<T> loading(@Nullable T data){
         return new Resource<>(Status.LOADING, data, Message.empty());
     }
 
-    public static <T, R> Resource<R> refresh(@NonNull Resource<T> resourceOld, @NonNull R data){
-        switch (resourceOld.status){
-            case LOADING: return Resource.loading(data);
-            case ERROR: return Resource.error(resourceOld.message, data);
-            case SUCCESS:
-            default: return Resource.success(data);
-        }
-    }
 }

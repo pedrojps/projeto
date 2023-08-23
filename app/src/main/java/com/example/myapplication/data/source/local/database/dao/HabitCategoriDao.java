@@ -19,7 +19,4 @@ public interface HabitCategoriDao extends BaseDao<HabitCategoria>{
     @Query("SELECT * FROM CATEGORIA_H WHERE id = :id ")
     Single<HabitCategoria> findById(long id);
 
-    //@Query("SELECT id, MAX (id) as id, nome, projeto_id FROM EQUIPE")
-    //Single<Equipe> findMaxid();
-
 }

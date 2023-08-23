@@ -6,6 +6,7 @@ import android.widget.HeaderViewListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
@@ -35,6 +36,8 @@ import timber.log.Timber;
 public class MainViewModel extends AndroidViewModel {
 
     private final HabitCategoriRepository mHabitCategoriRepository;
+
+    public final ObservableField<String> busca = new ObservableField<>();
 
     public final ObservableBoolean dataAvaliable = new ObservableBoolean();
 
@@ -101,13 +104,6 @@ public class MainViewModel extends AndroidViewModel {
                 .onErrorReturn(Resource::error)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mProjetosDeleted::setValue);
-    }
-    /////
-    public void teste (){
-        mHabitCategoriRepository.insert(new HabitCategoria("teste 2",new LocalDate(),"teste 1"))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
     }
 
     private void loadProjetos() {

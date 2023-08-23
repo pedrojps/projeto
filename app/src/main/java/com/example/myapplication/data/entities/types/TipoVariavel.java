@@ -34,6 +34,6 @@ public enum TipoVariavel {
                 return lado;
         }
 
-        throw new IllegalArgumentException("Não existe registro no enum LadoEstaca para o valor informado.");
+        throw new IllegalArgumentException("Não existe tipo informado.");
     }
 }

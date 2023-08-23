@@ -2,6 +2,7 @@ package com.example.myapplication.data.repository;
 
 import androidx.annotation.NonNull;
 
+import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.entities.ItemEnty;
 import com.example.myapplication.data.source.local.database.dao.VariavelCategoriDao;
@@ -62,6 +63,21 @@ public class VariavelCategoriRepository {
         return Completable.fromAction(() -> mVariavelCategoriDao.update(projeto));
     }
 
+    public Completable Update(@NonNull List<ItemCategoria> itemCategorias) {
+        return Completable.fromAction(() -> {
+            mVariavelCategoriDao.insertAll(itemCategorias);
+
+            String[] ids = new String[itemCategorias.size()];
+            for(int i = 0; i<itemCategorias.size();i++)
+                ids[i] = itemCategorias.get(i).getNome();
+
+            mVariavelCategoriDao.deleteNotIn(ids,itemCategorias.get(0).getCategoriID());
+        });
+    }
+
+    public Single<List<ItemEnty>> findByHabitEnty(long id){
+        return mVariavelEntyDao.findByHabit(id);
+    }
     public Completable delete(@NonNull ItemCategoria projeto){
         return Completable.fromAction(() -> mVariavelCategoriDao.delete(projeto));
     }

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.common.adapter.HideFabOnScrollRecyclerViewListener;
@@ -18,7 +19,7 @@ import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
 import com.example.myapplication.ui.factory.DialogFactory;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
-import com.example.myapplication.ui.habitCategoriDetali.ApontEquipamentoDetailActivity;
+import com.example.myapplication.ui.habitCategoriDetali.HabitCategoriaDetailActivity;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.ObjectUtils;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
 
     private ActivityMainBinding mBinding;
 
-    private FlexibleAdapter<HabitCategoriViewItem> mAdapter;
+    private HabitAdapterHome<HabitCategoriViewItem> mAdapter;
 
     private HideFabOnScrollRecyclerViewListener mScrollStateListener;
     @Override
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
 
 
     private void setupAdapter() {
-        mAdapter = new FlexibleAdapter<>(new ArrayList<>(), this, true);
+        mAdapter = new HabitAdapterHome<>(new ArrayList<>(), this, true);
 
         FlexibleItemDecoration itemDecoration = new FlexibleItemDecoration(this)
                 .withDefaultDivider(R.layout.item_habit_c);
@@ -63,7 +64,19 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
 
         subscribeItems();
         subscribeHabitAdd();
-        //subscribeHabitEdit();
+
+        mBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.filter(newText);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -91,7 +104,7 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
     public void deleteProjetos() {
         mViewModel.clearItemSelectionMap();
 
-        DialogFactory.createDialog(this, R.string.list_projeto_delete_projeto_dialog_title, null)
+        DialogFactory.createDialog(this, R.string.delete_habito, null)
                 .setMultiChoiceItems(mViewModel.getProjetoDisplayNameArray(), null,
                         (dialogInterface, which, isChecked) -> mViewModel.toggleItemSelection(which, isChecked))
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, which) -> {
@@ -106,7 +119,8 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
         mViewModel.getItems().observe(this, resource -> {
             if (resource.status == Status.SUCCESS) {
                 mViewModel.dataAvaliable.set(ObjectUtils.nonNull(resource.data) && !resource.data.isEmpty());
-                mAdapter.updateDataSet(resource.data, true);
+                mAdapter.updateDataSet(resource.data, true, true);
+                mBinding.searchView.setQuery("", false);
             } else if (resource.status == Status.ERROR) {
                 mViewModel.dataAvaliable.set(false);
                 DialogUtils.showDialog(this, resource.message.header, resource.message.body);
@@ -122,15 +136,6 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
         Intent it = AddEditHabitoCategoriaActivity.getNewIntent(this);
         startActivity(it);
     }
-/*
-    private void subscribeHabitEdit() {
-        mViewModel.getHabitEdit().observe(this, aVoid -> openEditHabit());
-    }
-
-    public void openEditHabit() {
-        Intent it = AddEditEquipamentoActivity.getNewIntent(this,mViewModel.selecionar+"");
-        startActivity(it);
-    }*/
 
     private MainViewModel findOrCreateViewModel() {
         MainViewModel.Factory factory = new MainViewModel.Factory(
@@ -148,8 +153,7 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
             HabitCategoriViewItem viewItem = mAdapter.getItem(position);
 
             if (ObjectUtils.nonNull(viewItem)) {
-               // mViewModel.selecionar = ;
-                Intent it = ApontEquipamentoDetailActivity.getNewIntent(this,viewItem.getModel().getId());
+                Intent it = HabitCategoriaDetailActivity.getNewIntent(this,viewItem.getModel());
                 startActivity(it);
 
                 return true;
