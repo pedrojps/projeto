@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
-import com.example.myapplication.common.adapter.HideFabOnScrollRecyclerViewListener;
 import com.example.myapplication.common.time.LocalTime;
 import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
@@ -47,8 +46,6 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
     private ActHabitEntidadeAddEditBinding mBinding;
 
     private FlexibleAdapter<VarCategoriCriateViewItem> mAdapter;
-
-    private HideFabOnScrollRecyclerViewListener mScrollStateListener;
 
     @NonNull
     public static Intent getNewIntent(Context context, @NonNull String equipamentoId) {

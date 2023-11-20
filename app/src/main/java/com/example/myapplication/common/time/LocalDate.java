@@ -48,7 +48,6 @@ public class LocalDate extends Date {
             @NonNull String dateString,
             @LocalDateFormat @NonNull String pattern
     ) throws ParseException {
-        //Sempre criar uma nova instância. DateFormat possui problemas para acesso concorrente em singleton
         DateFormat formatter = new SimpleDateFormat(pattern, Locale.getDefault());
         return new LocalDate(formatter.parse(dateString), pattern);
     }

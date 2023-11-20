@@ -1,21 +1,13 @@
 <resources>
     <string name="app_name">Habit</string>
 
-    <string name="fwandroid_dialog_button_yes">Sim</string>
-    <string name="fwandroid_dialog_button_no">Não</string>
-    <string name="fwandroid_dialog_button_ok">OK</string>
-    <string name="fwandroid_dialog_button_done">Concluído</string>
-    <string name="fwandroid_dialog_button_continue">Continuar</string>
-    <string name="fwandroid_dialog_button_cancel">Cancelar</string>
-    <string name="fwandroid_dialog_button_delete">Excluir</string>
+    <string name="format_integer">%d</string>
 
-    <string name="fwandroid_format_integer">%d</string>
+    <string name="default_string">Teste</string>
+    <string name="default_integer">12345</string>
 
-    <string name="fwandroid_default_string">Teste</string>
-    <string name="fwandroid_default_integer">12345</string>
-
-    <string name="fwandroid_month_year_picker_title">Selecione uma data</string>
-    <string-array name="fwandroid_month_array">
+    <string name="month_year_picker_title">Selecione uma data</string>
+    <string-array name="month_array">
         <item>Janeiro</item>
         <item>Fevereiro</item>
         <item>Março</item>
@@ -30,9 +22,12 @@
         <item>Dezembro</item>
     </string-array>
 
+    <string name="default_date">01/01/1980</string>
+    <string name="default_time">15:30</string>
     <string name="dialog_button_yes">Sim</string>
     <string name="dialog_button_no">Não</string>
     <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_done">Concluído</string>
     <string name="dialog_button_continue">Continuar</string>
     <string name="dialog_button_cancel">Cancelar</string>
     <string name="dialog_button_delete">Excluir</string>
@@ -78,5 +73,6 @@
     <string name="data">Data</string>
     <string name="observacao">Observação</string>
     <string name="hora">Hora</string>
+    <string name="lista_dia">Lista do dia</string>
 
 </resources>

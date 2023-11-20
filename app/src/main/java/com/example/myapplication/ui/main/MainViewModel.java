@@ -46,7 +46,6 @@ public class MainViewModel extends AndroidViewModel {
     private final SingleLiveEvent<Resource<Integer>> mProjetosDeleted = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<Void> mHabitAdd = new SingleLiveEvent<>();
-    private final SingleLiveEvent<Void> mHabitEdit = new SingleLiveEvent<>();
 
     private LiveData<Resource<List<HabitCategoriViewItem>>> mItems;
 
@@ -140,16 +139,8 @@ public class MainViewModel extends AndroidViewModel {
     public void openAddHabit() {
         mHabitAdd.call();
     }
-/*
 
-    public SingleLiveEvent<Void> getHabitEdit() {
-        return mHabitEdit;
-    }
-
-    public void openEditHabit() {
-        mHabitEdit.call();
-    }
-  */  public static class Factory implements ViewModelProvider.Factory {
+    public static class Factory implements ViewModelProvider.Factory {
 
         private final Application mApplication;
 

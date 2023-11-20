@@ -6,10 +6,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
-/**
- * A SingleLiveEvent used for AlertDialog error messages. Like a {@link SnackbarMessage} prevents
- * null body and uses a custom observer.
- */
+
 public class ErrorDialogMessage extends SingleLiveEvent<Pair<String, String>>{
 
     @MainThread

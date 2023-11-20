@@ -30,11 +30,6 @@ public class HideFabOnScrollRecyclerViewListener
 
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//        if(newState == RecyclerView.SCROLL_STATE_IDLE){
-//            showFabs();
-//        }else{
-//            hideFabs();
-//        }
         super.onScrollStateChanged(recyclerView, newState);
     }
 

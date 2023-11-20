@@ -10,9 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import timber.log.Timber;
 
-public class SingleLiveEvent<T>  extends MutableLiveData<T>
-
-    {
+public class SingleLiveEvent<T>  extends MutableLiveData<T> {
 
         private static final String TAG = "SingleLiveEvent";
 

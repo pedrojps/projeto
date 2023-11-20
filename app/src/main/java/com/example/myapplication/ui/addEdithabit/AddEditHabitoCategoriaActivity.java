@@ -13,9 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
-import com.example.myapplication.common.adapter.HideFabOnScrollRecyclerViewListener;
 import com.example.myapplication.data.entities.HabitCategoria;
-import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.databinding.ActHabitCategoriaAddEditBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.dialog.DialogActivity;
@@ -173,7 +171,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.excluir);
         builder.setMessage("Falha ao carregar/salvar dados");
-        builder.setPositiveButton(R.string.fwandroid_dialog_button_ok, (dialogInterface, i) -> {
+        builder.setPositiveButton(R.string.dialog_button_ok, (dialogInterface, i) -> {
             onBackPressed();
             dialogInterface.dismiss();
         });

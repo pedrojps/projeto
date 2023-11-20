@@ -47,7 +47,6 @@ public class LocalTime extends Date {
     public static LocalTime parse(
             @NonNull String dateString, @NonNull @LocalTimeFormat String pattern
     ) throws ParseException {
-        //Sempre criar uma nova instância. DateFormat possui problemas para acesso concorrente em singleton
         DateFormat formatter = new SimpleDateFormat(pattern, Locale.getDefault());
         return new LocalTime(formatter.parse(dateString), pattern);
     }
