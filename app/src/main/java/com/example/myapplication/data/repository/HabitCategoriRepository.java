@@ -57,6 +57,10 @@ public class HabitCategoriRepository {
         return mHabitEntyDao.findByIdAndDataPeriod(id,start,end);
     }
 
+    public Single<List<HabitEntyDetails>> findByIdAndDataPeriodDetails(long id, LocalDate start, LocalDate end){
+        return mHabitEntyDao.findByIdAndDataPeriodDetails(id,start,end);
+    }
+
     public Flowable<List<HabitCategoria>> list(){
         return mHabitCategoriDao.list();
     }

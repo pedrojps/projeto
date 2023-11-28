@@ -31,7 +31,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
 
     private final ErrorDialogMessage mErrorDialogMessage = new ErrorDialogMessage();
 
-    private final SingleLiveEvent<HabitCategoria> mEditApontamento = new SingleLiveEvent<>();
+    private final SingleLiveEvent<HabitCategoria> mEditHabit = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<Void> mApontamentoDeleted = new SingleLiveEvent<>();
 
@@ -39,7 +39,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
 
     private final SingleLiveEvent<Void> mCarregaMes = new SingleLiveEvent<>();
 
-    private final HabitCategoriRepository mApontEquipamentoRepository;
+    private final HabitCategoriRepository mCategoriRepository;
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -59,11 +59,11 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
 
     public HabitCategoriaDetailViewModel(
             @NonNull Application application,
-            @NonNull HabitCategoriRepository apontEquipamentoRepository,
+            @NonNull HabitCategoriRepository categoriRepository,
             HabitCategoria habitCategoria
     ) {
         super(application);
-        mApontEquipamentoRepository = apontEquipamentoRepository;
+        this.mCategoriRepository = categoriRepository;
         idHabit = habitCategoria.getId();
         mHabitCategoria = habitCategoria;
         loadEnty(new LocalDate());
@@ -71,7 +71,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
 
     public void loadEnty(LocalDate date){
         this.date = date;
-        mApontEquipamentoRepository.findByIdAndData(idHabit,this.date)
+        mCategoriRepository.findByIdAndData(idHabit,this.date)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -96,7 +96,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
         Calendar end =  Calendar.getInstance();
         end.set(YEAR,month,day);
 
-        mApontEquipamentoRepository.findByIdAndDataPeriod(idHabit,start,new LocalDate(end.getTime()))
+        mCategoriRepository.findByIdAndDataPeriod(idHabit,start,new LocalDate(end.getTime()))
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -128,7 +128,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
         return mCarregaMes;
     }
 
-    public HabitCategoria getApontamento() {
+    public HabitCategoria getHabit() {
         return mHabitCategoria;
     }
 
@@ -141,27 +141,27 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
     }
 
     public SingleLiveEvent<Void> getGrafic() {
-        return mHabitAdd;
+        return mGrafic;
     }
 
     public void openGrafic() {
         mGrafic.call();
     }
 
-    public SingleLiveEvent<HabitCategoria> getEditApontamento() {
-        return mEditApontamento;
+    public SingleLiveEvent<HabitCategoria> getEditHabit() {
+        return mEditHabit;
     }
 
-    public void editApontamento() {
-        mEditApontamento.setValue(mHabitCategoria);
+    public void editHabit() {
+        mEditHabit.setValue(mHabitCategoria);
     }
 
-    public SingleLiveEvent<Void> getApontamentoDeleted() {
+    public SingleLiveEvent<Void> getHabitDeleted() {
         return mApontamentoDeleted;
     }
 
     public void delete() {
-        mApontEquipamentoRepository.delete(mHabitCategoria)
+        mCategoriRepository.delete(mHabitCategoria)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -189,24 +189,24 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
 
         private final Application mApplication;
 
-        private final HabitCategoriRepository mApontEquipamentoRepository;
+        private final HabitCategoriRepository mHabitRepository;
 
         private final HabitCategoria mHabitCategoria;
 
         public Factory(
                 @NonNull Application application,
-                @NonNull HabitCategoriRepository apontEquipamentoRepository,
+                @NonNull HabitCategoriRepository habitCategoriRepository,
                 HabitCategoria habitCategoria
         ) {
             mApplication = application;
-            mApontEquipamentoRepository = apontEquipamentoRepository;
+            mHabitRepository = habitCategoriRepository;
             mHabitCategoria = habitCategoria;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new HabitCategoriaDetailViewModel(mApplication, mApontEquipamentoRepository, mHabitCategoria);
+            return (T) new HabitCategoriaDetailViewModel(mApplication, mHabitRepository, mHabitCategoria);
         }
     }
 }

@@ -31,6 +31,10 @@ public abstract class HabitEntyDao implements BaseDao<HabitEnty> {
     public abstract Single<List<HabitEnty>> findByIdAndDataPeriod(long id, LocalDate start, LocalDate end);
 
     @Transaction
+    @Query("SELECT * FROM ENTY_H WHERE categori_h = :id and data BETWEEN :start AND :end ")
+    public abstract Single<List<HabitEntyDetails>> findByIdAndDataPeriodDetails(long id, LocalDate start, LocalDate end);
+
+    @Transaction
     @Query("SELECT * FROM ENTY_H "
             + "WHERE id = :apontamentoId ")
     public abstract Single<HabitEntyDetails> findWithDetails(long apontamentoId);

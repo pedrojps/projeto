@@ -75,4 +75,11 @@
     <string name="hora">Hora</string>
     <string name="lista_dia">Lista do dia</string>
 
+    <string name="habit_nome">Habito: %s</string>
+    <string name="habit_periodo">Habito ocorreu: %s vezes</string>
+
+    <string name="media_diaria">Media das variaveis adicionais</string>
+
+    <string name="media_diaria_variavel">%s: %s /dia</string>
+
 </resources>

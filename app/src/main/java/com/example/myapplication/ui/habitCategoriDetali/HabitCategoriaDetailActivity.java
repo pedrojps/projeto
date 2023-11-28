@@ -24,6 +24,7 @@ import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
 import com.example.myapplication.ui.entidadeHabitoAdd.AddEditHabitoEntidadeActivity;
 import com.example.myapplication.ui.entidadeHabitoAdd.HabitEntyViewItem;
 import com.example.myapplication.ui.factory.DialogFactory;
+import com.example.myapplication.ui.graficos.GraficActivity;
 import com.example.myapplication.ui.habitEntyDetali.HabitEntyDetailActivity;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.ObjectUtils;
@@ -90,10 +91,10 @@ public class HabitCategoriaDetailActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setupAdapters();
-        subscribeApontamentoDeleted();
+        subscribeHabitDeleted();
         subscribeCaregaVariaveis();
         subscribeCaregaMes();
-        subscribeEditApontamento();
+        subscribeEditHabit();
         subscribeErrorMessage();
         subscribeHabitAdd();
         subscribeGrafic();
@@ -203,7 +204,7 @@ public class HabitCategoriaDetailActivity
                 onBackPressed();
                 return true;
             case R.id.menu_equipamento_detail_edit:
-                mViewModel.editApontamento();
+                mViewModel.editHabit();
                 return true;
             case R.id.menu_equipamento_detail_delete:
                 deleteApontamento();
@@ -250,15 +251,15 @@ public class HabitCategoriaDetailActivity
         });
     }
 
-    private void subscribeApontamentoDeleted() {
-        mViewModel.getApontamentoDeleted().observe(this, aVoid -> {
+    private void subscribeHabitDeleted() {
+        mViewModel.getHabitDeleted().observe(this, aVoid -> {
             setResult(RESULT_DELETE_OK);
             finish();
         });
     }
 
-    private void subscribeEditApontamento() {
-        mViewModel.getEditApontamento().observe(this, this::editApontamento);
+    private void subscribeEditHabit() {
+        mViewModel.getEditHabit().observe(this, this::editApontamento);
     }
 
     private void subscribeErrorMessage(){
@@ -275,12 +276,12 @@ public class HabitCategoriaDetailActivity
     }
 
     public void openGrafic() {
-        //Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getApontamento().getId()+"");
-        //startActivity(it);
+        Intent it = GraficActivity.getNewIntent(this,mViewModel.getHabit());
+        startActivity(it);
     }
 
     public void openAddHabit() {
-        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getApontamento().getId()+"");
+        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getHabit().getId()+"");
         startActivity(it);
     }
     private HabitCategoriaDetailViewModel findOrCreateViewModel() {
@@ -303,7 +304,7 @@ public class HabitCategoriaDetailActivity
             HabitEntyViewItem viewItem = mAdapter.getItem(position);
 
             if (ObjectUtils.nonNull(viewItem)) {
-                // mViewModel.selecionar = ;
+
                 Intent it = HabitEntyDetailActivity.getNewIntent(this,viewItem.getModel().getId());
                 startActivity(it);
 
