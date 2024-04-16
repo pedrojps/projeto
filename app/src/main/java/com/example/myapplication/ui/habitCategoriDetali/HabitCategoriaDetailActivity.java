@@ -27,6 +27,7 @@ import com.example.myapplication.ui.factory.DialogFactory;
 import com.example.myapplication.ui.graficos.GraficActivity;
 import com.example.myapplication.ui.habitEntyDetali.HabitEntyDetailActivity;
 import com.example.myapplication.utils.DialogUtils;
+import com.example.myapplication.utils.Globals;
 import com.example.myapplication.utils.ObjectUtils;
 
 
@@ -67,6 +68,7 @@ public class HabitCategoriaDetailActivity
 
     private HabitCategoriaDetailViewModel mViewModel;
 
+    private boolean isShowDialog = false;
     public static Intent getNewIntent(@NonNull Context context, HabitCategoria HabitCategoria) {
         return new Intent(context, HabitCategoriaDetailActivity.class)
                 .putExtra(EXTRA_HABIT, HabitCategoria);
@@ -90,6 +92,7 @@ public class HabitCategoriaDetailActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_DETAIL, boolean.class));
         setupAdapters();
         subscribeHabitDeleted();
         subscribeCaregaVariaveis();
@@ -318,6 +321,11 @@ public class HabitCategoriaDetailActivity
     protected void onResume() {
         carrega();
         super.onResume();
+        isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_DETAIL, boolean.class));
+        if(isShowDialog) {
+            DialogUtils.showDialog(this, "Aqui você consegue visualizar as marcações de hábitos já feitas por dia. Basta clicar no dia específico no calendário. Nos botões laterais inferiores, você pode criar uma nova marcação no \"+\" ou visualizar os dados no botão de gráfico.");
+            Globals.sharedInstance().set(Globals.c.SHOW_DIALOG_DETAIL, true);
+        }
     }
 
 }

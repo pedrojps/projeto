@@ -46,4 +46,9 @@ public abstract class HabitEntyDao implements BaseDao<HabitEnty> {
         this.deleteItens(habitEnty.getId());
         this.delete(habitEnty);
     }
+
+    public void deleteByCategoria(HabitEnty habitEnty){
+        this.deleteItens(habitEnty.getId());
+        this.delete(habitEnty);
+    }
 }

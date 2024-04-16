@@ -13,6 +13,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.common.lifecycle.ErrorDialogMessage;
 import com.example.myapplication.common.lifecycle.SingleLiveEvent;
 import com.example.myapplication.common.time.LocalDate;
+import com.example.myapplication.common.time.LocalDateFormat;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
@@ -21,7 +22,11 @@ import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.data.source.local.projection.HabitEntyDetails;
 import com.example.myapplication.data.source.local.projection.ItensEntyProject;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineDataSet;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -127,27 +132,58 @@ public class GraficViewModel extends AndroidViewModel {
         return text;
     }
 
-    private void setData(int count, float range) {
+    List<Entry> setData() {
         ArrayList<Entry> entries = new ArrayList<>();
 
 
-        HashMap<ItemCategoria, Integer> somatoria = new HashMap<>();
+        HashMap<String, Integer> byDay = new HashMap<>();
         for(HabitEntyDetails enty : mListVariaveis) {
+            String day = enty.habitEnty.getData().toString(LocalDateFormat.DATE2);
+            int cont;
+            try {
+                cont = byDay.get(day);
+            }
+            catch (Exception e) {
+                cont = 0;
+            }
 
-        }/*
-        // sort by x-value
-        Collections.sort(entries, new EntryXComparator());
-        // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(entries, "DataSet 1");
-        set1.setLineWidth(1.5f);
-        set1.setCircleRadius(4f);
-        // create a data object with the data sets
-        LineData data = new LineData(set1);
-        // set data
-        chart.setData(data);*/
+            int foo = cont + 1;
+
+            byDay.put(day,foo);
+        }
+
+        LocalDateTime lda = convertToLocalDateViaInstant(startDate.get());
+        LocalDateTime ldb = convertToLocalDateViaInstant(endDate.get());
+
+        List<String> dates = new ArrayList<>();
+        for (LocalDateTime ld = lda; !ld.isAfter(ldb); ld = ld.plusDays(1)) {
+            dates.add(
+                    ld.format(DateTimeFormatter.ofPattern(LocalDateFormat.DATE2))
+            );
+        }
+
+        List<Entry> valsComp1 = new ArrayList<Entry>();
+
+        for (String date : dates){
+            int cont = 0;
+            try {
+                cont = byDay.get(date);
+            }
+            catch (Exception e) {
+                cont = 0;
+            }
+            valsComp1.add(new Entry(dates.indexOf(date), cont));
+        }
+
+        return valsComp1;
+
     }
 
-
+    public LocalDateTime convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
     private float cacularByDay(float valor){
 
         Calendar data1 = Calendar.getInstance();

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.example.myapplication.R;
@@ -21,6 +22,7 @@ import com.example.myapplication.ui.factory.DialogFactory;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
 import com.example.myapplication.ui.habitCategoriDetali.HabitCategoriaDetailActivity;
 import com.example.myapplication.utils.DialogUtils;
+import com.example.myapplication.utils.Globals;
 import com.example.myapplication.utils.ObjectUtils;
 
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
     private HabitAdapterHome<HabitCategoriViewItem> mAdapter;
 
     private HideFabOnScrollRecyclerViewListener mScrollStateListener;
+
+    private boolean isShowDialog = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
         mScrollStateListener = new HideFabOnScrollRecyclerViewListener(mBinding.addHabitButton);
 
         setupAdapter();
+
+        isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_MAIN, boolean.class));
     }
 
 
@@ -77,6 +83,18 @@ public class MainActivity extends AppCompatActivity  implements FlexibleAdapter.
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBinding.searchView.clearFocus();
+
+        isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_MAIN, boolean.class));
+        if(isShowDialog) {
+            DialogUtils.showDialog(this, "Bem-vindo ao app de controle de hábitos!\n\nPara criar o primeiro hábito, clique no botão \"+\" localizado na parte inferior do app. Isso o levará para a tela de criação de hábitos.");
+            Globals.sharedInstance().set(Globals.c.SHOW_DIALOG_MAIN, true);
+        }
     }
 
     @Override

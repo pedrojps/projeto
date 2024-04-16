@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="var"
@@ -11,6 +12,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:background="?attr/selectableItemBackground">
 
         <TextView
@@ -20,6 +22,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:text="@={var.nome}"
+            android:layout_gravity="center_vertical"
             style="@style/Header.Small.Colored"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -62,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:labelFor="@+id/add_equipamento_modelos"
+            tools:showView="true"
             app:showView="@{var.tipo==0}">
 
             <androidx.cardview.widget.CardView
@@ -81,7 +85,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/fwandroid_text_medium"
+                        android:layout_margin="5dp"
                         android:text="@{@string/format_time(var.time)}"
                         style="@style/Text.Medium"/>
                 </LinearLayout>

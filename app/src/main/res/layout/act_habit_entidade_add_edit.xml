@@ -78,14 +78,15 @@
 
                 <TextView
                     android:id="@+id/time"
+                    style="@style/Header.Small.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="@string/hora"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/data_export_get_start_period"
-                    app:layout_constraintTop_toTopOf="@+id/date"
                     app:layout_constraintBottom_toBottomOf="@+id/date"
-                    style="@style/Header.Small.Colored"/>
+                    app:layout_constraintStart_toEndOf="@+id/data_export_get_start_period"
+                    app:layout_constraintTop_toTopOf="@+id/date" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/data_export_get_start_time"
@@ -146,7 +147,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                    android:id="@+id/projeto_list_bottom_sheet"
+                    android:id="@+id/list"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">

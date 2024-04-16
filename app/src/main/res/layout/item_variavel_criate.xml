@@ -11,14 +11,17 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:background="?attr/selectableItemBackground">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/fwandroid_text_medium"
+            android:layout_marginVertical="@dimen/fwandroid_text_extra_large"
             android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             android:text="@={var.nome}"
+            android:layout_gravity="center_vertical"
             style="@style/Header.Small.Colored"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +85,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/fwandroid_text_medium"
+                        android:layout_margin="5dp"
                         android:text="@{@string/format_time(var.time)}"
                         style="@style/Text.Medium"/>
                 </LinearLayout>

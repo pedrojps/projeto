@@ -90,20 +90,20 @@ public class HabitCategoriRepository {
         });
     }
 
-    public Completable update(@NonNull HabitCategoria projeto){
-        return Completable.fromAction(() -> mHabitCategoriDao.update(projeto));
+    public Completable update(@NonNull HabitCategoria habitCategoria){
+        return Completable.fromAction(() -> mHabitCategoriDao.update(habitCategoria));
     }
 
-    public Completable delete(@NonNull HabitCategoria projeto){
-        return Completable.fromAction(() -> mHabitCategoriDao.delete(projeto));
+    public Completable delete(@NonNull HabitCategoria habitCategoria){
+        return Completable.fromAction(() -> mHabitCategoriDao.delete(habitCategoria));
     }
 
-    public Completable deleteEnty(@NonNull HabitEnty projeto){
-        return Completable.fromAction(() -> mHabitEntyDao.deleteEnty(projeto));
+    public Completable deleteEnty(@NonNull HabitEnty habitEnty){
+        return Completable.fromAction(() -> mHabitEntyDao.deleteEnty(habitEnty));
     }
 
-    public Completable deleteAll(@NonNull List<HabitCategoria> projetos){
-        return Completable.fromAction(() -> mHabitCategoriDao.delete(projetos));
+    public Completable deleteAll(@NonNull List<HabitCategoria> habitCategorias){
+        return Completable.fromAction(() -> mHabitCategoriDao.delete(habitCategorias));
     }
 
 

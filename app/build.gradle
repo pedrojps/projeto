@@ -4,21 +4,28 @@ plugins {
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     viewBinding {
         enabled = true
     }
-    
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+    repositories
+            {
+                mavenCentral()
+                maven {url "https://oss.sonatype.org/content/repositories/snapshots/" }
+            }
     defaultConfig {
-        applicationId "com.example.myapplication"
-        minSdkVersion 24
-        targetSdkVersion 32
+        applicationId "com.app.Habit"
+        minSdkVersion 26
+        targetSdkVersion 33
         multiDexEnabled true
 
-        versionCode 1
-        versionName "1.0"
+        versionCode 7
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -57,6 +64,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.firebase:protolite-well-known-types:18.0.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation "com.android.support:multidex:$rootProject.verMultiDexSipportLib"
@@ -117,6 +125,7 @@ dependencies {
     implementation 'org.naishadhparmar.zcustomcalendar:zcustomcalendar:1.0.1'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
+    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }
 repositories {
     mavenCentral()

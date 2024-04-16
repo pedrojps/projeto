@@ -16,9 +16,10 @@ import com.example.myapplication.R;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.databinding.ActHabitCategoriaAddEditBinding;
 import com.example.myapplication.di.Injection;
-import com.example.myapplication.ui.dialog.DialogActivity;
+import com.example.myapplication.ui.dialog.DialogAddHabitItemActivity;
 import com.example.myapplication.ui.variaeisCategoriy.VarCategoriViewItem;
 import com.example.myapplication.utils.DialogUtils;
+import com.example.myapplication.utils.Globals;
 import com.example.myapplication.utils.ObjectUtils;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     private ActHabitCategoriaAddEditBinding mBinding;
 
     private FlexibleAdapter<VarCategoriViewItem> mAdapter;
+    private boolean isShowDialog = false;
 
     @NonNull
     public static Intent getNewIntent(Context context) {
@@ -70,6 +72,17 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
         subscribeViewChanges();
 
         initViewData();
+        isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_ADD_HABIT, boolean.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_ADD_HABIT, boolean.class));
+        if(isShowDialog) {
+            DialogUtils.showDialog(this, "Aqui você pode preencher o nome e a descrição do hábito, e adicionar mais variáveis clicando no \"+\". Para remover, basta apertar no ícone de lixeira ao lado do item.");
+            Globals.sharedInstance().set(Globals.c.SHOW_DIALOG_ADD_HABIT, true);
+        }
     }
 
     private void initViewData() {
@@ -95,8 +108,8 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     }
 
     public void variavelDialogAdd() {
-        Intent it = DialogActivity.getNewIntent(this  );
-        startActivityForResult(it, DialogActivity.REQUEST_SELECT_CAMINHO);
+        Intent it = DialogAddHabitItemActivity.getNewIntent(this  );
+        startActivityForResult(it, DialogAddHabitItemActivity.REQUEST_SELECT_CAMINHO);
     }
 
     private void subscribeErrorMessage() {
@@ -127,7 +140,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(DialogActivity.REQUEST_SELECT_CAMINHO==requestCode){
+        if(DialogAddHabitItemActivity.REQUEST_SELECT_CAMINHO==requestCode){
         mAdapter.addItem(mViewModel.handleEditRequisitanteResult(resultCode,data));
         }
 

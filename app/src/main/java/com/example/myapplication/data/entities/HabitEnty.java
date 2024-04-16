@@ -1,5 +1,7 @@
 package com.example.myapplication.data.entities;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -16,7 +18,7 @@ import com.example.myapplication.common.time.LocalTime;
 
 @Entity(tableName = "ENTY_H", foreignKeys = {
         @ForeignKey(entity = HabitCategoria.class, parentColumns = {"id"},
-                childColumns = {"categori_h"})})
+                childColumns = {"categori_h"}, onDelete = CASCADE)})
 public class HabitEnty implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)

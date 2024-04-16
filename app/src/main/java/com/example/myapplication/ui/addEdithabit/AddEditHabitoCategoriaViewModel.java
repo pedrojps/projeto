@@ -32,8 +32,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.myapplication.ui.dialog.DialogActivity.NAME_KEY;
-import static com.example.myapplication.ui.dialog.DialogActivity.TIPO_KEY;
+import static com.example.myapplication.ui.dialog.DialogAddHabitItemActivity.NAME_KEY;
+import static com.example.myapplication.ui.dialog.DialogAddHabitItemActivity.TIPO_KEY;
 
 public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 

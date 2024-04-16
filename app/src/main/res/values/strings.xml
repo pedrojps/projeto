@@ -40,16 +40,16 @@
     <string name="repetir">Repetir</string>
     <string name="habit_categoria">Categoria de Habito</string>
     <string name="habit_categoria_detalhe">Habito </string>
-    <string name="item_categoria">Variavel adicional</string>
-    <string name="time_s">TIME</string>
-    <string name="string_s">STRING</string>
-    <string name="valor_s">VALOR</string>
+    <string name="item_categoria">Lista de Informações adicionais</string>
+    <string name="time_s">Horatio</string>
+    <string name="string_s">Texto</string>
+    <string name="valor_s">Valor</string>
 
     <string name="src_campo_obrigatorio">Campo obrigatório</string>
 
     <string name="format_date">%1$td/%1$tm/%1$tY</string>
-    <string name="format_date_item">Criado em :%1$td/%1$tm/%1$tY</string>
-    <string name="format_time_item">Criado em :%1$tH:%1$tM</string>
+    <string name="format_date_item">Criado em: %1$td/%1$tm/%1$tY</string>
+    <string name="format_time_item">Criado as: %1$tH:%1$tM</string>
     <string name="format_time">%1$tH:%1$tM</string>
     <string name="format_datetime">%1$td/%1$tm/%1$tY %1$tH:%1$tM</string>
     <string name="format_datetime_2_args">%1$td/%1$tm/%1$tY %2$tH:%2$tM</string>
@@ -69,6 +69,7 @@
     <string name="registro">Registro</string>
     <string name="nome">Nome</string>
     <string name="descricao">Descrição</string>
+    <string name="label_image">Icone</string>
     <string name="enviando">Enviando…</string>
     <string name="data">Data</string>
     <string name="observacao">Observação</string>
@@ -78,7 +79,7 @@
     <string name="habit_nome">Habito: %s</string>
     <string name="habit_periodo">Habito ocorreu: %s vezes</string>
 
-    <string name="media_diaria">Media das variaveis adicionais</string>
+    <string name="media_diaria">Media das Informações adicionais Numericas</string>
 
     <string name="media_diaria_variavel">%s: %s /dia</string>
 

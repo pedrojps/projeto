@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_tiny"
-            android:text="@{@string/format_date_item(habit.getDataCriat()), default=`Criado em : 65437`}"
+            android:text="@{@string/format_date_item(habit.getDataCriat()), default=`Criado em: 65437`}"
             style="@style/Text.Small"/>
 
     </LinearLayout>

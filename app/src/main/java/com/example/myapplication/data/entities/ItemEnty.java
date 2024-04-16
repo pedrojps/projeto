@@ -3,6 +3,7 @@ package com.example.myapplication.data.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import static androidx.room.ForeignKey.CASCADE;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -14,9 +15,9 @@ import com.example.myapplication.common.time.DateTime;
 @Entity(tableName = "ENTY_I",
         foreignKeys = {
                 @ForeignKey(entity = HabitEnty.class, parentColumns = {"id"},
-                        childColumns = {"habit_enty"}),
+                        childColumns = {"habit_enty"}, onDelete = CASCADE),
                 @ForeignKey(entity = ItemCategoria.class, parentColumns = {"id"},
-                childColumns = {"item_categori"})
+                childColumns = {"item_categori"}, onDelete = CASCADE)
         })
 public class ItemEnty implements Parcelable {
     @PrimaryKey(autoGenerate = true)

@@ -119,7 +119,7 @@
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/periodo" />
@@ -135,6 +135,7 @@
             app:layout_constraintTop_toBottomOf="@+id/lineChart" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/info_vezes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

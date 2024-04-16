@@ -17,7 +17,7 @@ import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.databinding.ActHabitEntidadeAddEditBinding;
 import com.example.myapplication.di.Injection;
-import com.example.myapplication.ui.dialog.DialogActivity;
+import com.example.myapplication.ui.dialog.DialogAddHabitItemActivity;
 import com.example.myapplication.ui.dialog.SimpleDateDialog;
 import com.example.myapplication.ui.dialog.SimpleTimeDialog;
 import com.example.myapplication.ui.variaeisCategoriy.variaeisCategoriyCrieteRegistro.VarCategoriCriateViewItem;
@@ -99,8 +99,8 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
     }
 
     public void variavelDialogAdd() {
-        Intent it = DialogActivity.getNewIntent(this  );
-        startActivityForResult(it, DialogActivity.REQUEST_SELECT_CAMINHO);
+        Intent it = DialogAddHabitItemActivity.getNewIntent(this  );
+        startActivityForResult(it, DialogAddHabitItemActivity.REQUEST_SELECT_CAMINHO);
     }
 
     private void subscribeErrorMessage() {
@@ -127,7 +127,7 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(DialogActivity.REQUEST_SELECT_CAMINHO==requestCode){
+        if(DialogAddHabitItemActivity.REQUEST_SELECT_CAMINHO==requestCode){
         mAdapter.addItem(mViewModel.handleEditRequisitanteResult(resultCode,data));
         }
 

@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_habi"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_habi_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.main.MainActivity"
@@ -18,9 +18,24 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="MyDb2.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="7" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.example.myapplication.utils" />
+
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="${applicationId}"
+            android:exported="false" />
+
         <activity android:name=".ui.addEdithabit.AddEditHabitoCategoriaActivity"
             android:label="@string/habit_categoria"/>
-        <activity android:name=".ui.dialog.DialogActivity"
+        <activity android:name=".ui.dialog.DialogAddHabitItemActivity"
             android:theme="@style/Dialog.NoTitle"
             android:excludeFromRecents="true"/>
 

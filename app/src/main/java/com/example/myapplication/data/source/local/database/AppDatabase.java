@@ -7,6 +7,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.entities.HabitEnty;
@@ -35,7 +37,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "habit_db";
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     private static AppDatabase INSTANCE;
 
@@ -43,7 +45,8 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                      AppDatabase.class, DATABASE_NAME)
-                   // .addMigrations( MIGRATION_1_2)
+                    //.addMigrations( MIGRATION_1_2)
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return INSTANCE;
