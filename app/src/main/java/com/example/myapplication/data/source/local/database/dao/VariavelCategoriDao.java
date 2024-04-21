@@ -27,6 +27,9 @@ public interface VariavelCategoriDao extends BaseDao<ItemCategoria>{
     @Query("DELETE FROM categoria_i WHERE categori_h = :idc and NOT (nome IN (:black))")
     void deleteNotIn(String[] black, long idc);
 
+    @Query("DELETE FROM categoria_i WHERE categori_h = :idc ")
+    void deleteID(long idc);
+
     @Insert(onConflict = IGNORE )
     long[] insertAll(List<ItemCategoria> entity);
 

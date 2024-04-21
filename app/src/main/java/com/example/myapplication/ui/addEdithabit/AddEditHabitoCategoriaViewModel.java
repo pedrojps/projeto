@@ -2,6 +2,7 @@ package com.example.myapplication.ui.addEdithabit;
 
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -21,6 +22,7 @@ import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.data.repository.VariavelCategoriRepository;
 import com.example.myapplication.ui.variaeisCategoriy.VarCategoriViewItem;
+import com.example.myapplication.utils.ImageUtil;
 import com.example.myapplication.utils.ObjectUtils;
 import com.google.common.base.Strings;
 
@@ -46,6 +48,8 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
     public final ObservableField<String> nameError = new ObservableField<>();
 
     public final ObservableField<String> descricaoError = new ObservableField<>();
+
+    public final ObservableField<Bitmap> image = new ObservableField<>();
 
     public final ObservableBoolean buttonEnabled = new ObservableBoolean();
 
@@ -103,7 +107,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 
         mIsNovaCategoria = false;
         loadEquipamento(habitCategoria.getId());
-        this.setEquipamento(habitCategoria);
+        this.setCAtegoria(habitCategoria);
     }
 
     private void loadEquipamento(@NonNull long equipamentoId) {
@@ -124,13 +128,14 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         return list;
     }
 
-    private void setEquipamento(HabitCategoria equipamento) {
-        id.set(equipamento.getId()+"");
-        name.set(equipamento.getNome());
-        descricao.set(equipamento.getDiscricao());
+    private void setCAtegoria(HabitCategoria habitCategoria) {
+        id.set(habitCategoria.getId()+"");
+        name.set(habitCategoria.getNome());
+        descricao.set(habitCategoria.getDiscricao());
+        image.set(ImageUtil.INSTANCE.readBtn(getApplication().getBaseContext(), id.get()));
     }
 
-    public SingleLiveEvent<Void> getEquipamentoSavedEvent() {
+    public SingleLiveEvent<Void> getSavedEvent() {
         return mCategoriaSaved;
     }
 
@@ -155,15 +160,19 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
     }
 
     public void save() {
-        HabitCategoria equipamento = new HabitCategoria(
-               0, name.get(), new LocalDate() ,descricao.get(), null);
+        HabitCategoria categoria = new HabitCategoria(
+               0, name.get(), new LocalDate() ,descricao.get(),  null);
 
         if (isNewEquipamento()) {
-            insert(equipamento);
+            insert(categoria);
         } else {
-            equipamento.setId(Integer.parseInt(id.get()));
-            update(equipamento);
+            categoria.setId(Integer.parseInt(id.get()));
+            update(categoria);
         }
+    }
+
+    private void salveImage(long id){
+        ImageUtil.INSTANCE.saveImage(getApplication().getBaseContext(), image.get() ,id+"");
     }
 
     public void variavelAdd() {
@@ -185,14 +194,14 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         return null;
     }
 
-    private void insert(@NonNull HabitCategoria equipamento) {//
+    private void insert(@NonNull HabitCategoria categoria) {//
 
-       mHabitCategoriRepository.insert(equipamento)
+       mHabitCategoriRepository.insert(categoria)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(mCompositeDisposable::add)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(habitCategoria -> {
-
+                    salveImage(habitCategoria.getId());
                     List<ItemCategoria> lis = new ArrayList<>();
                     for (int i=0;mVariaveis.size()>i;i++){
                         ItemCategoria ic = mVariaveis.get(i);
@@ -203,28 +212,29 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
                     mVariavelCategoriRepository.insert(lis).subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(()->{
-                                mCategoriaSaved.call();}, throwable -> {mFalha.call();});
+                                mCategoriaSaved.call();}, throwable -> {showError(throwable);});
                     else
                         mCategoriaSaved.call();
                 }, throwable -> {
-                    mFalha.call();
+                    showError(throwable);
                 });
     }
 
-    private void update(@NonNull HabitCategoria equipamento) {
+    private void update(@NonNull HabitCategoria habit) {
+        salveImage(habit.getId());
         List<ItemCategoria> lis = new ArrayList<>();
         for (int i=0;mVariaveis.size()>i;i++){
             ItemCategoria ic = mVariaveis.get(i);
-            ic.setCategoriID(equipamento.getId());
+            ic.setCategoriID(habit.getId());
             lis.add(ic);
         }
 
-        mHabitCategoriRepository.update(equipamento).andThen(mVariavelCategoriRepository.Update(lis))
+        mHabitCategoriRepository.update(habit).andThen(mVariavelCategoriRepository.Update(lis, habit.getId()))
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(mCompositeDisposable::add)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mCategoriaSaved::call, throwable -> {
-                    mFalha.call();
+                    showError(throwable);
                 });
     }
 
@@ -257,7 +267,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
                         posisaoAdapt=(posisao);
                         mVariaveis.remove(i);
                         mDeletVariavelAntiga.call();
-                    },throwable -> {mFalha.call();});;
+                    },throwable -> {showError(throwable);});;
         }else {
             posisaoAdapt=(posisao);
             mVariaveis.remove(i);

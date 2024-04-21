@@ -295,6 +295,7 @@ public class HabitCategoriaDetailActivity
                 Injection.HabitCategoriRepository(getApplicationContext()),
                 habitCategoria
         );
+        setTitle(habitCategoria.getNome());
 
         return ViewModelProviders.of(this, factory).get(HabitCategoriaDetailViewModel.class);
     }

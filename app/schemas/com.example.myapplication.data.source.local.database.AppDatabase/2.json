@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "602ac6c0dac8f33f41d18e75f426bc0a",
+    "identityHash": "4bddabdbb6aad791db2aad21bead261f",
     "entities": [
       {
         "tableName": "CATEGORIA_H",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dataCriat` TEXT NOT NULL, `discricao` TEXT, `nome` TEXT, `exportado` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dataCriat` TEXT NOT NULL, `discricao` TEXT, `nome` TEXT, `exportado` TEXT, `icone` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -35,6 +35,12 @@
           {
             "fieldPath": "exportado",
             "columnName": "exportado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "icone",
+            "columnName": "icone",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -262,7 +268,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"602ac6c0dac8f33f41d18e75f426bc0a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4bddabdbb6aad791db2aad21bead261f\")"
     ]
   }
 }

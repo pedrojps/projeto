@@ -2,6 +2,7 @@ package com.example.myapplication.data.entities;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -36,6 +37,9 @@ public class HabitEnty implements Parcelable {
     private String observacao;
 
     private DateTime exportado;
+
+    //@Ignore
+    //private Bitmap icone;
 
     public HabitEnty() {
     }
@@ -130,8 +134,17 @@ public class HabitEnty implements Parcelable {
     public boolean isExportado(){
         return exportado != null;
     }
+/*
+    @Ignore
+    public void setIcone(Bitmap icone) {
+        this.icone = icone;
+    }
 
-
+    @Ignore
+    public Bitmap getIcone() {
+        return icone;
+    }
+*/
     @Ignore
     protected HabitEnty(Parcel in) {
 

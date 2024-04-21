@@ -110,6 +110,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
     public List<HabitEntyViewItem> getVariaveis() {
         List<HabitEntyViewItem> list = new ArrayList<>();
         for (HabitEnty i : mListVariaveis){
+            //i.setIcone(mHabitCategoria.getIcone());
             list.add(new HabitEntyViewItem(i));
         }
         return list;

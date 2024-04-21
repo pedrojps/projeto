@@ -2,11 +2,13 @@ package com.example.myapplication.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
 import com.example.myapplication.R;
+import com.example.myapplication.generated.callback.OnClickListener;
 
 public class DialogUtils {
 
@@ -17,6 +19,19 @@ public class DialogUtils {
                 .show();
     }
 
+    public static AlertDialog showDialogCallback(@NonNull Context context, @StringRes int messageResId, @StringRes int titleResId, Listener positiveCall){
+        return new AlertDialog.Builder(context)
+                .setTitle(titleResId)
+                .setMessage(messageResId)
+                .setPositiveButton(R.string.dialog_button_yes, (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    positiveCall.callBack();
+                })
+                .setNegativeButton(R.string.dialog_button_no, (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                })
+                .show();
+    }
     public static void showDialog(@NonNull Context context, String message){
         make(context, null, message).show();
     }
@@ -44,5 +59,7 @@ public class DialogUtils {
                 .setPositiveButton(R.string.dialog_button_ok, (dialogInterface, i) -> dialogInterface.dismiss())
                 .create();
     }
-
+    public interface Listener {
+        void callBack();
+    }
 }

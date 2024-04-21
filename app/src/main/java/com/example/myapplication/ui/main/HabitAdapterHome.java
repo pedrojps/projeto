@@ -51,11 +51,17 @@ public class HabitAdapterHome<H extends AbstractFlexibleItem<HabitCategoriViewHo
 
         if (text == null) return;
 
-        for (HabitCategoriViewItem h: mItens){
-            if (h.getModel().getNome().contains(text) || h.getModel().getDiscricao().contains(text)){
-                list.add(h);
+        try {
+            for (HabitCategoriViewItem h: mItens){
+                if (h.getModel().getNome().contains(text) || h.getModel().getDiscricao().contains(text)){
+                    list.add(h);
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
+            list.addAll(mItens);
         }
+
 
         updateDataSet(list,true,false);
     }

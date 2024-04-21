@@ -1,9 +1,11 @@
 package com.example.myapplication.data.entities;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -12,6 +14,7 @@ import androidx.room.PrimaryKey;
 import com.example.myapplication.common.time.DateTime;
 import com.example.myapplication.common.time.LocalDate;
 import com.example.myapplication.common.time.LocalTime;
+import com.example.myapplication.data.source.local.database.typeConverter.BitmapTypeConverter;
 
 @Entity(tableName = "CATEGORIA_H")
 public class HabitCategoria implements Parcelable {
@@ -29,13 +32,17 @@ public class HabitCategoria implements Parcelable {
 
     private DateTime exportado;
 
+    //@Nullable
+    //private String icone;
+
     public HabitCategoria() {
     }
     @Ignore
     public HabitCategoria(@NonNull String nome, @NonNull LocalDate dataCriat,String discricao) {
         this.dataCriat = dataCriat;
-        this.nome=nome;
+        this.nome = nome;
         this.discricao = discricao;
+      //  this.icone = icone;
     }
 
     @Ignore
@@ -44,6 +51,7 @@ public class HabitCategoria implements Parcelable {
         this.dataCriat = dataCriat;
         this.discricao = discricao;
         this.exportado = exportado;
+        //this.icone = icone;
         this.nome = nome;
     }
 
@@ -79,8 +87,15 @@ public class HabitCategoria implements Parcelable {
     public void setId(long id) {
         this.id = id;
     }
+/*
+    public Bitmap getIcone() {
+        return icone;
+    }
 
-
+    public void setIcone(Bitmap icone) {
+        this.icone = icone;
+    }
+*/
     @NonNull
     public LocalDate getDataCriat() {
         return dataCriat;
@@ -119,7 +134,9 @@ public class HabitCategoria implements Parcelable {
         dataCriat = new LocalDate(in.readLong());
 
         discricao = in.readString();
-
+        //byte[] _byte = new byte[in.readInt()];
+        //in.readByteArray(_byte);
+        //icone = in.readString();//new BitmapTypeConverter().byteArrayToBitmap(_byte);
         long exportadoValue = in.readLong();
         exportado = exportadoValue < 0 ? null : new DateTime(exportadoValue);
     }
@@ -130,6 +147,9 @@ public class HabitCategoria implements Parcelable {
         dest.writeString(nome);
         dest.writeLong(dataCriat.getTime());
         dest.writeString(discricao);
+        //byte[] b = new BitmapTypeConverter().bitmapToByteArray(icone);
+        //dest.writeInt(b.length);
+        //dest.writeString(icone);
         dest.writeLong(exportado == null ? -1 : exportado.getTime());
     }
 

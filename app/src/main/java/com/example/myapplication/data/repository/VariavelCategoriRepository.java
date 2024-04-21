@@ -63,15 +63,18 @@ public class VariavelCategoriRepository {
         return Completable.fromAction(() -> mVariavelCategoriDao.update(projeto));
     }
 
-    public Completable Update(@NonNull List<ItemCategoria> itemCategorias) {
+    public Completable Update(List<ItemCategoria> itemCategorias, long idc) {
         return Completable.fromAction(() -> {
-            mVariavelCategoriDao.insertAll(itemCategorias);
+            if (itemCategorias != null && itemCategorias.size() != 0){
+                mVariavelCategoriDao.insertAll(itemCategorias);
 
-            String[] ids = new String[itemCategorias.size()];
-            for(int i = 0; i<itemCategorias.size();i++)
-                ids[i] = itemCategorias.get(i).getNome();
+                String[] ids = new String[itemCategorias.size()];
+                for(int i = 0; i<itemCategorias.size();i++)
+                    ids[i] = itemCategorias.get(i).getNome();
 
-            mVariavelCategoriDao.deleteNotIn(ids,itemCategorias.get(0).getCategoriID());
+                mVariavelCategoriDao.deleteNotIn(ids, idc);
+            }else
+                mVariavelCategoriDao.deleteID(idc);
         });
     }
 

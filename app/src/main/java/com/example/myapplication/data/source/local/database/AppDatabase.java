@@ -18,6 +18,7 @@ import com.example.myapplication.data.source.local.database.dao.HabitCategoriDao
 import com.example.myapplication.data.source.local.database.dao.HabitEntyDao;
 import com.example.myapplication.data.source.local.database.dao.VariavelCategoriDao;
 import com.example.myapplication.data.source.local.database.dao.VariavelEntyDao;
+import com.example.myapplication.data.source.local.database.typeConverter.BitmapTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.DatetimeTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.LocalDateTypeConverter;
 import com.example.myapplication.data.source.local.database.typeConverter.LocalTimeTypeConverter;
@@ -25,7 +26,8 @@ import com.example.myapplication.data.source.local.database.typeConverter.LocalT
 @TypeConverters({
         LocalDateTypeConverter.class,
         LocalTimeTypeConverter.class,
-        DatetimeTypeConverter.class
+        DatetimeTypeConverter.class,
+        BitmapTypeConverter.class
 })
 @Database(entities = {
         HabitCategoria.class,
@@ -37,7 +39,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "habit_db";
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 4;
 
     private static AppDatabase INSTANCE;
 
