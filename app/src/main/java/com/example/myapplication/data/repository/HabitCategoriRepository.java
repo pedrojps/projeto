@@ -8,6 +8,7 @@ import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.source.local.database.dao.HabitCategoriDao;
 import com.example.myapplication.data.source.local.database.dao.HabitEntyDao;
 import com.example.myapplication.data.source.local.projection.HabitEntyDetails;
+import com.example.myapplication.utils.DayOfWeek;
 
 import java.util.List;
 
@@ -61,8 +62,11 @@ public class HabitCategoriRepository {
         return mHabitEntyDao.findByIdAndDataPeriodDetails(id,start,end);
     }
 
-    public Flowable<List<HabitCategoria>> list(){
-        return mHabitCategoriDao.list();
+    public Flowable<List<HabitCategoria>> list(DayOfWeek day){
+        if (day == DayOfWeek.NONE)
+            return mHabitCategoriDao.list();
+        else
+            return mHabitCategoriDao.listByDayOfWeek("%" + day.getId() + "%");
     }
 
     public Single<HabitCategoria> insert(@NonNull HabitCategoria habitCategoria) {

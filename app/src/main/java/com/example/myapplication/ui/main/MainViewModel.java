@@ -20,6 +20,7 @@ import com.example.myapplication.data.network.Resource;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewHolder;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
+import com.example.myapplication.utils.DayOfWeek;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class MainViewModel extends AndroidViewModel {
     private final SingleLiveEvent<Void> mHabitAdd = new SingleLiveEvent<>();
 
     private LiveData<Resource<List<HabitCategoriViewItem>>> mItems;
+
+    private DayOfWeek dayOfWeek = DayOfWeek.NONE;
 
     //public long selecionar=-1;
     public MainViewModel(@NonNull Application application,
@@ -114,7 +117,7 @@ public class MainViewModel extends AndroidViewModel {
         return Flowable.create(e -> {
             e.onNext(Resource.loading(null));
 
-            mHabitCategoriRepository.list()
+            mHabitCategoriRepository.list(dayOfWeek)
                     .observeOn(Schedulers.computation())
                     .map(this::sortAndMapToFlexibleItem)
                     .map(Resource::success)
@@ -138,6 +141,10 @@ public class MainViewModel extends AndroidViewModel {
 
     public void openAddHabit() {
         mHabitAdd.call();
+    }
+
+    public void setDay(DayOfWeek day){
+        this.dayOfWeek = day;
     }
 
     public static class Factory implements ViewModelProvider.Factory {

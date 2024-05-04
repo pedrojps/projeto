@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
 import com.example.myapplication.R;
-import com.example.myapplication.generated.callback.OnClickListener;
 
 public class DialogUtils {
 

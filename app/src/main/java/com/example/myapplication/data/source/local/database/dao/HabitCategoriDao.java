@@ -19,4 +19,7 @@ public interface HabitCategoriDao extends BaseDao<HabitCategoria>{
     @Query("SELECT * FROM CATEGORIA_H WHERE id = :id ")
     Single<HabitCategoria> findById(long id);
 
+    @Query("SELECT * FROM CATEGORIA_H WHERE nome IS NOT NULL and day_of_week LIKE :day")
+    Flowable<List<HabitCategoria>> listByDayOfWeek(String day);
+
 }

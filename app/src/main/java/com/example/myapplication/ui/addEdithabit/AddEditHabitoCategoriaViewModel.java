@@ -22,11 +22,13 @@ import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.data.repository.VariavelCategoriRepository;
 import com.example.myapplication.ui.variaeisCategoriy.VarCategoriViewItem;
+import com.example.myapplication.utils.DayOfWeek;
 import com.example.myapplication.utils.ImageUtil;
 import com.example.myapplication.utils.ObjectUtils;
 import com.google.common.base.Strings;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -76,6 +78,8 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     public int posisaoAdapt= -1;
+
+    private ArrayList<Integer> mDayOfWeek = new ArrayList();
 
     public AddEditHabitoCategoriaViewModel(
             @NonNull Application application,
@@ -127,12 +131,28 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         }
         return list;
     }
-
+    public boolean containsDayOfWeek(DayOfWeek day){
+        return mDayOfWeek.contains(day.getId());
+    }
+    public void setDayOfWeek(DayOfWeek day,boolean check){
+        if (check)
+            mDayOfWeek.add(day.getId());
+        else
+            mDayOfWeek.removeIf((i)-> i==day.getId());
+    }
     private void setCAtegoria(HabitCategoria habitCategoria) {
         id.set(habitCategoria.getId()+"");
         name.set(habitCategoria.getNome());
         descricao.set(habitCategoria.getDiscricao());
         image.set(ImageUtil.INSTANCE.readBtn(getApplication().getBaseContext(), id.get()));
+        try {
+            List<String> dayOfWeek =  Arrays.asList(habitCategoria.getDayOfWeek().substring(1, habitCategoria.getDayOfWeek().length() - 1).replaceAll(" ","").split(","));
+            dayOfWeek.forEach((s)->{
+                mDayOfWeek.add(Integer.parseInt(s));
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public SingleLiveEvent<Void> getSavedEvent() {
@@ -161,7 +181,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 
     public void save() {
         HabitCategoria categoria = new HabitCategoria(
-               0, name.get(), new LocalDate() ,descricao.get(),  null);
+               0, name.get(), new LocalDate() ,descricao.get(),mDayOfWeek.toString(),  null);
 
         if (isNewEquipamento()) {
             insert(categoria);

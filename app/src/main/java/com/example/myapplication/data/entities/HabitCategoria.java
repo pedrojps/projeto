@@ -16,6 +16,8 @@ import com.example.myapplication.common.time.LocalDate;
 import com.example.myapplication.common.time.LocalTime;
 import com.example.myapplication.data.source.local.database.typeConverter.BitmapTypeConverter;
 
+import java.util.ArrayList;
+
 @Entity(tableName = "CATEGORIA_H")
 public class HabitCategoria implements Parcelable {
 
@@ -32,27 +34,32 @@ public class HabitCategoria implements Parcelable {
 
     private DateTime exportado;
 
+    @ColumnInfo(name = "day_of_week")
+    private String dayOfWeek;
+
     //@Nullable
     //private String icone;
 
     public HabitCategoria() {
     }
     @Ignore
-    public HabitCategoria(@NonNull String nome, @NonNull LocalDate dataCriat,String discricao) {
+    public HabitCategoria(@NonNull String nome, @NonNull LocalDate dataCriat,String discricao,String dayOfWeek) {
         this.dataCriat = dataCriat;
         this.nome = nome;
         this.discricao = discricao;
       //  this.icone = icone;
+        this.dayOfWeek = dayOfWeek;
     }
 
     @Ignore
-    public HabitCategoria(long id,@NonNull String nome,  @NonNull LocalDate dataCriat, String discricao, DateTime exportado) {
+    public HabitCategoria(long id,@NonNull String nome,  @NonNull LocalDate dataCriat, String discricao,String dayOfWeek, DateTime exportado) {
         this.id = id;
         this.dataCriat = dataCriat;
         this.discricao = discricao;
         this.exportado = exportado;
         //this.icone = icone;
         this.nome = nome;
+        this.dayOfWeek = dayOfWeek;
     }
 
     @Override
@@ -87,15 +94,15 @@ public class HabitCategoria implements Parcelable {
     public void setId(long id) {
         this.id = id;
     }
-/*
-    public Bitmap getIcone() {
-        return icone;
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setIcone(Bitmap icone) {
-        this.icone = icone;
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
-*/
+
     @NonNull
     public LocalDate getDataCriat() {
         return dataCriat;
@@ -134,9 +141,7 @@ public class HabitCategoria implements Parcelable {
         dataCriat = new LocalDate(in.readLong());
 
         discricao = in.readString();
-        //byte[] _byte = new byte[in.readInt()];
-        //in.readByteArray(_byte);
-        //icone = in.readString();//new BitmapTypeConverter().byteArrayToBitmap(_byte);
+        dayOfWeek = in.readString();
         long exportadoValue = in.readLong();
         exportado = exportadoValue < 0 ? null : new DateTime(exportadoValue);
     }
@@ -147,9 +152,7 @@ public class HabitCategoria implements Parcelable {
         dest.writeString(nome);
         dest.writeLong(dataCriat.getTime());
         dest.writeString(discricao);
-        //byte[] b = new BitmapTypeConverter().bitmapToByteArray(icone);
-        //dest.writeInt(b.length);
-        //dest.writeString(icone);
+        dest.writeString(dayOfWeek);
         dest.writeLong(exportado == null ? -1 : exportado.getTime());
     }
 

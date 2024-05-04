@@ -41,6 +41,7 @@
     <string name="habit_categoria">Categoria de Habito</string>
     <string name="habit_categoria_detalhe">Habito </string>
     <string name="item_categoria">Lista de Informações adicionais</string>
+    <string name="alert_day">Dias da semana(Opicional)</string>
     <string name="time_s">Horatio</string>
     <string name="string_s">Texto</string>
     <string name="valor_s">Valor</string>
