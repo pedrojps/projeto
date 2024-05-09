@@ -94,7 +94,8 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
 
     private void updateButtonState() {
         boolean enabled = Strings.isNullOrEmpty(nameError.get())
-                && Strings.isNullOrEmpty(descricaoError.get());
+                //&& Strings.isNullOrEmpty(descricaoError.get())
+                ;
 
         buttonEnabled.set(enabled);
     }
@@ -262,19 +263,19 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         return mIsNovaCategoria;
     }
 
-    private void validateDescricao(String descricao) {
+    private void validateName(String descricao) {
         if (Strings.isNullOrEmpty(descricao)) {
-            setDescricaoError(R.string.src_campo_obrigatorio);
+            setNameError(R.string.src_campo_obrigatorio);
         } else {
-            setDescricaoError(null);
+            setNameError(null);
         }
     }
 
-    private void setDescricaoError(@StringRes Integer errorResId) {
+    private void setNameError(@StringRes Integer errorResId) {
         if (ObjectUtils.nonNull(errorResId)) {
-            descricaoError.set(getApplication().getString(errorResId));
+            nameError.set(getApplication().getString(errorResId));
         } else {
-            descricaoError.set(null);
+            nameError.set(null);
         }
         updateButtonState();
     }
@@ -300,11 +301,11 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
     }
 
     private void setupObservables() {
-        descricao.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        name.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable observable, int i) {
-                String value = descricao.get();
-                validateDescricao(value);
+                String value = name.get();
+                validateName(value);
             }
         });
     }

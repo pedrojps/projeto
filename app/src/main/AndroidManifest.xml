@@ -42,12 +42,15 @@
             android:theme="@style/Dialog.NoTitle"
             android:excludeFromRecents="true"/>
 
+        <activity android:name=".ui.select_image.SelectImageActivity"/>
+
         <activity android:name=".ui.habitCategoriDetali.HabitCategoriaDetailActivity"
             android:label="@string/habit_categoria_detalhe"
             />
         <activity android:name=".ui.entidadeHabitoAdd.AddEditHabitoEntidadeActivity"/>
         <activity android:name=".ui.habitEntyDetali.HabitEntyDetailActivity"/>
         <activity android:name=".ui.graficos.GraficActivity"/>
+        <activity android:name=".ui.about.AboutActivity"/>
 
 
     </application>

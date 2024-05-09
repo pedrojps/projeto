@@ -24,16 +24,25 @@
             android:padding="5dp"
             android:background="?attr/selectableItemBackground">
 
-            <ImageView
-                android:id="@+id/image_icon"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/image_icon_cont"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
+                app:cardCornerRadius="50dp"
                 android:src="@mipmap/ic_habit_defult"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.25" />
+                app:layout_constraintVertical_bias="0.25" >
+
+                <ImageView
+                    android:id="@+id/image_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_baseline_sports_kabaddi_24" />
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/textView4"
@@ -45,8 +54,8 @@
                 android:maxLines="1"
                 android:text="@{@string/format_time_item(habit.getHora()), default=`Criado em: 65437`}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_icon"
-                app:layout_constraintTop_toTopOf="@+id/image_icon"
+                app:layout_constraintStart_toEndOf="@+id/image_icon_cont"
+                app:layout_constraintTop_toTopOf="@+id/image_icon_cont"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView

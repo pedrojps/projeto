@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-hdpi/white_backgroud.xml" value="0.356" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/default_datetextview_selector.xml" value="0.124" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/default_normal.xml" value="0.124" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/default_pressed.xml" value="0.11" />
@@ -13,29 +14,33 @@
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/holiday_view_selector.xml" value="0.11" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/selected_circle.xml" value="0.11" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1055" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_baseline_sports_kabaddi_24.xml" value="0.346" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_select_day.xml" value="0.331" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_teste.xml" value="0.331" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_unselect.xml" value="0.331" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/select_day.xml" value="0.331" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/about_activity.xml" value="0.3" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_categori_detalhes_detail.xml" value="0.27936507936507937" />
-        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_enty_detalhes_detail.xml" value="0.25" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_enty_detalhes_detail.xml" value="0.5" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_grafico_habit.xml" value="0.365625" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_habit_categoria_add_edit.xml" value="0.5" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/act_habit_entidade_add_edit.xml" value="0.33" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/activity_main.xml" value="0.33349123638086214" />
-        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/activity_main_host.xml" value="0.1" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/activity_main_host.xml" value="0.25" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/default_view.xml" value="1.0" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/dialog_caminho.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/dialog_select_image.xml" value="0.4467005076142132" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/dialog_set_variavel.xml" value="0.5" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/fwandroid_dialog_month_year_picker.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/holiday_view.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_habit_c.xml" value="0.5596184419713831" />
-        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_habit_e.xml" value="0.67" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_habit_e.xml" value="4.0" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_icone.xml" value="1.0" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_variavel_c.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_variavel_criate.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_variavel_detalhe.xml" value="0.17831813576494426" />
-        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/simple_calendar.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/simple_calendar.xml" value="0.33" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/simple_list_item_1.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/unavailable_view.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/menu/menu_equipamento_detail.xml" value="0.36666666666666664" />

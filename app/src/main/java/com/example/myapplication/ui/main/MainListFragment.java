@@ -22,6 +22,7 @@ import com.example.myapplication.ui.habitCategoriDetali.HabitCategoriaDetailActi
 import com.example.myapplication.utils.DayOfWeek;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.Globals;
+import com.example.myapplication.utils.ImageUtil;
 import com.example.myapplication.utils.ObjectUtils;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class MainListFragment extends Fragment  implements FlexibleAdapter.OnIte
         mBinding = ActivityMainBinding.inflate(inflater, container, false);
         mBinding.setVm(mViewModel);
 
+        ImageUtil.INSTANCE.imageClicle(getContext().getDrawable(R.mipmap.ic_habit_defult),mBinding.imageEmpty);
         setupAdapter();
         return mBinding.getRoot();
     }

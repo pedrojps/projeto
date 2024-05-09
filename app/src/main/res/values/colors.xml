@@ -47,4 +47,5 @@
 
     <color name="cyan_1">#E0F7FA</color>
 
+    <color name="backgroud_card">#fff</color>
 </resources>

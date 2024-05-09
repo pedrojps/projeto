@@ -13,6 +13,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.data.network.Status;
 import com.example.myapplication.databinding.ActivityMainHostBinding;
 import com.example.myapplication.di.Injection;
+import com.example.myapplication.ui.about.AboutActivity;
 import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
 import com.example.myapplication.ui.factory.DialogFactory;
 import com.example.myapplication.ui.main.MainViewModel;
@@ -92,7 +93,7 @@ public class MainHostActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.menu_item_about:
-                //onBackPressed();
+                openAbout();
                 return true;
             case R.id.menu_item_habit_list_delete:
                 deleteProjetos();
@@ -103,16 +104,18 @@ public class MainHostActivity extends AppCompatActivity {
 
     public void deleteProjetos() {
         mViewModel.clearItemSelectionMap();
-
-        DialogFactory.createDialog(this, R.string.delete_habito, null)
-                .setMultiChoiceItems(mViewModel.getProjetoDisplayNameArray(), null,
-                        (dialogInterface, which, isChecked) -> mViewModel.toggleItemSelection(which, isChecked))
-                .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, which) -> {
-                    mViewModel.deleteProjetosSelected();
-                    dialogInterface.dismiss();
-                })
-                .setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss())
-                .show();
+        if (mViewModel.getProjetoDisplayNameArray().length!=0)
+            DialogFactory.createDialog(this, R.string.delete_habito, null)
+                    .setMultiChoiceItems(mViewModel.getProjetoDisplayNameArray(), null,
+                            (dialogInterface, which, isChecked) -> mViewModel.toggleItemSelection(which, isChecked))
+                    .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, which) -> {
+                        mViewModel.deleteProjetosSelected();
+                        dialogInterface.dismiss();
+                    })
+                    .setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+                    .show();
+        else
+            DialogUtils.showDialog(this, "Não há hábitos a serem excluídos!");
     }
 
     private void subscribeHabitAdd() {
@@ -123,7 +126,10 @@ public class MainHostActivity extends AppCompatActivity {
         Intent it = AddEditHabitoCategoriaActivity.getNewIntent(this);
         startActivity(it);
     }
-
+    public void openAbout() {
+        Intent it = new Intent(this, AboutActivity.class);
+        startActivity(it);
+    }
     private MainViewModel findOrCreateViewModel() {
         MainViewModel.Factory factory = new MainViewModel.Factory(
                 getApplication(),

@@ -4,9 +4,13 @@ import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.core.graphics.drawable.toBitmap
 import com.example.myapplication.R
 import java.io.File
 import java.io.FileInputStream
@@ -19,6 +23,16 @@ object ImageUtil {
         val rounded = RoundedBitmapDrawableFactory.create(imageView.resources, image)
         rounded.isCircular = true
         imageView.setImageDrawable(rounded)
+    }
+
+    fun imageClicle(drawable: Drawable?, imageView: ImageView): Bitmap {
+        val backgroud = imageView.context.getDrawable(R.drawable.white_backgroud)
+        val finalDrawable = LayerDrawable(arrayOf(backgroud,drawable))
+        val image = finalDrawable.toBitmap()
+        val rounded = RoundedBitmapDrawableFactory.create(imageView.resources, image)
+        rounded.isCircular = true
+        imageView.setImageDrawable(rounded)
+        return image
     }
 
     fun permissionReadImage(): String {
@@ -35,6 +49,14 @@ object ImageUtil {
         if (!yourFile.exists()) return null
 
         return BitmapFactory.decodeStream(FileInputStream(yourFile))
+    }
+
+    fun savaImage(mcoContext: Context, @DrawableRes finalInt: Int, sFileName: String?){
+        saveImage(mcoContext,mcoContext.getDrawable(finalInt)?.toBitmap(),sFileName)
+    }
+
+    fun savaImage(mcoContext: Context, finalDrawable: Drawable?, sFileName: String?){
+        saveImage(mcoContext,finalDrawable?.toBitmap(),sFileName)
     }
 
     fun saveImage(mcoContext: Context, finalBitmap: Bitmap?, sFileName: String?) {
@@ -60,7 +82,7 @@ object ImageUtil {
         if (image != null) {
             imageClicle(image, imageView)
         } else {
-            imageView.setImageDrawable(mcoContext.getDrawable(R.mipmap.ic_habit_defult))
+            imageClicle(mcoContext.getDrawable(R.mipmap.ic_habit_defult), imageView)
         }
     }
 }

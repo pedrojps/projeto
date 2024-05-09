@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="135dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_habi" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="O aplicativo Habit é o resultado do meu trabalho de conclusão de curso (TCC). Seu objetivo principal é oferecer aos usuários uma ferramenta eficaz para a gestão e desenvolvimento de hábitos. Por meio da criação e registro de hábitos, o aplicativo visa auxiliar os usuários a monitorar e manter suas rotinas diárias de maneira organizada e motivadora.
+
+A funcionalidade central do aplicativo reside em sua plataforma, onde os usuários podem definir seus hábitos, registrar suas execuções e acompanhar seu progresso ao longo do tempo. O Habit gera um gráfico de atividades para cada hábito, proporcionando uma visualização clara do desempenho do usuário em relação às suas metas.
+
+Com base nesse objetivo, o aplicativo Habit tem como meta incentivar a formação de hábitos positivos, fomentar a disciplina pessoal e contribuir para o bem-estar e a qualidade de vida dos usuários."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
