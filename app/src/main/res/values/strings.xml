@@ -46,6 +46,7 @@
     <string name="string_s">Texto</string>
     <string name="valor_s">Valor</string>
 
+    <string name="select_image_title">Selecione uma imagem</string>
     <string name="src_campo_obrigatorio">Campo obrigatório</string>
 
     <string name="format_date">%1$td/%1$tm/%1$tY</string>

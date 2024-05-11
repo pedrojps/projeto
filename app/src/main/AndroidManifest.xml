@@ -42,7 +42,8 @@
             android:theme="@style/Dialog.NoTitle"
             android:excludeFromRecents="true"/>
 
-        <activity android:name=".ui.select_image.SelectImageActivity"/>
+        <activity android:name=".ui.select_image.SelectImageActivity"
+            android:label="@string/select_image_title"/>
 
         <activity android:name=".ui.habitCategoriDetali.HabitCategoriaDetailActivity"
             android:label="@string/habit_categoria_detalhe"

@@ -53,8 +53,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_small"
-                        app:layout_constraintTop_toBottomOf="@+id/data_export_get_start_period_label"
                         app:layout_constraintLeft_toRightOf="@+id/data_export_get_start_period_label"
+                        app:layout_constraintTop_toBottomOf="@+id/data_export_get_start_period_label"
                         app:layout_constraintBottom_toTopOf="@+id/data_export_get_start_period_label"
                         app:cardElevation="@dimen/raised_medium"
                         app:cardMaxElevation="8dp"
@@ -81,11 +81,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="@dimen/margin_small"
                         android:text="@string/hora"
-                        app:layout_constraintBottom_toTopOf="@+id/data_export_get_start_period"
-                        app:layout_constraintLeft_toRightOf="@+id/data_export_get_start_period"
-                        app:layout_constraintTop_toBottomOf="@+id/data_export_get_start_period" />
+                        app:layout_constraintTop_toBottomOf="@+id/data_export_get_start_period_label"
+                        app:layout_constraintBottom_toTopOf="@+id/data_export_get_start_period_label"
+                        app:layout_constraintLeft_toRightOf="@+id/data_export_get_start_period"/>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/data_export_get_start_time"

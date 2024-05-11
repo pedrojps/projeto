@@ -17,6 +17,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.common.lifecycle.ErrorDialogMessage;
 import com.example.myapplication.common.lifecycle.SingleLiveEvent;
 import com.example.myapplication.common.time.LocalDate;
+import com.example.myapplication.data.entities.AlertCategori;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
@@ -28,7 +29,6 @@ import com.example.myapplication.utils.ObjectUtils;
 import com.google.common.base.Strings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -72,6 +72,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
     private final VariavelCategoriRepository mVariavelCategoriRepository;
 
     private List<ItemCategoria> mVariaveis = new ArrayList<>();
+    private List<AlertCategori> mAlert = new ArrayList<>();
 
     private boolean mIsNovaCategoria = false;
 
@@ -111,18 +112,34 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         }
 
         mIsNovaCategoria = false;
-        loadEquipamento(habitCategoria.getId());
+        load(habitCategoria.getId());
         this.setCAtegoria(habitCategoria);
     }
 
-    private void loadEquipamento(@NonNull long equipamentoId) {
-        mVariavelCategoriRepository.findByHabit(equipamentoId).subscribeOn(Schedulers.io())
+    private void load(@NonNull long categoriaId) {
+        mVariavelCategoriRepository.findByHabit(categoriaId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(var->{this.setVariaveis(var);variavelCarrega();},throwable -> {mFalha.call();});
+                .subscribe(var->{
+                    this.setVariaveis(var);
+                    variavelCarrega();},throwable -> {mFalha.call();});
+
+        mVariavelCategoriRepository.findByHabitAlert(categoriaId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(var->{
+                    this.setAlert(var);
+                    variavelCarrega();},throwable -> {mFalha.call();});
     }
 
     public void setVariaveis(List<ItemCategoria> mVariaveis) {
         this.mVariaveis = mVariaveis;
+    }
+
+    public void setAlert(List<AlertCategori> mAlert) {
+        this.mAlert = mAlert;
+    }
+
+    public List<AlertCategori> getAlert() {
+        return mAlert;
     }
 
     public List<VarCategoriViewItem> getVariaveis() {
@@ -132,28 +149,12 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         }
         return list;
     }
-    public boolean containsDayOfWeek(DayOfWeek day){
-        return mDayOfWeek.contains(day.getId());
-    }
-    public void setDayOfWeek(DayOfWeek day,boolean check){
-        if (check)
-            mDayOfWeek.add(day.getId());
-        else
-            mDayOfWeek.removeIf((i)-> i==day.getId());
-    }
+
     private void setCAtegoria(HabitCategoria habitCategoria) {
         id.set(habitCategoria.getId()+"");
         name.set(habitCategoria.getNome());
         descricao.set(habitCategoria.getDiscricao());
         image.set(ImageUtil.INSTANCE.readBtn(getApplication().getBaseContext(), id.get()));
-        try {
-            List<String> dayOfWeek =  Arrays.asList(habitCategoria.getDayOfWeek().substring(1, habitCategoria.getDayOfWeek().length() - 1).replaceAll(" ","").split(","));
-            dayOfWeek.forEach((s)->{
-                mDayOfWeek.add(Integer.parseInt(s));
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     public SingleLiveEvent<Void> getSavedEvent() {
@@ -223,34 +224,31 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(habitCategoria -> {
                     salveImage(habitCategoria.getId());
-                    List<ItemCategoria> lis = new ArrayList<>();
-                    for (int i=0;mVariaveis.size()>i;i++){
-                        ItemCategoria ic = mVariaveis.get(i);
-                        ic.setCategoriID(habitCategoria.getId());
-                        lis.add(ic);
-                    }
-                    if(lis.size()!=0)
-                    mVariavelCategoriRepository.insert(lis).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(()->{
-                                mCategoriaSaved.call();}, throwable -> {showError(throwable);});
-                    else
-                        mCategoriaSaved.call();
+                    insertVariavelAlert(habitCategoria.getId());
                 }, throwable -> {
                     showError(throwable);
                 });
     }
 
+    public void insertVariavelAlert(long id){
+        mAlert.forEach(i-> i.setCategoriID(id));
+        mVariaveis.forEach(i-> i.setCategoriID(id));
+
+        mVariavelCategoriRepository.insert(mVariaveis).andThen(mVariavelCategoriRepository.insertAlert(mAlert))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(()->{
+                    mCategoriaSaved.call();}, throwable -> {showError(throwable);});
+    }
+
     private void update(@NonNull HabitCategoria habit) {
         salveImage(habit.getId());
-        List<ItemCategoria> lis = new ArrayList<>();
-        for (int i=0;mVariaveis.size()>i;i++){
-            ItemCategoria ic = mVariaveis.get(i);
-            ic.setCategoriID(habit.getId());
-            lis.add(ic);
-        }
+        mAlert.forEach(i-> i.setCategoriID(habit.getId()));
+        mVariaveis.forEach(i-> i.setCategoriID(habit.getId()));
 
-        mHabitCategoriRepository.update(habit).andThen(mVariavelCategoriRepository.Update(lis, habit.getId()))
+        mHabitCategoriRepository.update(habit)
+                .andThen(mVariavelCategoriRepository.Update(mVariaveis, habit.getId()))
+                .andThen(mVariavelCategoriRepository.updateAlert(mAlert,habit.getId()))
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(mCompositeDisposable::add)
                 .observeOn(AndroidSchedulers.mainThread())

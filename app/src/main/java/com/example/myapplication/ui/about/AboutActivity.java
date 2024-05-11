@@ -12,6 +12,6 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataBindingUtil.setContentView(this, R.layout.act_habit_categoria_add_edit);
+        DataBindingUtil.setContentView(this, R.layout.about_activity);
     }
 }

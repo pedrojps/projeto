@@ -2,9 +2,11 @@ package com.example.myapplication.data.repository;
 
 import androidx.annotation.NonNull;
 
+import com.example.myapplication.data.entities.AlertCategori;
 import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.entities.ItemEnty;
+import com.example.myapplication.data.source.local.database.dao.AlertDao;
 import com.example.myapplication.data.source.local.database.dao.VariavelCategoriDao;
 import com.example.myapplication.data.source.local.database.dao.VariavelEntyDao;
 
@@ -21,14 +23,17 @@ public class VariavelCategoriRepository {
 
     private final VariavelEntyDao mVariavelEntyDao;
 
-    private VariavelCategoriRepository(VariavelCategoriDao variavelCategoriDao,VariavelEntyDao variavelEntyDao) {
+    private final AlertDao mAlertDao;
+
+    private VariavelCategoriRepository(VariavelCategoriDao variavelCategoriDao,VariavelEntyDao variavelEntyDao,AlertDao alertDao) {
         mVariavelCategoriDao = variavelCategoriDao;
         mVariavelEntyDao = variavelEntyDao;
+        mAlertDao = alertDao;
     }
 
-    public static synchronized VariavelCategoriRepository getInstance(@NonNull VariavelCategoriDao variavelCategoriDao,VariavelEntyDao variavelEntyDao){
+    public static synchronized VariavelCategoriRepository getInstance(@NonNull VariavelCategoriDao variavelCategoriDao,VariavelEntyDao variavelEntyDao,AlertDao alertDao){
         if(INSTANCE == null){
-            INSTANCE = new VariavelCategoriRepository(variavelCategoriDao,variavelEntyDao);
+            INSTANCE = new VariavelCategoriRepository(variavelCategoriDao,variavelEntyDao,alertDao);
         }
         return INSTANCE;
     }
@@ -49,14 +54,16 @@ public class VariavelCategoriRepository {
         return mVariavelCategoriDao.list();
     }
 
-    public Completable insert(@NonNull ItemCategoria projeto){
-        return Completable.fromAction(() -> mVariavelCategoriDao.insert(projeto));
+    public Completable insert(@NonNull ItemCategoria itemCategoria){
+        return Completable.fromAction(() -> mVariavelCategoriDao.insert(itemCategoria));
     }
-    public Completable insert(@NonNull List<ItemCategoria> projeto){
-        return Completable.fromAction(() -> mVariavelCategoriDao.insert(projeto));
+    public Completable insert(@NonNull List<ItemCategoria> itemCategorias){
+        return Completable.fromAction(() ->
+                mVariavelCategoriDao.insert(itemCategorias)
+        );
     }
-    public Completable insertEnty(@NonNull List<ItemEnty> projeto){
-        return Completable.fromAction(() -> mVariavelEntyDao.insert(projeto));
+    public Completable insertEnty(@NonNull List<ItemEnty> itemEnties){
+        return Completable.fromAction(() -> mVariavelEntyDao.insert(itemEnties));
     }
 
     public Completable update(@NonNull ItemCategoria projeto){
@@ -81,11 +88,30 @@ public class VariavelCategoriRepository {
     public Single<List<ItemEnty>> findByHabitEnty(long id){
         return mVariavelEntyDao.findByHabit(id);
     }
-    public Completable delete(@NonNull ItemCategoria projeto){
-        return Completable.fromAction(() -> mVariavelCategoriDao.delete(projeto));
+    public Completable delete(@NonNull ItemCategoria itemCategoria){
+        return Completable.fromAction(() -> mVariavelCategoriDao.delete(itemCategoria));
     }
 
-    public Completable deleteAll(@NonNull List<ItemCategoria> projetos){
-        return Completable.fromAction(() -> mVariavelCategoriDao.delete(projetos));
+    public Completable deleteAll(@NonNull List<ItemCategoria> itemCategorias){
+        return Completable.fromAction(() -> mVariavelCategoriDao.delete(itemCategorias));
+    }
+
+    public Completable delete(@NonNull AlertCategori alertCategori){
+        return Completable.fromAction(() -> mAlertDao.delete(alertCategori));
+    }
+
+    public Completable insertAlert(@NonNull List<AlertCategori> alertCategoris){
+        return Completable.fromAction(() -> mAlertDao.insert(alertCategoris));
+    }
+
+    public Single<List<AlertCategori>> findByHabitAlert(long id){
+        return mAlertDao.findByHabit(id);
+    }
+
+    public Completable updateAlert(List<AlertCategori> alertCategoris, long idc) {
+        return Completable.fromAction(() -> {
+            mAlertDao.deleteID(idc);
+            mAlertDao.insertAll(alertCategoris);
+        });
     }
 }

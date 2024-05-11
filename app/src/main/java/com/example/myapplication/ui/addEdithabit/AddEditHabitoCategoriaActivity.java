@@ -23,10 +23,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.entities.AlertCategori;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.databinding.ActHabitCategoriaAddEditBinding;
 import com.example.myapplication.di.Injection;
+import com.example.myapplication.ui.addEdithabit.adapter.AlertAdapter;
 import com.example.myapplication.ui.dialog.DialogAddHabitItemActivity;
 import com.example.myapplication.ui.select_image.SelectImageActivity;
 import com.example.myapplication.ui.variaeisCategoriy.VarCategoriViewItem;
@@ -55,6 +57,8 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     private ActHabitCategoriaAddEditBinding mBinding;
 
     private FlexibleAdapter<VarCategoriViewItem> mAdapter;
+
+    private AlertAdapter mAlertAdapter = new AlertAdapter();
     private boolean isShowDialog = false;
 
     @NonNull
@@ -132,6 +136,11 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
 
     private void subscribeSaved() {
         mViewModel.getSavedEvent().observe(this, aVoid -> saved());
+
+        mBinding.addSave.setOnClickListener(v->{
+            mViewModel.setAlert(mAlertAdapter.getList());
+            mViewModel.save();
+        });
     }
     private void subscribeAddVariavel() {
         mViewModel.getVariaveisAdd().observe(this, aVoid -> variavelDialogAdd());
@@ -140,7 +149,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     private void subscribeCarregaVariavel() {
         mViewModel.getVariavelCarrega().observe(this, aVoid -> carregaVariavei());
     }
-
+/*
     private void subscribeCheck() {
         mBinding.labelD.setOnClickListener((view) ->{
             mBinding.checkboxD.setChecked(!mBinding.checkboxD.isChecked());
@@ -232,7 +241,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
                         && mBinding.checkboxS3.isChecked()
                         && mBinding.checkboxT.isChecked() );
     }
-
+*/
 
     private void subscribeImage() {
         mViewModel.image.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -298,8 +307,10 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     }
 
     private void carregaVariavei(){
+        mAdapter.removeRange(0,mAdapter.getItemCount());
         mAdapter.addItems(0,mViewModel.getVariaveis());
-        setCheck();
+        mAlertAdapter.setListItems(new ArrayList(mViewModel.getAlert()));
+        //setCheck();
     }
 
     private void subscribeViewChanges() {
@@ -307,11 +318,19 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
         subscribeErrorMessage();
         subscribeAddVariavel();
         subscribeCarregaVariavel();
-        subscribeCheck();
+        //subscribeCheck();
         subscribeImage();
         subscribeButtonImage();
         subscribeDeletVarivaelAntiga();
         subscribeFalha();
+        subscribeAlert();
+    }
+
+    private void subscribeAlert(){
+        mBinding.alertList.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.alertList.setAdapter(mAlertAdapter);
+        mBinding.alertList.setNestedScrollingEnabled(false);
+        mBinding.alertAdd.setOnClickListener(view-> mAlertAdapter.addItem(new AlertCategori()));
     }
 
     private void setupAdapters() {

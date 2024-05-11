@@ -53,7 +53,14 @@ public class HabitAdapterHome<H extends AbstractFlexibleItem<HabitCategoriViewHo
 
         try {
             for (HabitCategoriViewItem h: mItens){
-                if (h.getModel().getNome().contains(text) || h.getModel().getDiscricao().contains(text)){
+                String name = h.getModel().getNome();
+                String discricao = h.getModel().getDiscricao();
+                if (name==null)
+                    name = "";
+                if (discricao==null)
+                    discricao = "";
+                if (name.toLowerCase().contains(text.toLowerCase())
+                        || discricao.toLowerCase().contains(text.toLowerCase())){
                     list.add(h);
                 }
             }

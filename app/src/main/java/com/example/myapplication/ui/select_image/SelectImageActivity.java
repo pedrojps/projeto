@@ -149,13 +149,48 @@ public class SelectImageActivity extends AppCompatActivity {
             saved();
         }));
 
-        mBinding.iconList.setLayoutManager(new GridLayoutManager(this, 4));
+        mBinding.iconList.setLayoutManager(new GridLayoutManager(this,5));
     }
 
     private ArrayList<Integer> getItens(){
         ArrayList<Integer> itens = new ArrayList<>();
 
         itens.add(R.drawable.ic_baseline_sports_kabaddi_24);
+        itens.add(R.drawable.ic_baseline_child_friendly_24);
+        itens.add(R.drawable.ic_baseline_clean_hands_24);
+        itens.add(R.drawable.ic_baseline_emoji_food_beverage_24);
+        itens.add(R.drawable.ic_baseline_emoji_objects_24);
+        itens.add(R.drawable.ic_baseline_engineering_24);
+        itens.add(R.drawable.ic_baseline_family_restroom_24);
+        itens.add(R.drawable.ic_baseline_fitness_center_24);
+        itens.add(R.drawable.ic_baseline_grass_24);
+        itens.add(R.drawable.ic_baseline_local_activity_24);
+        itens.add(R.drawable.ic_baseline_local_bar_24);
+        itens.add(R.drawable.ic_baseline_local_dining_24);
+        itens.add(R.drawable.ic_baseline_local_florist_24);
+        itens.add(R.drawable.ic_baseline_mood_24);
+        itens.add(R.drawable.ic_baseline_meeting_room_24);
+        itens.add(R.drawable.ic_baseline_outdoor_grill_24);
+        itens.add(R.drawable.ic_baseline_palette_24);
+        itens.add(R.drawable.ic_baseline_pedal_bike_24);
+        itens.add(R.drawable.ic_baseline_rowing_24);
+        itens.add(R.drawable.ic_baseline_psychology_24);
+        itens.add(R.drawable.ic_baseline_school_24);
+        itens.add(R.drawable.ic_baseline_science_24);
+        itens.add(R.drawable.ic_baseline_security_24);
+        itens.add(R.drawable.ic_baseline_self_improvement_24);
+        itens.add(R.drawable.ic_baseline_smartphone_24);
+        itens.add(R.drawable.ic_baseline_sms_24);
+        itens.add(R.drawable.ic_baseline_spa_24);
+        itens.add(R.drawable.ic_baseline_sports_24);
+        itens.add(R.drawable.ic_baseline_sports_bar_24);
+        itens.add(R.drawable.ic_baseline_sports_baseball_24);
+        itens.add(R.drawable.ic_baseline_sports_esports_24);
+        itens.add(R.drawable.ic_baseline_sports_handball_24);
+        itens.add(R.drawable.ic_baseline_sports_kabaddi_24);
+        itens.add(R.drawable.ic_baseline_sports_motorsports_24);
+        itens.add(R.drawable.ic_baseline_two_wheeler_24);
+        itens.add(R.drawable.ic_baseline_umbrella_24);
 
         return itens;
     }

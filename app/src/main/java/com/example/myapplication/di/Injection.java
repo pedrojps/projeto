@@ -21,9 +21,7 @@ public class Injection {
 
     public static VariavelCategoriRepository VariavelCategoriRepository(@NonNull Context context) {
         AppDatabase appDatabase = provideDatabase(context);
-        return VariavelCategoriRepository.getInstance(appDatabase.variavelCategoriDao(),appDatabase.variavelEntyDao());
+        return VariavelCategoriRepository.getInstance(appDatabase.variavelCategoriDao(),appDatabase.variavelEntyDao(),appDatabase.AlertDao());
     }
-
-
 
 }

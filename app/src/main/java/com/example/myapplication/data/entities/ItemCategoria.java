@@ -139,4 +139,15 @@ public class ItemCategoria implements Parcelable {
         dest.writeInt(tipo);
     }
 
+
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+    @Override
+    public boolean equals(Object o) {
+        if (getClass() != o.getClass()) return false;
+
+        ItemCategoria other = (ItemCategoria) o;
+
+        return this.id == other.getId();
+    }
+
 }
