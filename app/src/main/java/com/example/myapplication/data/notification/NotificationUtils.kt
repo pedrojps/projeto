@@ -4,15 +4,21 @@ import android.content.Context
 import androidx.work.*
 import com.example.myapplication.common.time.LocalDate
 import com.example.myapplication.common.time.LocalDateFormat
-import com.example.myapplication.common.time.LocalTimeFormat
+import com.example.myapplication.common.time.LocalTime
 import com.example.myapplication.data.source.local.database.AppDatabase
 import com.example.myapplication.data.source.local.projection.HabitAlertProject
+import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem
+import java.lang.Boolean
 import java.time.*
-import java.time.format.DateTimeFormatter
-import java.time.format.ResolverStyle
 import java.util.*
 import java.util.concurrent.Executors
-import com.example.myapplication.common.time.LocalTime as Time
+import kotlin.Comparator
+import kotlin.Exception
+import kotlin.Int
+import kotlin.Long
+import kotlin.String
+import kotlin.apply
+import kotlin.let
 
 object NotificationUtils {
 
@@ -34,23 +40,26 @@ object NotificationUtils {
         return dayOfWeek
     }
 
-    private val FORMATO_HORAS: DateTimeFormatter = DateTimeFormatter
-        .ofPattern("HH:mm")
-        .withResolverStyle(ResolverStyle.STRICT)
+    fun sortItens(items:List<HabitCategoriViewItem> ):List<HabitCategoriViewItem> {
+        val now = LocalTime.now()
+        val sortedItems = items.sortedWith { item1, item2 ->
+            when {
+                item1.model is HabitAlertProject && item2.model is HabitAlertProject -> {
+                    val isBefore1 = (item1.model as HabitAlertProject).time?.before(now)
+                    val isBefore2 = (item2.model as HabitAlertProject).time?.before(now)
+                    when {
+                        isBefore1 == true && isBefore2 != true -> 1
+                        isBefore1 != true && isBefore2 == true -> -1
+                        else -> (item1.model as HabitAlertProject).time?.compareTo((item2.model as HabitAlertProject).time) ?: 0
+                    }
+                }
+                item1.model is HabitAlertProject-> -1
+                item2.model is HabitAlertProject -> 1
+                else -> 0
+            }
+        }
 
-    private fun faltando(agora: LocalTime, desejada: LocalTime): LocalTime {
-        return desejada.minusHours(agora.hour.toLong()).minusMinutes(agora.minute.toLong())
-    }
-
-    private fun mostrar(horario: LocalTime, objetivo: String) {
-        val desejada = LocalTime.parse(objetivo, FORMATO_HORAS)
-        val falta = faltando(horario, desejada)
-        System.out.println(
-            "Entre " + horario.format(FORMATO_HORAS)
-                .toString() + " e " + desejada.format(FORMATO_HORAS)
-                .toString() + ", a diferença é de " + falta.format(FORMATO_HORAS)
-                .toString() + "."
-        )
+        return sortedItems
     }
 
     fun calculateInitialDelay(notificationSchedule: HabitAlertProject): Long {
@@ -92,8 +101,8 @@ object NotificationUtils {
 
                     val inputData = Data.Builder()
                         .putInt("notificationId", schedule.alertId.toInt())
-                        .putString("title", "Lembrete de Hábito de " + schedule.nome)
-                        .putString("text", "Hora de registrar seu hábito!")
+                        .putString("title", "Lembrete do Hábito: ${schedule.nome}")
+                        .putString("text", "Hora de registrar seu hábito de ${schedule.nome}!")
                         .putLong("scheduleId", schedule.id)
                         .build()
 

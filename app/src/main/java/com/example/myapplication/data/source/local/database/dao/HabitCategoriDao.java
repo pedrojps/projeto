@@ -14,7 +14,7 @@ import io.reactivex.Single;
 @Dao
 public interface HabitCategoriDao extends BaseDao<HabitCategoria>{
 
-    @Query("SELECT * FROM CATEGORIA_H WHERE nome IS NOT NULL")
+    @Query("SELECT * FROM CATEGORIA_H WHERE nome IS NOT NULL ORDER BY CATEGORIA_H.nome")
     Flowable<List<HabitCategoria>> list();
 
     @Query("SELECT * FROM CATEGORIA_H WHERE id = :id ")
@@ -29,6 +29,7 @@ public interface HabitCategoriDao extends BaseDao<HabitCategoria>{
     List<HabitAlertProject> listByHabitAlertIsAtive(boolean isAtive);
 
     @Query(" SELECT CATEGORIA_H.* , ALERT_CATEGORI.id as alert_id, ALERT_CATEGORI.day_of_week as week, ALERT_CATEGORI.isAtive, ALERT_CATEGORI.time " +
-            "FROM CATEGORIA_H INNER JOIN ALERT_CATEGORI ON CATEGORIA_H.id = ALERT_CATEGORI.categori_h WHERE ALERT_CATEGORI.day_of_week LIKE :day" )
+            "FROM CATEGORIA_H INNER JOIN ALERT_CATEGORI ON CATEGORIA_H.id = ALERT_CATEGORI.categori_h WHERE ALERT_CATEGORI.day_of_week LIKE :day " +
+            "ORDER BY ALERT_CATEGORI.time" )
     Flowable<List<HabitAlertProject>> listByHabitAlertByDay(String day);
 }

@@ -77,12 +77,6 @@ public class MainListFragment extends Fragment  implements FlexibleAdapter.OnIte
 
         mViewModel = findOrCreateViewModel();
         mViewModel.setDay(day);
-        //if(day == DayOfWeek.NONE){
-        //    DIALOG = Globals.c.SHOW_DIALOG_MAIN;
-       // }
-        //else {
-        //    DIALOG = Globals.c.SHOW_DIALOG_MAIN_DAY;
-       // }
 
         isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(DIALOG, boolean.class));
     }

@@ -5,10 +5,15 @@ import android.os.Build;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.example.myapplication.common.time.LocalTime;
+import com.example.myapplication.data.notification.NotificationUtils;
+import com.example.myapplication.data.source.local.projection.HabitAlertProject;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewHolder;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -36,6 +41,7 @@ public class HabitAdapterHome<H extends AbstractFlexibleItem<HabitCategoriViewHo
     }
 
     public void updateDataSet(@Nullable List items, boolean animate, boolean load) {
+        items = NotificationUtils.INSTANCE.sortItens(items);
         super.updateDataSet(items, animate);
         if (load) mItens = items;
     }

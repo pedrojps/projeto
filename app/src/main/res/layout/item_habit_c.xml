@@ -48,7 +48,7 @@
                 android:text="@{habit.getNome()}"
                 app:layout_constraintStart_toEndOf="@+id/image_icon"
                 app:layout_constraintTop_toTopOf="@+id/image_icon"
-                tools:text="nome do habito" />
+                tools:text="nome do hábito" />
 
             <TextView
                 android:id="@+id/discrition"
@@ -58,7 +58,7 @@
                 android:text="@{habit.getDiscricao()}"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
-                tools:text="descrição do habito"  />
+                tools:text="descrição do hábito"  />
 
             <TextView
                 android:id="@+id/time"

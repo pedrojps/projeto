@@ -51,4 +51,14 @@ public class LocalTime extends Date {
         return new LocalTime(formatter.parse(dateString), pattern);
     }
 
+    public static LocalTime now(){
+        LocalTime lt = new LocalTime();
+        try {
+            return LocalTime.parse(lt.toString(LocalTimeFormat.FULL_TIME),LocalTimeFormat.FULL_TIME);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return lt;
+    }
+
 }

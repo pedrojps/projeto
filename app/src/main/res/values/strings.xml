@@ -38,8 +38,8 @@
     <string name="excluir">Excluir</string>
     <string name="continuar">Continuar</string>
     <string name="repetir">Repetir</string>
-    <string name="habit_categoria">Categoria de Habito</string>
-    <string name="habit_categoria_detalhe">Habito </string>
+    <string name="habit_categoria">Categoria de Hábito</string>
+    <string name="habit_categoria_detalhe">Hábito </string>
     <string name="item_categoria">Lista de Informações adicionais</string>
     <string name="alert_day">Dias da semana(Opicional)</string>
     <string name="time_s">Horatio</string>
@@ -56,10 +56,10 @@
     <string name="format_time">%1$tH:%1$tM</string>
     <string name="format_datetime">%1$td/%1$tm/%1$tY %1$tH:%1$tM</string>
     <string name="format_datetime_2_args">%1$td/%1$tm/%1$tY %2$tH:%2$tM</string>
-    <string name="confirmar_delete_habito">Excluir o Habito?</string>
-    <string name="delete_habito">Excluir o Habito?</string>
-    <string name="error_criacao_habito">Não foi possivel cadastra o habito</string>
-    <string name="carrega_habyto">não foi possivel carrega habito</string>
+    <string name="confirmar_delete_habito">Excluir o Hábito?</string>
+    <string name="delete_habito">Excluir o Hábito?</string>
+    <string name="error_criacao_habito">Não foi possivel cadastra o hábito</string>
+    <string name="carrega_habyto">não foi possivel carrega hábito</string>
     <string name="date">Data</string>
     <string name="sobre">Sobre</string>
     <string name="apenas_no_periodo">Apenas no período</string>
@@ -79,8 +79,8 @@
     <string name="hora">Hora</string>
     <string name="lista_dia">Lista do dia</string>
 
-    <string name="habit_nome">Habito: %s</string>
-    <string name="habit_periodo">Habito ocorreu: %s vezes</string>
+    <string name="habit_nome">Hábito: %s</string>
+    <string name="habit_periodo">Hábito ocorreu: %s vezes</string>
 
     <string name="media_diaria">Media das Informações adicionais Numericas</string>
 

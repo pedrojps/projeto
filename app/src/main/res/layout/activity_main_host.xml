@@ -57,7 +57,7 @@
                 android:layout_marginTop="52dp"
                 android:layout_marginEnd="32dp"
                 android:gravity="center"
-                android:text="Nenhum Habito para ser exibida."
+                android:text="Nenhum Hábito para ser exibida."
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

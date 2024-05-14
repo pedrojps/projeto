@@ -102,7 +102,7 @@ public class MainViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .toSingle(() -> Resource.success(projetosToDelete.size()))
-                .doOnError(throwable -> Timber.e(throwable, "Erro ao tentar deletar os Habitos."))
+                .doOnError(throwable -> Timber.e(throwable, "Erro ao tentar deletar os Hábitos."))
                 .onErrorReturn(Resource::error)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mProjetosDeleted::setValue);
