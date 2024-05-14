@@ -8,11 +8,11 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.myapplication.R
 import com.example.myapplication.ui.main.host.MainHostActivity
-import java.time.Duration
 
 class NotificationWorker(private val context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
@@ -29,12 +29,20 @@ class NotificationWorker(private val context: Context, params: WorkerParameters)
             putExtra("scheduleId", scheduleId)
         }
 
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            notificationId,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(
+                applicationContext, notificationId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        } else {
+            PendingIntent.getActivity(
+                applicationContext, notificationId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        }
+
+        createNotificationChannel()
 
         // Cria a notificação
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -53,6 +61,17 @@ class NotificationWorker(private val context: Context, params: WorkerParameters)
         return Result.success()
     }
 
+    private fun createNotificationChannel() {
+        val name = "Habit Tracker Channel"
+        val descriptionText = "Channel for habit tracker notifications"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            description = descriptionText
+        }
+        val notificationManager: NotificationManager =
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
     companion object {
         const val CHANNEL_ID = "habit_tracker_channel"
     }

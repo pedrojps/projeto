@@ -47,7 +47,6 @@ public class MainHostActivity extends AppCompatActivity {
         mBinding.setVm(mViewModel);
         subscribeItems();
         setup();
-        createNotificationChannel();
 
     }
 
@@ -62,17 +61,6 @@ public class MainHostActivity extends AppCompatActivity {
         Intent it = HabitCategoriaDetailActivity.getNewIntent(this,habito, true);
         startActivity(it);
         scheduleId = -1;
-    }
-
-    private void createNotificationChannel() {
-        CharSequence name = "Habit Tracker Channel";
-        String description = "Canal para notificações do Habit Tracker";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel(NotificationWorker.CHANNEL_ID, name, importance);
-        channel.setDescription(description);
-
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
     }
 
     private void setup() {
