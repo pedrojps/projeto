@@ -9,8 +9,6 @@ import com.example.myapplication.databinding.ItemAlertBinding
 import com.example.myapplication.ui.dialog.SimpleTimeDialog
 import com.example.myapplication.utils.DayOfWeek
 import java.util.*
-import java.util.function.Consumer
-import kotlin.collections.ArrayList
 
 class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -89,7 +87,8 @@ class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(bi
                 checkboxT.isChecked = check
             }
             setCheck()
-            time.text = itemView.context.getString(R.string.format_time,  item.time ?: LocalTime())
+            val timeL = item.time ?: LocalTime()
+            time.text = itemView.context.getString(R.string.format_time,  timeL)
             time.setOnClickListener {
                 SimpleTimeDialog(itemView.context, item.time ?: LocalTime()) { newDate: Date ->
                     val localTime = LocalTime(newDate)
@@ -97,10 +96,15 @@ class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(bi
                     item.time = localTime
                 }.show()
             }
+            alertaAtiveDay.isChecked = mItem?.isAtive?: false
             alertaAtiveDay.setOnClickListener {
                 mItem?.isAtive = alertaAtiveDay.isChecked
             }
             deleteItem.setOnClickListener(listenerDeleter)
+
+            mItem?.time = timeL
+            mItem?.dayOfWeek = mDayOfWeek.toString()
+            mItem?.isAtive = alertaAtiveDay.isChecked
         }
 
     }
@@ -119,20 +123,7 @@ class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(bi
     }
 
     private fun setCheck() {
-        try {
-            val dayOfWeek =
-                mItem?.dayOfWeek
-                    ?.substring(1, (mItem?.dayOfWeek?.length?:1) - 1)
-                    ?.replace(" ".toRegex(), "")?.split(",")?.toTypedArray()
-
-            dayOfWeek?.forEach { s: String ->
-                mDayOfWeek.add(
-                    s.toInt()
-                )
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        mDayOfWeek = mItem?.dayOfWeekList as ArrayList<Int?>
 
         binding.apply {
             checkboxD.isChecked = containsDayOfWeek(DayOfWeek.SUNDAY)

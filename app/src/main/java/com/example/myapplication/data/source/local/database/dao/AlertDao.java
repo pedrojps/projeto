@@ -27,4 +27,5 @@ public interface AlertDao extends BaseDao<AlertCategori>{
 
     @Query("DELETE FROM ALERT_CATEGORI WHERE categori_h = :idc ")
     void deleteID(long idc);
+
 }

@@ -125,8 +125,8 @@ public class MainViewModel extends AndroidViewModel {
                     .subscribe(e::onNext);
         }, BackpressureStrategy.BUFFER);
     }
-    private List<HabitCategoriViewItem> sortAndMapToFlexibleItem(List<HabitCategoria> projetos){
-        List<HabitCategoria> sortedList = new ArrayList<>(projetos);
+    private List<HabitCategoriViewItem> sortAndMapToFlexibleItem(List<? extends HabitCategoria> projetos){
+        List<? extends HabitCategoria> sortedList = new ArrayList<>(projetos);
         Collections.sort(sortedList, this::sortByCodigoProjetoAsc);
         return Lists.transform(sortedList, HabitCategoriViewItem::new);
     }

@@ -62,11 +62,11 @@ public class HabitCategoriRepository {
         return mHabitEntyDao.findByIdAndDataPeriodDetails(id,start,end);
     }
 
-    public Flowable<List<HabitCategoria>> list(DayOfWeek day){
+    public Flowable<? extends List<? extends HabitCategoria>> list(DayOfWeek day){
         if (day == DayOfWeek.NONE)
             return mHabitCategoriDao.list();
         else
-            return mHabitCategoriDao.listByDayOfWeek("%" + day.getId() + "%");
+            return mHabitCategoriDao.listByHabitAlertByDay("%" + day.getId() + "%");
     }
 
     public Single<HabitCategoria> insert(@NonNull HabitCategoria habitCategoria) {

@@ -14,6 +14,9 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.myapplication.common.time.LocalTime;
+import com.example.myapplication.data.notification.NotificationUtils;
+
+import java.util.ArrayList;
 
 @Entity(tableName = "ALERT_CATEGORI", foreignKeys = {
         @ForeignKey(entity = HabitCategoria.class, parentColumns = {"id"},
@@ -115,6 +118,10 @@ public class AlertCategori implements Parcelable {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public ArrayList<Integer> getDayOfWeekList(){
+        return NotificationUtils.INSTANCE.getDayWeek(this.dayOfWeek);
     }
 
 }

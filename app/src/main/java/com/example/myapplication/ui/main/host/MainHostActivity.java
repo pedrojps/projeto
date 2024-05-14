@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.main.host;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,17 +12,24 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.network.Status;
+import com.example.myapplication.data.notification.NotificationUtils;
+import com.example.myapplication.data.notification.NotificationWorker;
 import com.example.myapplication.databinding.ActivityMainHostBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.about.AboutActivity;
 import com.example.myapplication.ui.addEdithabit.AddEditHabitoCategoriaActivity;
 import com.example.myapplication.ui.factory.DialogFactory;
+import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
+import com.example.myapplication.ui.habitCategoriDetali.HabitCategoriaDetailActivity;
 import com.example.myapplication.ui.main.MainViewModel;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.Globals;
 import com.example.myapplication.utils.ObjectUtils;
 import com.example.myapplication.utils.adapters.mediators.TabLayoutSimpleBaseMediator;
+
+import java.util.List;
 
 public class MainHostActivity extends AppCompatActivity {
 
@@ -28,8 +37,7 @@ public class MainHostActivity extends AppCompatActivity {
 
     private ActivityMainHostBinding mBinding;
 
-    private boolean isShowDialog = false;
-
+    long scheduleId = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +47,33 @@ public class MainHostActivity extends AppCompatActivity {
         mBinding.setVm(mViewModel);
         subscribeItems();
         setup();
-        isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_MAIN_C, boolean.class));
+        createNotificationChannel();
+
     }
 
+    private void redirect(List<HabitCategoriViewItem> data) {
+        if (scheduleId == -1) return;
+        HabitCategoria habito = null;
+        for (HabitCategoriViewItem schedule : data)
+            if (schedule.getModel().getId() == scheduleId){
+                habito = schedule.getModel();
+            }
+        if (habito==null) return;
+        Intent it = HabitCategoriaDetailActivity.getNewIntent(this,habito, true);
+        startActivity(it);
+        scheduleId = -1;
+    }
+
+    private void createNotificationChannel() {
+        CharSequence name = "Habit Tracker Channel";
+        String description = "Canal para notificações do Habit Tracker";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(NotificationWorker.CHANNEL_ID, name, importance);
+        channel.setDescription(description);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+    }
 
     private void setup() {
         HabitAdapterHost adapter = new HabitAdapterHost(this);
@@ -60,6 +92,11 @@ public class MainHostActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        NotificationUtils.INSTANCE.scheduleNotifications(this);
+
+        Intent intent = getIntent();
+        scheduleId = intent.getLongExtra("scheduleId", -1L);
+        intent.putExtra("scheduleId", -1L);
 /*
         isShowDialog = !Boolean.TRUE.equals(Globals.sharedInstance().get(Globals.c.SHOW_DIALOG_MAIN_C, boolean.class));
         if(isShowDialog) {
@@ -71,9 +108,7 @@ public class MainHostActivity extends AppCompatActivity {
         mViewModel.getItems().observe(this, resource -> {
             if (resource.status == Status.SUCCESS) {
                 mViewModel.dataAvaliable.set(ObjectUtils.nonNull(resource.data) && !resource.data.isEmpty());
-                //mAdapter.updateDataSet(resource.data, true, true);
-                //mBinding.searchView.setQuery("", false);
-                //isEmpty();
+                redirect(resource.data);
             } else if (resource.status == Status.ERROR) {
                 mViewModel.dataAvaliable.set(false);
                 DialogUtils.showDialog(this, resource.message.header, resource.message.body);

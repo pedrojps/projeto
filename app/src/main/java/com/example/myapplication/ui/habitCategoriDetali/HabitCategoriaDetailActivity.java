@@ -60,6 +60,8 @@ public class HabitCategoriaDetailActivity
 
     public static final String EXTRA_HABIT = "EXTRA_HABIT";
 
+    public static final String EXTRA_IS_CREATE = "EXTRA_IS_CREATE";
+
     private CustomCalendar calendarView;
 
     private FlexibleAdapter<HabitEntyViewItem> mAdapter;
@@ -69,9 +71,10 @@ public class HabitCategoriaDetailActivity
     private HabitCategoriaDetailViewModel mViewModel;
 
     private boolean isShowDialog = false;
-    public static Intent getNewIntent(@NonNull Context context, HabitCategoria HabitCategoria) {
+    public static Intent getNewIntent(@NonNull Context context, HabitCategoria HabitCategoria,boolean isCreate) {
         return new Intent(context, HabitCategoriaDetailActivity.class)
-                .putExtra(EXTRA_HABIT, HabitCategoria);
+                .putExtra(EXTRA_HABIT, HabitCategoria)
+                .putExtra(EXTRA_IS_CREATE, isCreate);
     }
 
     @Override
@@ -148,6 +151,14 @@ public class HabitCategoriaDetailActivity
                         return arr;
                     }
                 });
+
+        isCreateMacation();
+    }
+
+    private void isCreateMacation() {
+        boolean isCreate = getIntent().getBooleanExtra(EXTRA_IS_CREATE,false);
+        if (isCreate)
+            openAddHabit();
     }
 
     private void setupCalendareObserve(){
@@ -284,7 +295,7 @@ public class HabitCategoriaDetailActivity
     }
 
     public void openAddHabit() {
-        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getHabit().getId()+"");
+        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getHabit().getId()+"", mViewModel.date.getTime());
         startActivity(it);
     }
     private HabitCategoriaDetailViewModel findOrCreateViewModel() {

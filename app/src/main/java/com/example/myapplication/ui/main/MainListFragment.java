@@ -173,7 +173,7 @@ public class MainListFragment extends Fragment  implements FlexibleAdapter.OnIte
             HabitCategoriViewItem viewItem = mAdapter.getItem(position);
 
             if (ObjectUtils.nonNull(viewItem)) {
-                Intent it = HabitCategoriaDetailActivity.getNewIntent(this.getActivity(),viewItem.getModel());
+                Intent it = HabitCategoriaDetailActivity.getNewIntent(this.getActivity(),viewItem.getModel(),false);
                 startActivity(it);
 
                 return true;

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.common.time.LocalDate;
 import com.example.myapplication.common.time.LocalTime;
 import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
@@ -39,6 +40,8 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
 
     private static final String EXTRA_HABITY_CATEGORI = "EXTRA_HABITY_CATEGORI";
 
+    private static final String EXTRA_HABITY_TIME = "EXTRA_HABITY_TIME";
+
     private static final String EXTRA_HABITY_EDIT = "EXTRA_HABITY_EDIT";
 
     private AddEditHabitoEntidadeViewModel mViewModel;
@@ -48,9 +51,10 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
     private FlexibleAdapter<VarCategoriCriateViewItem> mAdapter;
 
     @NonNull
-    public static Intent getNewIntent(Context context, @NonNull String equipamentoId) {
+    public static Intent getNewIntent(Context context, @NonNull String id, long date) {
         return new Intent(context, AddEditHabitoEntidadeActivity.class)
-                .putExtra(EXTRA_HABITY_CATEGORI, equipamentoId);
+                .putExtra(EXTRA_HABITY_CATEGORI, id)
+                .putExtra(EXTRA_HABITY_TIME, date);
     }
 
     @NonNull
@@ -84,6 +88,8 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
             mViewModel.start(h);
         } else {
             mViewModel.start(getIntent().getStringExtra(EXTRA_HABITY_CATEGORI));
+            LocalDate ld = new LocalDate(getIntent().getLongExtra(EXTRA_HABITY_TIME,new LocalDate().getTime()));
+            mViewModel.startDate.set(ld);
         }
     }
 
