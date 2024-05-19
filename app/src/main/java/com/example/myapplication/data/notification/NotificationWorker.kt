@@ -27,6 +27,7 @@ class NotificationWorker(private val context: Context, params: WorkerParameters)
         val intent = Intent(context, MainHostActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("scheduleId", scheduleId)
+            action = "ACTION_${notificationId}_${System.currentTimeMillis()}"
         }
 
 
@@ -50,6 +51,7 @@ class NotificationWorker(private val context: Context, params: WorkerParameters)
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_baseline_access_alarm_24)
             .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .build()
 
@@ -57,6 +59,7 @@ class NotificationWorker(private val context: Context, params: WorkerParameters)
         with(NotificationManagerCompat.from(context)) {
             notify(notificationId, notification)
         }
+
 
         return Result.success()
     }

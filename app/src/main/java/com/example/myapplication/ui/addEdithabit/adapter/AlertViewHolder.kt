@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.addEdithabit.adapter
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.common.time.LocalTime
@@ -8,6 +9,7 @@ import com.example.myapplication.data.entities.AlertCategori
 import com.example.myapplication.databinding.ItemAlertBinding
 import com.example.myapplication.ui.dialog.SimpleTimeDialog
 import com.example.myapplication.utils.DayOfWeek
+import com.example.myapplication.utils.Globals
 import java.util.*
 
 class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(binding.root) {
@@ -18,36 +20,10 @@ class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(bi
     fun onBind(item: AlertCategori, position: Int, listenerDeleter: View.OnClickListener) {
         mItem = item
         mDayOfWeek= ArrayList()
+        val isNotShowAlert :Boolean? = Globals[Globals.c.SHOW_ALERT_OPISION]
 
         binding.apply {
-            labelD.setOnClickListener { _ ->
-                checkboxD.isChecked = !checkboxD.isChecked
-                checkAll()
-            }
-            labelQ1.setOnClickListener { _ ->
-                checkboxQ1.isChecked = !checkboxD.isChecked
-                checkAll()
-            }
-            labelQ2.setOnClickListener { _ ->
-                checkboxQ2.isChecked = !checkboxD.isChecked
-                checkAll()
-            }
-            labelS.setOnClickListener { _ ->
-                checkboxS.isChecked = !checkboxD.isChecked
-                checkAll()
-            }
-            labelS2.setOnClickListener { _ ->
-                checkboxS2.isChecked = !checkboxD.isChecked
-                checkAll()
-            }
-            labelS3.setOnClickListener { _ ->
-                checkboxS3.isChecked = !checkboxD.isChecked
-                checkAll()
-            }
-            labelT.setOnClickListener { _ ->
-                checkboxT.isChecked = !checkboxD.isChecked
-                checkAll()
-            }
+
             checkboxD.setOnCheckedChangeListener { _, check ->
                 checkAll()
                 setDayOfWeek(DayOfWeek.SUNDAY, check)
@@ -96,6 +72,8 @@ class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(bi
                     item.time = localTime
                 }.show()
             }
+
+            if (isNotShowAlert==true) alertaAtiveDay.isVisible = false
             alertaAtiveDay.isChecked = mItem?.isAtive?: false
             alertaAtiveDay.setOnClickListener {
                 mItem?.isAtive = alertaAtiveDay.isChecked
@@ -141,9 +119,10 @@ class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(bi
     }
 
     private fun setDayOfWeek(day: DayOfWeek, check: Boolean) {
-        if (check)
-            mDayOfWeek.add(day.id)
-        else
+        if (check){
+            if (!mDayOfWeek.contains(day.id))
+                mDayOfWeek.add(day.id)
+        } else
             mDayOfWeek.removeIf{
                 it == day.id
             }

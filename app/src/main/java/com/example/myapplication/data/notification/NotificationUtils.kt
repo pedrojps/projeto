@@ -8,11 +8,10 @@ import com.example.myapplication.common.time.LocalTime
 import com.example.myapplication.data.source.local.database.AppDatabase
 import com.example.myapplication.data.source.local.projection.HabitAlertProject
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem
-import java.lang.Boolean
 import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.Executors
-import kotlin.Comparator
 import kotlin.Exception
 import kotlin.Int
 import kotlin.Long
@@ -65,9 +64,7 @@ object NotificationUtils {
     fun calculateInitialDelay(notificationSchedule: HabitAlertProject): Long {
         val now = Calendar.getInstance()
         val date = LocalDate.parse(LocalDate().toString(LocalDateFormat.SQLITE_DATE),LocalDateFormat.SQLITE_DATE)
-        val notificationTime = Calendar.getInstance().apply {
-            timeInMillis = (date.time + (notificationSchedule.time?.time?: 0))
-         }
+        val notificationTime = getAlertData(notificationSchedule.time)
 
         // Se a notificação já passou hoje, avança para o próximo dia de notificação
         if (now.after(notificationTime)) {
@@ -81,6 +78,24 @@ object NotificationUtils {
         }
 
         return notificationTime.timeInMillis - now.timeInMillis
+    }
+
+    private fun getAlertData(time: LocalTime?): Calendar {
+        val localDateTime =  try {
+            val dateString = "${LocalDate().toString(LocalDateFormat.SQLITE_DATE)} ${time.toString()}"
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            LocalDateTime.parse(dateString, formatter)
+        }catch (e:Exception){
+            LocalDateTime.now()
+        }
+
+        val date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant())
+
+        // Configura o Calendar com a data e hora
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+
+        return calendar
     }
 
     fun scheduleNotifications(context: Context?) {
@@ -116,4 +131,5 @@ object NotificationUtils {
             }
         }
     }
+
 }

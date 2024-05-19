@@ -1,13 +1,20 @@
 package com.example.myapplication.ui.main.host;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -24,6 +31,7 @@ import com.example.myapplication.ui.factory.DialogFactory;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
 import com.example.myapplication.ui.habitCategoriDetali.HabitCategoriaDetailActivity;
 import com.example.myapplication.ui.main.MainViewModel;
+import com.example.myapplication.utils.BatteryOptimizationUtils;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.Globals;
 import com.example.myapplication.utils.ObjectUtils;
@@ -38,6 +46,18 @@ public class MainHostActivity extends AppCompatActivity {
     private ActivityMainHostBinding mBinding;
 
     long scheduleId = -1;
+
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permissão concedida, agenda notificações
+                    NotificationUtils.INSTANCE.scheduleNotifications(MainHostActivity.this);
+                } else {
+                    // Permissão negada, lidar com o caso
+                    Globals.sharedInstance().set(Globals.c.SHOW_ALERT_OPISION, true);
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +67,31 @@ public class MainHostActivity extends AppCompatActivity {
         mBinding.setVm(mViewModel);
         subscribeItems();
         setup();
+        requestPermission();
+        // Verificar e solicitar remoção das otimizações de bateria
+        if (!BatteryOptimizationUtils.INSTANCE.isIgnoringBatteryOptimizations(this)) {
+            BatteryOptimizationUtils.INSTANCE.showBatteryOptimizationDialog(this);
+        }
+    }
 
+    private void requestPermission(){
+        // Verificar e solicitar permissão de notificação se necessário
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                // Permissão já concedida, agenda notificações
+                NotificationUtils.INSTANCE.scheduleNotifications(this);
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
+                // Mostrar um racional explicando por que a permissão é necessária
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            } else {
+                // Solicitar a permissão diretamente
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        } else {
+            // Para versões anteriores ao Android 13, agenda notificações diretamente
+            NotificationUtils.INSTANCE.scheduleNotifications(this);
+        }
     }
 
     private void redirect(List<HabitCategoriViewItem> data) {

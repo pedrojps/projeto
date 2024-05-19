@@ -37,197 +37,116 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkbox_d"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layout_checkbox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:button="@drawable/select_day"
+                android:layout_gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/time"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/label_d"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="D"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_d"
-                app:layout_constraintEnd_toEndOf="@+id/checkbox_d"
-                app:layout_constraintStart_toStartOf="@+id/checkbox_d"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.15" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/select_day_d" />
+                </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkbox_s"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:button="@drawable/select_day"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_d"
-                app:layout_constraintStart_toEndOf="@+id/checkbox_d"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox_s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:button="@drawable/select_day_s" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/label_s"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_s"
-                app:layout_constraintEnd_toEndOf="@+id/checkbox_s"
-                app:layout_constraintStart_toStartOf="@+id/checkbox_s"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_s"
-                app:layout_constraintVertical_bias="0.15" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox_t"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:button="@drawable/select_day_t" />
+                </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkbox_t"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:button="@drawable/select_day"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_s"
-                app:layout_constraintStart_toEndOf="@+id/checkbox_s"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox_q1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:button="@drawable/select_day_q" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/label_t"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="T"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_t"
-                app:layout_constraintEnd_toEndOf="@+id/checkbox_t"
-                app:layout_constraintStart_toStartOf="@+id/checkbox_t"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.15" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox_q2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:button="@drawable/select_day_q" />
+                </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkbox_q1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:button="@drawable/select_day"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_t"
-                app:layout_constraintStart_toEndOf="@+id/checkbox_t"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox_s2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:button="@drawable/select_day_s" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/label_q1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Q"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_q1"
-                app:layout_constraintEnd_toEndOf="@+id/checkbox_q1"
-                app:layout_constraintStart_toStartOf="@+id/checkbox_q1"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_q1"
-                app:layout_constraintVertical_bias="0.15" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/checkbox_s3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:button="@drawable/select_day_s"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkbox_s2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/checkbox_s2"
+                        app:layout_constraintTop_toTopOf="@+id/checkbox_d"
+                        app:layout_constraintVertical_bias="0.0" />
+                </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkbox_q2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:button="@drawable/select_day"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_q1"
-                app:layout_constraintStart_toEndOf="@+id/checkbox_q1"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/label_q2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Q"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_q2"
-                app:layout_constraintEnd_toEndOf="@+id/checkbox_q2"
-                app:layout_constraintStart_toStartOf="@+id/checkbox_q2"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_q2"
-                app:layout_constraintVertical_bias="0.15" />
-
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkbox_s2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:button="@drawable/select_day"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_q2"
-                app:layout_constraintStart_toEndOf="@+id/checkbox_q2"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/label_s2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_s2"
-                app:layout_constraintEnd_toEndOf="@+id/checkbox_s2"
-                app:layout_constraintStart_toStartOf="@+id/checkbox_s2"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_s2"
-                app:layout_constraintVertical_bias="0.15" />
-
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkbox_s3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:button="@drawable/select_day"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_s2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/checkbox_s2"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/label_s3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/checkbox_s3"
-                app:layout_constraintEnd_toEndOf="@+id/checkbox_s3"
-                app:layout_constraintStart_toStartOf="@+id/checkbox_s3"
-                app:layout_constraintTop_toTopOf="@+id/checkbox_s3"
-                app:layout_constraintVertical_bias="0.15" />
-
-            <Switch
-                android:id="@+id/all_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="Todos os dias"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/delete_item"
@@ -239,20 +158,53 @@
                 app:layout_constraintBottom_toBottomOf="@+id/time"
                 app:layout_constraintEnd_toEndOf="@+id/time"
                 app:layout_constraintTop_toTopOf="@+id/time" />
-            <Switch
-                android:id="@+id/alerta_ative_day"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="Alerta Ativo"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/all_day"
-                app:layout_constraintTop_toBottomOf="@+id/checkbox_d"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_checkbox"
+                app:layout_constraintVertical_bias="0.0">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <Switch
+                        android:id="@+id/all_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Todos os dias"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_checkbox"
+                        app:layout_constraintVertical_bias="0.0" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_weight="1">
+                    <Switch
+                        android:id="@+id/alerta_ative_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Alerta Ativo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/all_day"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_checkbox"
+                        app:layout_constraintVertical_bias="0.0" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
