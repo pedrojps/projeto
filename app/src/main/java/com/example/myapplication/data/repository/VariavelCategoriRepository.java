@@ -66,8 +66,8 @@ public class VariavelCategoriRepository {
         return Completable.fromAction(() -> mVariavelEntyDao.insert(itemEnties));
     }
 
-    public Completable update(@NonNull ItemCategoria projeto){
-        return Completable.fromAction(() -> mVariavelCategoriDao.update(projeto));
+    public Completable update(@NonNull ItemCategoria itemCategoria){
+        return Completable.fromAction(() -> mVariavelCategoriDao.update(itemCategoria));
     }
 
     public Completable Update(List<ItemCategoria> itemCategorias, long idc) {

@@ -1,8 +1,6 @@
 package com.example.myapplication.ui.main.host;
 
 import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -22,7 +20,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.network.Status;
 import com.example.myapplication.data.notification.NotificationUtils;
-import com.example.myapplication.data.notification.NotificationWorker;
 import com.example.myapplication.databinding.ActivityMainHostBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.about.AboutActivity;
@@ -163,20 +160,20 @@ public class MainHostActivity extends AppCompatActivity {
                 openAbout();
                 return true;
             case R.id.menu_item_habit_list_delete:
-                deleteProjetos();
+                delete();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void deleteProjetos() {
+    public void delete() {
         mViewModel.clearItemSelectionMap();
-        if (mViewModel.getProjetoDisplayNameArray().length!=0)
+        if (mViewModel.getDisplayNameArray().length!=0)
             DialogFactory.createDialog(this, R.string.delete_habito, null)
-                    .setMultiChoiceItems(mViewModel.getProjetoDisplayNameArray(), null,
+                    .setMultiChoiceItems(mViewModel.getDisplayNameArray(), null,
                             (dialogInterface, which, isChecked) -> mViewModel.toggleItemSelection(which, isChecked))
                     .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, which) -> {
-                        mViewModel.deleteProjetosSelected();
+                        mViewModel.deleteSelected();
                         dialogInterface.dismiss();
                     })
                     .setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss())

@@ -23,7 +23,6 @@ import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.data.repository.VariavelCategoriRepository;
 import com.example.myapplication.ui.variaeisCategoriy.VarCategoriViewItem;
-import com.example.myapplication.utils.DayOfWeek;
 import com.example.myapplication.utils.ImageUtil;
 import com.example.myapplication.utils.ObjectUtils;
 import com.google.common.base.Strings;
@@ -185,7 +184,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
         HabitCategoria categoria = new HabitCategoria(
                0, name.get(), new LocalDate() ,descricao.get(),mDayOfWeek.toString(),  null);
 
-        if (isNewEquipamento()) {
+        if (isNew()) {
             insert(categoria);
         } else {
             categoria.setId(Integer.parseInt(id.get()));
@@ -257,7 +256,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
                 });
     }
 
-    public boolean isNewEquipamento() {
+    public boolean isNew() {
         return mIsNovaCategoria;
     }
 
@@ -279,7 +278,7 @@ public class AddEditHabitoCategoriaViewModel extends AndroidViewModel {
     }
 
     public void removerItens(ItemCategoria i,int posisao){
-        if(!isNewEquipamento() && false){
+        if(!isNew() && false){
             mVariavelCategoriRepository.delete(i).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(()->{

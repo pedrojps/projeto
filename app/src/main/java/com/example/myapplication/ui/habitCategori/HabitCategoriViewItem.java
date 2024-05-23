@@ -15,25 +15,25 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
 public class HabitCategoriViewItem extends AbstractFlexibleItem<HabitCategoriViewHolder> {
 
-    private final HabitCategoria mProjeto;
+    private final HabitCategoria habitCategoria;
 
     public HabitCategoriViewItem(HabitCategoria obra) {
-        this.mProjeto = obra;
+        this.habitCategoria = obra;
     }
 
     public HabitCategoria getModel() {
-        return mProjeto;
+        return habitCategoria;
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object o) {
-        return mProjeto.equals(o);
+        return habitCategoria.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return mProjeto.hashCode();
+        return habitCategoria.hashCode();
     }
 
     @Override
@@ -49,6 +49,6 @@ public class HabitCategoriViewItem extends AbstractFlexibleItem<HabitCategoriVie
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, HabitCategoriViewHolder holder, int position, List payloads) {
-        holder.bind(mProjeto);
+        holder.bind(habitCategoria);
     }
 }

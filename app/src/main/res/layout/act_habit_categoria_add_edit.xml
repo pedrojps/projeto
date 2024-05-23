@@ -45,10 +45,10 @@
                     android:layout_height="wrap_content"
                     app:errorEnabled="@{vm.nameError != null}"
                     app:error="@{vm.nameError}"
-                    android:labelFor="@+id/add_equipamento_modelos">
+                    android:labelFor="@+id/add_modelos">
 
                     <AutoCompleteTextView
-                        android:id="@+id/add_equipamento_modelos"
+                        android:id="@+id/add_modelos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={vm.name}"
@@ -71,10 +71,10 @@
                     android:layout_height="wrap_content"
                     app:errorEnabled="@{vm.descricaoError != null}"
                     app:error="@{vm.descricaoError}"
-                    android:labelFor="@+id/add_equipamento_descricoes">
+                    android:labelFor="@+id/add_descricoes">
 
                     <AutoCompleteTextView
-                        android:id="@+id/add_equipamento_descricoes"
+                        android:id="@+id/add_descricoes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={vm.descricao}"
@@ -142,221 +142,7 @@
                     android:layout_marginBottom="@dimen/margin_small"
                     android:text="@string/alert_day"
                     style="@style/Header.Small.Colored"/>
-                <!--
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    app:cardCornerRadius="20dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_height="wrap_content">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp">
-
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/checkbox_d"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:button="@drawable/select_day"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/label_d"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="D"
-                            android:textColor="#FFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_d"
-                            app:layout_constraintEnd_toEndOf="@+id/checkbox_d"
-                            app:layout_constraintStart_toStartOf="@+id/checkbox_d"
-                            app:layout_constraintTop_toTopOf="@+id/checkbox_d"
-                            app:layout_constraintVertical_bias="0.15" />
-
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/checkbox_s"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:button="@drawable/select_day"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_d"
-                            app:layout_constraintStart_toEndOf="@+id/checkbox_d"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/label_s"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="S"
-                            android:textColor="#FFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_s"
-                            app:layout_constraintEnd_toEndOf="@+id/checkbox_s"
-                            app:layout_constraintStart_toStartOf="@+id/checkbox_s"
-                            app:layout_constraintTop_toTopOf="@+id/checkbox_s"
-                            app:layout_constraintVertical_bias="0.15" />
-
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/checkbox_t"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:button="@drawable/select_day"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_s"
-                            app:layout_constraintStart_toEndOf="@+id/checkbox_s"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/label_t"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="T"
-                            android:textColor="#FFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_t"
-                            app:layout_constraintEnd_toEndOf="@+id/checkbox_t"
-                            app:layout_constraintStart_toStartOf="@+id/checkbox_t"
-                            app:layout_constraintTop_toTopOf="@+id/checkbox_t"
-                            app:layout_constraintVertical_bias="0.15" />
-
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/checkbox_q1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:button="@drawable/select_day"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_t"
-                            app:layout_constraintStart_toEndOf="@+id/checkbox_t"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/label_q1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Q"
-                            android:textColor="#FFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_q1"
-                            app:layout_constraintEnd_toEndOf="@+id/checkbox_q1"
-                            app:layout_constraintStart_toStartOf="@+id/checkbox_q1"
-                            app:layout_constraintTop_toTopOf="@+id/checkbox_q1"
-                            app:layout_constraintVertical_bias="0.15" />
-
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/checkbox_q2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:button="@drawable/select_day"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_q1"
-                            app:layout_constraintStart_toEndOf="@+id/checkbox_q1"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/label_q2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Q"
-                            android:textColor="#FFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_q2"
-                            app:layout_constraintEnd_toEndOf="@+id/checkbox_q2"
-                            app:layout_constraintStart_toStartOf="@+id/checkbox_q2"
-                            app:layout_constraintTop_toTopOf="@+id/checkbox_q2"
-                            app:layout_constraintVertical_bias="0.15" />
-
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/checkbox_s2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:button="@drawable/select_day"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_q2"
-                            app:layout_constraintStart_toEndOf="@+id/checkbox_q2"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/label_s2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="S"
-                            android:textColor="#FFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_s2"
-                            app:layout_constraintEnd_toEndOf="@+id/checkbox_s2"
-                            app:layout_constraintStart_toStartOf="@+id/checkbox_s2"
-                            app:layout_constraintTop_toTopOf="@+id/checkbox_s2"
-                            app:layout_constraintVertical_bias="0.15" />
-
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/checkbox_s3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:button="@drawable/select_day"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_s2"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toEndOf="@+id/checkbox_s2"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/label_s3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="S"
-                            android:textColor="#FFF"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checkbox_s3"
-                            app:layout_constraintEnd_toEndOf="@+id/checkbox_s3"
-                            app:layout_constraintStart_toStartOf="@+id/checkbox_s3"
-                            app:layout_constraintTop_toTopOf="@+id/checkbox_s3"
-                            app:layout_constraintVertical_bias="0.15" />
-
-                        <Switch
-                            android:id="@+id/all_day"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:text="Todos os dias"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/checkbox_d"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-                -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -414,7 +200,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/projeto_list_bottom_sheet"
+                    android:id="@+id/list_bottom_sheet"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">

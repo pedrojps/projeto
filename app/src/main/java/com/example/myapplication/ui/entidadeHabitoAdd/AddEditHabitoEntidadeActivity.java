@@ -99,7 +99,7 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
         return super.onSupportNavigateUp();
     }
 
-    public void equipamentoSaved() {
+    public void saved() {
         setResult(RESULT_OK);
         finish();
     }
@@ -115,8 +115,8 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
         );
     }
 
-    private void subscribeEquipamentoSaved() {
-        mViewModel.getEquipamentoSavedEvent().observe(this, aVoid -> equipamentoSaved());
+    private void subscribeSaved() {
+        mViewModel.getSavedEvent().observe(this, aVoid -> saved());
     }
     private void subscribeAddVariavel() {
         mViewModel.getVariaveisAdd().observe(this, aVoid -> variavelDialogAdd());
@@ -144,7 +144,7 @@ public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements 
 
 
     private void subscribeViewChanges() {
-        subscribeEquipamentoSaved();
+        subscribeSaved();
         subscribeErrorMessage();
         subscribeAddVariavel();
         subscribeCarregaVariavel();

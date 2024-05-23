@@ -2,7 +2,6 @@ package com.example.myapplication.ui.main;
 
 import android.app.Application;
 import android.util.SparseBooleanArray;
-import android.widget.HeaderViewListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableBoolean;
@@ -14,18 +13,15 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.common.lifecycle.SingleLiveEvent;
-import com.example.myapplication.common.time.LocalDate;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.network.Resource;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
-import com.example.myapplication.ui.habitCategori.HabitCategoriViewHolder;
 import com.example.myapplication.ui.habitCategori.HabitCategoriViewItem;
 import com.example.myapplication.utils.DayOfWeek;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
@@ -44,7 +40,7 @@ public class MainViewModel extends AndroidViewModel {
 
     private final SparseBooleanArray mItemSelectionMap = new SparseBooleanArray();
 
-    private final SingleLiveEvent<Resource<Integer>> mProjetosDeleted = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Resource<Integer>> mDeleted = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<Void> mHabitAdd = new SingleLiveEvent<>();
 
@@ -57,7 +53,7 @@ public class MainViewModel extends AndroidViewModel {
                          @NonNull HabitCategoriRepository habitCategoriRepository) {
         super(application);
         mHabitCategoriRepository=habitCategoriRepository;
-        loadProjetos();
+        load();
     }
     public LiveData<Resource<List<HabitCategoriViewItem>>> getItems() {
         return mItems;
@@ -66,7 +62,7 @@ public class MainViewModel extends AndroidViewModel {
     public void clearItemSelectionMap() {
         mItemSelectionMap.clear();
     }
-    public CharSequence[] getProjetoDisplayNameArray() {
+    public CharSequence[] getDisplayNameArray() {
         List<HabitCategoriViewItem> viewItems = mItems.getValue().data;
         CharSequence[] displayNames = new CharSequence[viewItems.size()];
 
@@ -81,39 +77,39 @@ public class MainViewModel extends AndroidViewModel {
     public void toggleItemSelection(int position, boolean isSelected) {
         mItemSelectionMap.put(position, isSelected);
     }
-    public List<HabitCategoria> getProjetosSelected() {
+    public List<HabitCategoria> getSelected() {
         List<HabitCategoriViewItem> viewItems = mItems.getValue().data;
-        List<HabitCategoria> projetosToDelete = new ArrayList<>();
+        List<HabitCategoria> habitToDelete = new ArrayList<>();
 
         for (int i = 0; i < mItemSelectionMap.size(); i++) {
             if (mItemSelectionMap.valueAt(i)) {
                 int index = mItemSelectionMap.keyAt(i);
-                HabitCategoria projeto = viewItems.get(index).getModel();
-                projetosToDelete.add(projeto);
+                HabitCategoria habitCategoria = viewItems.get(index).getModel();
+                habitToDelete.add(habitCategoria);
             }
         }
-        return projetosToDelete;
+        return habitToDelete;
     }
 
-    public void deleteProjetosSelected() {
-        List<HabitCategoria> projetosToDelete = getProjetosSelected();
+    public void deleteSelected() {
+        List<HabitCategoria> habitToDelete = getSelected();
 
-        mHabitCategoriRepository.deleteAll(projetosToDelete)
+        mHabitCategoriRepository.deleteAll(habitToDelete)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
-                .toSingle(() -> Resource.success(projetosToDelete.size()))
+                .toSingle(() -> Resource.success(habitToDelete.size()))
                 .doOnError(throwable -> Timber.e(throwable, "Erro ao tentar deletar os Hábitos."))
                 .onErrorReturn(Resource::error)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mProjetosDeleted::setValue);
+                .subscribe(mDeleted::setValue);
     }
 
-    private void loadProjetos() {
-        mItems = LiveDataReactiveStreams.fromPublisher(getProjetoPublisher()
+    private void load() {
+        mItems = LiveDataReactiveStreams.fromPublisher(getPublisher()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()));
     }
-    private Flowable<Resource<List<HabitCategoriViewItem>>> getProjetoPublisher() {
+    private Flowable<Resource<List<HabitCategoriViewItem>>> getPublisher() {
         return Flowable.create(e -> {
             e.onNext(Resource.loading(null));
 
@@ -125,14 +121,14 @@ public class MainViewModel extends AndroidViewModel {
                     .subscribe(e::onNext);
         }, BackpressureStrategy.BUFFER);
     }
-    private List<HabitCategoriViewItem> sortAndMapToFlexibleItem(List<? extends HabitCategoria> projetos){
-        List<? extends HabitCategoria> sortedList = new ArrayList<>(projetos);
-        Collections.sort(sortedList, this::sortByCodigoProjetoAsc);
+    private List<HabitCategoriViewItem> sortAndMapToFlexibleItem(List<? extends HabitCategoria> habitCategorias){
+        List<? extends HabitCategoria> sortedList = new ArrayList<>(habitCategorias);
+        Collections.sort(sortedList, this::sortByCodigoAsc);
         return Lists.transform(sortedList, HabitCategoriViewItem::new);
     }
 
-    private int sortByCodigoProjetoAsc(@NonNull HabitCategoria projeto1, @NonNull HabitCategoria projeto2) {
-        return Long.compare(projeto1.getId(), projeto2.getId());
+    private int sortByCodigoAsc(@NonNull HabitCategoria habitCategoria1, @NonNull HabitCategoria habitCategoria2) {
+        return Long.compare(habitCategoria1.getId(), habitCategoria2.getId());
     }
 
     public SingleLiveEvent<Void> getHabitAdd() {

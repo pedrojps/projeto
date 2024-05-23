@@ -207,7 +207,7 @@ public class HabitCategoriaDetailActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_equipamento_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -217,11 +217,11 @@ public class HabitCategoriaDetailActivity
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.menu_equipamento_detail_edit:
+            case R.id.menu_detail_edit:
                 mViewModel.editHabit();
                 return true;
-            case R.id.menu_equipamento_detail_delete:
-                deleteApontamento();
+            case R.id.menu_detail_delete:
+                delete();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -236,12 +236,12 @@ public class HabitCategoriaDetailActivity
         }
     }
 
-    public void editApontamento(HabitCategoria id) {
+    public void edit(HabitCategoria id) {
         Intent it = AddEditHabitoCategoriaActivity.getNewIntent(this, id);
         startActivityForResult(it, REQUEST_EDIT_CODE);
     }
 
-    public void deleteApontamento() {
+    public void delete() {
 
         DialogFactory.createDialog(this, getString(R.string.confirmar_delete_habito))
                 .setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss())
@@ -273,7 +273,7 @@ public class HabitCategoriaDetailActivity
     }
 
     private void subscribeEditHabit() {
-        mViewModel.getEditHabit().observe(this, this::editApontamento);
+        mViewModel.getEditHabit().observe(this, this::edit);
     }
 
     private void subscribeErrorMessage(){

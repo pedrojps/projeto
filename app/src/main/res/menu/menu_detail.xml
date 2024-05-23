@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:id="@+id/menu_group_equipamento_actions">
+    <group android:id="@+id/menu_group_actions">
 
-        <item android:id="@+id/menu_equipamento_detail_edit"
+        <item android:id="@+id/menu_detail_edit"
             android:title="@string/editar"
             android:icon="@drawable/ic_mode_edit_white_24dp"
             app:showAsAction="never"/>
 
-        <item android:id="@+id/menu_equipamento_detail_delete"
+        <item android:id="@+id/menu_detail_delete"
             android:title="@string/excluir"
             android:icon="@drawable/ic_delete_white_24dp"
             app:showAsAction="never"/>

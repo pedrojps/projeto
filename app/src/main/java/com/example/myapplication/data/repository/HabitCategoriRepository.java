@@ -29,9 +29,9 @@ public class HabitCategoriRepository {
         mHabitEntyDao =habitEntyDao;
     }
 
-    public static synchronized HabitCategoriRepository getInstance(@NonNull HabitCategoriDao projetoDao,HabitEntyDao habitEntyDao){
+    public static synchronized HabitCategoriRepository getInstance(@NonNull HabitCategoriDao habitCategoriDao,HabitEntyDao habitEntyDao){
         if(INSTANCE == null){
-            INSTANCE = new HabitCategoriRepository(projetoDao,habitEntyDao);
+            INSTANCE = new HabitCategoriRepository(habitCategoriDao,habitEntyDao);
         }
         return INSTANCE;
     }

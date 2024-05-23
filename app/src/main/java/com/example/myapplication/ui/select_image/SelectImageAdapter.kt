@@ -19,7 +19,7 @@ class SelectImageAdapter(items: List<Int>) : RecyclerView.Adapter<IconeViewHolde
     override fun onBindViewHolder(holder: IconeViewHolder, position: Int) {
         val item = mItems[position]
 
-        holder.onBind(item, position)
+        holder.onBind(item)
         holder.binding.root.setOnClickListener { listener?.onItemClicked(position, item) }
     }
 

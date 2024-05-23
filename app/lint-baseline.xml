@@ -3,8 +3,8 @@
 
     <issue
         id="NotSibling"
-        message="`@+id/add_equipamento_save` is not a sibling in the same `ConstraintLayout`"
-        errorLine1="                app:layout_constraintBottom_toTopOf=&quot;@+id/add_equipamento_save&quot;"
+        message="`@+id/add_save` is not a sibling in the same `ConstraintLayout`"
+        errorLine1="                app:layout_constraintBottom_toTopOf=&quot;@+id/add_save&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/act_enty_detalhes_detail.xml"

@@ -22,7 +22,7 @@
             android:descendantFocusability="beforeDescendants">
 
             <LinearLayout
-                android:id="@+id/add_equipamento_fields"
+                android:id="@+id/add_fields"
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -128,10 +128,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:labelFor="@+id/add_equipamento_modelos">
+                    android:labelFor="@+id/add_modelos">
 
                     <AutoCompleteTextView
-                        android:id="@+id/add_equipamento_modelos"
+                        android:id="@+id/add_modelos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={vm.observacao}"
@@ -143,7 +143,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                    android:id="@+id/projeto_list_bottom_sheet"
+                    android:id="@+id/list_bottom_sheet"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">

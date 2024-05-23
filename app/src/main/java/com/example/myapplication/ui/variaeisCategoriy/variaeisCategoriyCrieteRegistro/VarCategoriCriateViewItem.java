@@ -15,25 +15,25 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
 public class VarCategoriCriateViewItem extends AbstractFlexibleItem<VarCategoriCriateViewHolder> {
 
-    private final ItemCategoria mProjeto;
+    private final ItemCategoria mItemCategoria;
 
     public VarCategoriCriateViewItem(ItemCategoria obra) {
-        this.mProjeto = obra;
+        this.mItemCategoria = obra;
     }
 
     public ItemCategoria getModel() {
-        return mProjeto;
+        return mItemCategoria;
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object o) {
-        return mProjeto.equals(o);
+        return mItemCategoria.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return mProjeto.hashCode();
+        return mItemCategoria.hashCode();
     }
 
     @Override
@@ -49,6 +49,6 @@ public class VarCategoriCriateViewItem extends AbstractFlexibleItem<VarCategoriC
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, VarCategoriCriateViewHolder holder, int position, List payloads) {
-        holder.bind(mProjeto);
+        holder.bind(mItemCategoria);
     }
 }

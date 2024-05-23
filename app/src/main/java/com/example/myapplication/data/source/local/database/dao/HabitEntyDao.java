@@ -36,8 +36,8 @@ public abstract class HabitEntyDao implements BaseDao<HabitEnty> {
 
     @Transaction
     @Query("SELECT * FROM ENTY_H "
-            + "WHERE id = :apontamentoId ")
-    public abstract Single<HabitEntyDetails> findWithDetails(long apontamentoId);
+            + "WHERE id = :Id ")
+    public abstract Single<HabitEntyDetails> findWithDetails(long Id);
 
     @Query("DELETE FROM ENTY_I WHERE habit_enty = :id; ")
     abstract void deleteItens(long id);

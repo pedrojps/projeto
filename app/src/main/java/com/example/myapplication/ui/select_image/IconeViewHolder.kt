@@ -14,7 +14,7 @@ class IconeViewHolder(val binding: ItemIconeBinding):
         ItemIconeBinding.inflate(inflater, parent, false)
     )
 
-    fun onBind(item: Int, position: Int) {
+    fun onBind(item: Int) {
 
         binding.apply {
             val context = root.context

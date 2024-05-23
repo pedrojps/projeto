@@ -1,22 +1,15 @@
 package com.example.myapplication.ui.addEdithabit;
 
-import static com.example.myapplication.ui.dialog.DialogAddHabitItemActivity.NAME_KEY;
-import static com.example.myapplication.ui.dialog.DialogAddHabitItemActivity.TIPO_KEY;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.Observable;
 import androidx.lifecycle.ViewModelProviders;
@@ -25,14 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.myapplication.R;
 import com.example.myapplication.data.entities.AlertCategori;
 import com.example.myapplication.data.entities.HabitCategoria;
-import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.databinding.ActHabitCategoriaAddEditBinding;
 import com.example.myapplication.di.Injection;
 import com.example.myapplication.ui.addEdithabit.adapter.AlertAdapter;
 import com.example.myapplication.ui.dialog.DialogAddHabitItemActivity;
 import com.example.myapplication.ui.select_image.SelectImageActivity;
 import com.example.myapplication.ui.variaeisCategoriy.VarCategoriViewItem;
-import com.example.myapplication.utils.DayOfWeek;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.Globals;
 import com.example.myapplication.utils.ImageUtil;
@@ -67,9 +58,9 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     }
 
     @NonNull
-    public static Intent getNewIntent(Context context, @NonNull HabitCategoria equipamentoId) {
+    public static Intent getNewIntent(Context context, @NonNull HabitCategoria categoria) {
         return new Intent(context, AddEditHabitoCategoriaActivity.class)
-                .putExtra(EXTRA_HABITY_CATEGORI_ID, equipamentoId);
+                .putExtra(EXTRA_HABITY_CATEGORI_ID, categoria);
     }
 
     @Override
@@ -375,7 +366,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
 
             if (ObjectUtils.nonNull(viewItem)) {
 
-                if(mViewModel.isNewEquipamento())
+                if(mViewModel.isNew())
                     mAdapter.removeItem(position);
                 mViewModel.removerItens(viewItem.getModel(),position);
 

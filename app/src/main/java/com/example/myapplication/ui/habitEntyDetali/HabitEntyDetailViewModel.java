@@ -37,9 +37,9 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
 
     private final ErrorDialogMessage mErrorDialogMessage = new ErrorDialogMessage();
 
-    private final SingleLiveEvent<Long> mEditApontamento = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Long> mEdit = new SingleLiveEvent<>();
 
-    private final SingleLiveEvent<Void> mApontamentoDeleted = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> mDeleted = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<Void> mCarregaEnty = new SingleLiveEvent<>();
 
@@ -55,7 +55,7 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
 
     private List<ItemEnty> mValores=new ArrayList<>();
 
-    private HabitEntyDetails mApontamento;
+    private HabitEntyDetails mHabitEntyDetails;
 
     private long idHabit = 0;
 
@@ -82,7 +82,7 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
     }
 
     public void setEnty(HabitEntyDetails habiyEntyWithDetails){
-        mApontamento= habiyEntyWithDetails;
+        mHabitEntyDetails = habiyEntyWithDetails;
         startDate.set(habiyEntyWithDetails.habitEnty.getData());
         startTime.set(habiyEntyWithDetails.habitEnty.getHora());
         observacao.set(habiyEntyWithDetails.habitEnty.getObservacao());
@@ -92,7 +92,7 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
 
     public List<VarCategoriDetalheViewItem> getVariaveis() {
         List<VarCategoriDetalheViewItem> list = new ArrayList<>();
-        for (ItensEntyProject i : mApontamento.itensEntyProjects){
+        for (ItensEntyProject i : mHabitEntyDetails.itensEntyProjects){
             ItemCategoria c = i.getItemEnty();
             c.valor = i.itemEnty.getValor();
             if(c.getTipo()==0){
@@ -113,28 +113,28 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
     public  SingleLiveEvent<Void> getCarregaEnty(){
         return mCarregaEnty;
     }
-    public HabitEnty getApontamento() {
-        return mApontamento.habitEnty;
+    public HabitEnty getHabitEnty() {
+        return mHabitEntyDetails.habitEnty;
     }
 
-    public SingleLiveEvent<Long> getEditApontamento() {
-        return mEditApontamento;
+    public SingleLiveEvent<Long> getEdit() {
+        return mEdit;
     }
 
-    public void editApontamento() {
-        mEditApontamento.setValue(mApontamento.habitEnty.getId());
+    public void edit() {
+        mEdit.setValue(mHabitEntyDetails.habitEnty.getId());
     }
 
-    public SingleLiveEvent<Void> getApontamentoDeleted() {
-        return mApontamentoDeleted;
+    public SingleLiveEvent<Void> getDeleted() {
+        return mDeleted;
     }
 
     public void delete() {
-        mHabitCategoriRepository.deleteEnty(this.mApontamento.habitEnty)
+        mHabitCategoriRepository.deleteEnty(this.mHabitEntyDetails.habitEnty)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mApontamentoDeleted::call, this::showError);
+                .subscribe(mDeleted::call, this::showError);
     }
 
     public ErrorDialogMessage getErrorDialogMessage(){
@@ -158,25 +158,25 @@ public class HabitEntyDetailViewModel extends AndroidViewModel {
 
         private final Application mApplication;
 
-        private final HabitCategoriRepository mApontEquipamentoRepository;
+        private final HabitCategoriRepository mRepository;
 
-        private final long mApontamentoId;
+        private final long mId;
 
         public Factory(
                 @NonNull Application application,
-                @NonNull HabitCategoriRepository apontEquipamentoRepository,
-                long apontamentoId
+                @NonNull HabitCategoriRepository repository,
+                long id
         ) {
             mApplication = application;
-            mApontEquipamentoRepository = apontEquipamentoRepository;
-            mApontamentoId = apontamentoId;
+            mRepository = repository;
+            mId = id;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new HabitEntyDetailViewModel(mApplication, mApontEquipamentoRepository, mApontamentoId);
+            return (T) new HabitEntyDetailViewModel(mApplication, mRepository, mId);
         }
     }
 }

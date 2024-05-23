@@ -33,7 +33,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
 
     private final SingleLiveEvent<HabitCategoria> mEditHabit = new SingleLiveEvent<>();
 
-    private final SingleLiveEvent<Void> mApontamentoDeleted = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Void> mDeleted = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<Void> mCarregaEnty = new SingleLiveEvent<>();
 
@@ -75,8 +75,8 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apontWithDetails -> {
-                    mListVariaveis = apontWithDetails;
+                .subscribe(withDetails -> {
+                    mListVariaveis = withDetails;
                     mCarregaEnty.call();
                 }, this::showError);
     }
@@ -100,8 +100,8 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apontWithDetails -> {
-                    mListVariaveisMes = apontWithDetails;
+                .subscribe(withDetails -> {
+                    mListVariaveisMes = withDetails;
                     mCarregaMes.call();
                 }, this::showError);
         loadEnty(date);
@@ -158,7 +158,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
     }
 
     public SingleLiveEvent<Void> getHabitDeleted() {
-        return mApontamentoDeleted;
+        return mDeleted;
     }
 
     public void delete() {
@@ -166,7 +166,7 @@ public class HabitCategoriaDetailViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mApontamentoDeleted::call, this::showError);
+                .subscribe(mDeleted::call, this::showError);
     }
 
     public ErrorDialogMessage getErrorDialogMessage(){

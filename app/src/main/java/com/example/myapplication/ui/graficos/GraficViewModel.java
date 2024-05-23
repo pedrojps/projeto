@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,14 +14,12 @@ import com.example.myapplication.common.lifecycle.SingleLiveEvent;
 import com.example.myapplication.common.time.LocalDate;
 import com.example.myapplication.common.time.LocalDateFormat;
 import com.example.myapplication.data.entities.HabitCategoria;
-import com.example.myapplication.data.entities.HabitEnty;
 import com.example.myapplication.data.entities.ItemCategoria;
 import com.example.myapplication.data.entities.types.TipoVariavel;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.data.source.local.projection.HabitEntyDetails;
 import com.example.myapplication.data.source.local.projection.ItensEntyProject;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -77,8 +74,8 @@ public class GraficViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(this::addDisposable)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(apontWithDetails -> {
-                    mListVariaveis = apontWithDetails;
+                .subscribe(withDetails -> {
+                    mListVariaveis = withDetails;
                     mCarregaEnty.call();
                 }, this::showError);
 
@@ -255,24 +252,24 @@ public class GraficViewModel extends AndroidViewModel {
 
         private final Application mApplication;
 
-        private final HabitCategoriRepository mApontEquipamentoRepository;
+        private final HabitCategoriRepository mRepository;
 
         private final HabitCategoria mHabitCategoria;
 
         public Factory(
                 @NonNull Application application,
-                @NonNull HabitCategoriRepository apontEquipamentoRepository,
+                @NonNull HabitCategoriRepository repository,
                 HabitCategoria habitCategoria
         ) {
             mApplication = application;
-            mApontEquipamentoRepository = apontEquipamentoRepository;
+            mRepository = repository;
             mHabitCategoria = habitCategoria;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new GraficViewModel(mApplication, mApontEquipamentoRepository, mHabitCategoria);
+            return (T) new GraficViewModel(mApplication, mRepository, mHabitCategoria);
         }
     }
 }

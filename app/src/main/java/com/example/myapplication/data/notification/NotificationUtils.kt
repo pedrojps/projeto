@@ -63,7 +63,6 @@ object NotificationUtils {
 
     fun calculateInitialDelay(notificationSchedule: HabitAlertProject): Long {
         val now = Calendar.getInstance()
-        val date = LocalDate.parse(LocalDate().toString(LocalDateFormat.SQLITE_DATE),LocalDateFormat.SQLITE_DATE)
         val notificationTime = getAlertData(notificationSchedule.time)
 
         // Se a notificação já passou hoje, avança para o próximo dia de notificação

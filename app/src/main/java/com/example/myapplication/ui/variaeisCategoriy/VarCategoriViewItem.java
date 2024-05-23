@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.entities.ItemCategoria;
-import com.example.myapplication.databinding.ItemHabitCBinding;
 import com.example.myapplication.databinding.ItemVariavelCBinding;
 
 import java.util.List;
@@ -16,25 +15,25 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
 public class VarCategoriViewItem extends AbstractFlexibleItem<VarCategoriViewHolder> {
 
-    private final ItemCategoria mProjeto;
+    private final ItemCategoria mItemCategoria;
 
     public VarCategoriViewItem(ItemCategoria obra) {
-        this.mProjeto = obra;
+        this.mItemCategoria = obra;
     }
 
     public ItemCategoria getModel() {
-        return mProjeto;
+        return mItemCategoria;
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object o) {
-        return mProjeto.equals(o);
+        return mItemCategoria.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return mProjeto.hashCode();
+        return mItemCategoria.hashCode();
     }
 
     @Override
@@ -50,6 +49,6 @@ public class VarCategoriViewItem extends AbstractFlexibleItem<VarCategoriViewHol
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, VarCategoriViewHolder holder, int position, List payloads) {
-        holder.bind(mProjeto);
+        holder.bind(mItemCategoria);
     }
 }

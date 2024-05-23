@@ -17,7 +17,7 @@ class AlertViewHolder(val binding: ItemAlertBinding): RecyclerView.ViewHolder(bi
     var mItem: AlertCategori? = null
     private var mDayOfWeek: ArrayList<Int?> = ArrayList()
 
-    fun onBind(item: AlertCategori, position: Int, listenerDeleter: View.OnClickListener) {
+    fun onBind(item: AlertCategori, listenerDeleter: View.OnClickListener) {
         mItem = item
         mDayOfWeek= ArrayList()
         val isNotShowAlert :Boolean? = Globals[Globals.c.SHOW_ALERT_OPISION]

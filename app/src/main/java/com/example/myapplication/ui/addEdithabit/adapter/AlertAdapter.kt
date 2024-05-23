@@ -20,7 +20,7 @@ class AlertAdapter: RecyclerView.Adapter<AlertViewHolder>()  {
     override fun onBindViewHolder(holder: AlertViewHolder, position: Int) {
         val item = list[position]
 
-        holder.onBind(item, position){
+        holder.onBind(item){
             list.remove(item)
             this.notifyDataSetChanged()
         }

@@ -37,7 +37,7 @@ public class HabitEntyDetailActivity
 
     public static final int RESULT_DELETE_OK = RESULT_EDIT_OK + 7;
 
-    public static final String EXTRA_APONTAMENTO_ID = "EXTRA_APONTAMENTO_ID";
+    public static final String EXTRA_ENTY_ID = "EXTRA_ENTY_ID";
 
     private FlexibleAdapter<VarCategoriDetalheViewItem> mAdapter;
 
@@ -45,9 +45,9 @@ public class HabitEntyDetailActivity
 
     private HabitEntyDetailViewModel mViewModel;
 
-    public static Intent getNewIntent(@NonNull Context context, long apontamentoId) {
+    public static Intent getNewIntent(@NonNull Context context, long id) {
         return new Intent(context, HabitEntyDetailActivity.class)
-                .putExtra(EXTRA_APONTAMENTO_ID, apontamentoId);
+                .putExtra(EXTRA_ENTY_ID, id);
     }
 
     @Override
@@ -62,9 +62,9 @@ public class HabitEntyDetailActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setupAdapters();
-        subscribeApontamentoDeleted();
+        subscribeDeleted();
         subscribeCaregaVariaveis();
-        subscribeEditApontamento();
+        subscribeEdit();
         subscribeErrorMessage();
 
     }
@@ -89,7 +89,7 @@ public class HabitEntyDetailActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_equipamento_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -99,11 +99,11 @@ public class HabitEntyDetailActivity
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.menu_equipamento_detail_edit:
-                mViewModel.editApontamento();
+            case R.id.menu_detail_edit:
+                mViewModel.edit();
                 return true;
-            case R.id.menu_equipamento_detail_delete:
-                deleteApontamento();
+            case R.id.menu_detail_delete:
+                delete();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -118,12 +118,12 @@ public class HabitEntyDetailActivity
         }
     }
 
-    public void editApontamento(long id) {
-        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getApontamento());
+    public void edit(long id) {
+        Intent it = AddEditHabitoEntidadeActivity.getNewIntent(this,mViewModel.getHabitEnty());
         startActivityForResult(it, REQUEST_EDIT_CODE);
     }
 
-    public void deleteApontamento() {
+    public void delete() {
 
         DialogFactory.createDialog(this, getString(R.string.confirmar_delete_habito))
                 .setNegativeButton(R.string.dialog_button_cancel, (dialogInterface, i) -> dialogInterface.dismiss())
@@ -140,15 +140,15 @@ public class HabitEntyDetailActivity
         });
     }
 
-    private void subscribeApontamentoDeleted() {
-        mViewModel.getApontamentoDeleted().observe(this, aVoid -> {
+    private void subscribeDeleted() {
+        mViewModel.getDeleted().observe(this, aVoid -> {
             setResult(RESULT_DELETE_OK);
             finish();
         });
     }
 
-    private void subscribeEditApontamento() {
-        mViewModel.getEditApontamento().observe(this, this::editApontamento);
+    private void subscribeEdit() {
+        mViewModel.getEdit().observe(this, this::edit);
     }
 
     private void subscribeErrorMessage(){
@@ -158,12 +158,12 @@ public class HabitEntyDetailActivity
     }
 
     private HabitEntyDetailViewModel findOrCreateViewModel() {
-        long apontamentoId = getIntent().getLongExtra(EXTRA_APONTAMENTO_ID, 0);
+        long id = getIntent().getLongExtra(EXTRA_ENTY_ID, 0);
 
         HabitEntyDetailViewModel.Factory factory = new HabitEntyDetailViewModel.Factory(
                 getApplication(),
                 Injection.HabitCategoriRepository(getApplicationContext()),
-                apontamentoId
+                id
         );
 
         return ViewModelProviders.of(this, factory).get(HabitEntyDetailViewModel.class);

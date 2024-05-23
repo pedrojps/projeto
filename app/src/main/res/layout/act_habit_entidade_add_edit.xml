@@ -22,14 +22,14 @@
             android:descendantFocusability="beforeDescendants">
 
             <LinearLayout
-                android:id="@+id/add_equipamento_fields"
+                android:id="@+id/add_fields"
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/add_equipamento_save"
+                app:layout_constraintBottom_toTopOf="@+id/add_save"
                 app:layout_constraintVertical_chainStyle="spread_inside">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +49,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/data_export_get_start_period"
+                    android:id="@+id/data_get_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -85,11 +85,11 @@
                     android:text="@string/hora"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/date"
-                    app:layout_constraintStart_toEndOf="@+id/data_export_get_start_period"
+                    app:layout_constraintStart_toEndOf="@+id/data_get_day"
                     app:layout_constraintTop_toTopOf="@+id/date" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/data_export_get_start_time"
+                    android:id="@+id/data_get_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -132,10 +132,10 @@
                     android:layout_height="wrap_content"
                     app:errorEnabled="@{vm.modeloError != null}"
                     app:error="@{vm.modeloError}"
-                    android:labelFor="@+id/add_equipamento_modelos">
+                    android:labelFor="@+id/add_modelos">
 
                     <AutoCompleteTextView
-                        android:id="@+id/add_equipamento_modelos"
+                        android:id="@+id/add_modelos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={vm.modelo}"
@@ -161,11 +161,11 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/add_equipamento_save"
+                android:id="@+id/add_save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
-                app:layout_constraintTop_toBottomOf="@+id/add_equipamento_fields"
+                app:layout_constraintTop_toBottomOf="@+id/add_fields"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/fwandroid_text_medium"
-            android:labelFor="@+id/add_equipamento_modelos"
+            android:labelFor="@+id/add_modelos"
             app:showView="@{var.tipo==1}">
 
             <AutoCompleteTextView
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/fwandroid_text_medium"
-            android:labelFor="@+id/add_equipamento_modelos"
+            android:labelFor="@+id/add_modelos"
             app:showView="@{var.tipo==2}">
 
             <AutoCompleteTextView
@@ -65,7 +65,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/add_equipamento_modelos"
+            android:labelFor="@+id/add_modelos"
             app:showView="@{var.tipo==0}">
 
             <androidx.cardview.widget.CardView
