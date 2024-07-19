@@ -11,6 +11,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.myapplication.common.time.DateTime;
+import com.example.myapplication.common.time.LocalDate;
 
 @Entity(tableName = "ENTY_I",
         foreignKeys = {
@@ -33,6 +34,8 @@ public class ItemEnty implements Parcelable {
 
     private String valor;
 
+    @Ignore
+    public LocalDate data;
 
     public ItemEnty() {}
     @Ignore

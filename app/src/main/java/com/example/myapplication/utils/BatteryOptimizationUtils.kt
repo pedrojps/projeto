@@ -20,16 +20,6 @@ object BatteryOptimizationUtils {
     }
 
     fun requestIgnoreBatteryOptimizations(context: Context) {
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val intent = Intent()
-            val packageName = context.packageName
-            val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-                intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-                intent.data = Uri.parse("package:$packageName")
-                context.startActivity(intent)
-            }
-        }*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val packageName = context.packageName

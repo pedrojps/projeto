@@ -15,10 +15,12 @@ import com.example.myapplication.common.time.LocalDate;
 import com.example.myapplication.common.time.LocalDateFormat;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.data.entities.ItemCategoria;
+import com.example.myapplication.data.entities.ItemEnty;
 import com.example.myapplication.data.entities.types.TipoVariavel;
 import com.example.myapplication.data.repository.HabitCategoriRepository;
 import com.example.myapplication.data.source.local.projection.HabitEntyDetails;
 import com.example.myapplication.data.source.local.projection.ItensEntyProject;
+import com.example.myapplication.ui.graficos.adapter.ItemsGrafic;
 import com.github.mikephil.charting.data.Entry;
 
 import java.time.LocalDateTime;
@@ -26,6 +28,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +59,9 @@ public class GraficViewModel extends AndroidViewModel {
 
     private List<HabitEntyDetails> mListVariaveis =new ArrayList<>();
 
+    private ArrayList<ItemsGrafic> listGrafic = new ArrayList();
+
+    private String textVariabe = "";
     private final SingleLiveEvent<Void> mCarregaEnty = new SingleLiveEvent<>();
     public GraficViewModel(
             @NonNull Application application,
@@ -92,19 +99,37 @@ public class GraficViewModel extends AndroidViewModel {
     public String aditionalText(){
         String text = "";
         HashMap<ItemCategoria, Integer> somatoria = new HashMap<>();
+        HashMap<ItemCategoria, ArrayList<ItemEnty>> newGraficosItens = new HashMap<>();
+        HashMap<ItemCategoria, ArrayList<ItemEnty>> newTextItens = new HashMap<>();
+        ArrayList<ItensEntyProject> stringItens = new ArrayList<>();
 
         for(HabitEntyDetails enty : mListVariaveis) {
             for(ItensEntyProject item : enty.itensEntyProjects) {
                 ItemCategoria itemC = item.itemCategorias.get(0);
+                item.itemEnty.data = enty.habitEnty.getData();
+                ArrayList items;
 
                 if(itemC.getTipo() == TipoVariavel.VALOR.value){
+
+                    try {
+                        items =  newGraficosItens.get(itemC);
+                        if (items == null) items = new ArrayList();
+                    }
+                    catch (Exception e) {
+                        items = new ArrayList();
+                    }
+                    items.add(item.itemEnty);
+
+
                     int valor;
+
                     try {
                         valor =  somatoria.get(itemC);
                     }
                     catch (Exception e) {
                         valor = 0;
                     }
+
 
                     int foo;
                     try {
@@ -116,22 +141,62 @@ public class GraficViewModel extends AndroidViewModel {
                     valor = valor + foo;
 
                     somatoria.put(itemC,valor);
+                    newGraficosItens.put(itemC,items);
+                }else{
+                    try {
+                        items =  newTextItens.get(itemC);
+                        if (items == null) items = new ArrayList();
+                    }
+                    catch (Exception e) {
+                        items = new ArrayList();
+                    }
+                    items.add(item.itemEnty);
+                    newTextItens.put(itemC,items);
                 }
             }
         }
 
         for (ItemCategoria itemc : somatoria.keySet()){
             String t =  getApplication().getString(R.string.media_diaria_variavel, itemc.getNome(), cacularByDay(somatoria.get(itemc))+"");
-            text = text + t;
+            text = text +"\n"+ t;
 
         }
+
+        stringItens.sort(Comparator.comparing(o -> o.itemEnty.data));
+
+        StringBuilder vt = new StringBuilder();
+        for (ItemCategoria itemc : newTextItens.keySet()){
+            ItemsGrafic ig = new ItemsGrafic(
+                    itemc,
+                    newTextItens.get(itemc)
+            );
+            vt.append(ig.toString());
+        }
+        textVariabe = vt.toString();
+
+        ArrayList<ItemsGrafic> listG = new ArrayList();
+        for (ItemCategoria itemc : newGraficosItens.keySet()){
+            listG.add(new ItemsGrafic(
+                    itemc,
+                    newGraficosItens.get(itemc)
+            ));
+        }
+
+        listGrafic = listG;
 
         return text;
     }
 
+    public ArrayList<ItemsGrafic> getListGrafic() {
+        return listGrafic;
+    }
+
+    public String getTextVariabe() {
+        return textVariabe;
+    }
+
     List<Entry> setData() {
         ArrayList<Entry> entries = new ArrayList<>();
-
 
         HashMap<String, Integer> byDay = new HashMap<>();
         for(HabitEntyDetails enty : mListVariaveis) {

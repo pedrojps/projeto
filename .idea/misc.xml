@@ -14,6 +14,7 @@
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/holiday_view_selector.xml" value="0.11" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-mdpi/selected_circle.xml" value="0.11" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1055" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable-xxxhdpi/rectangle_negative.xml" value="0.152" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.3675" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_baseline_add_task_24.xml" value="0.3675" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/ic_baseline_check_circle_outline_24.xml" value="0.3675" />
@@ -79,6 +80,7 @@
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/fwandroid_dialog_month_year_picker.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/holiday_view.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_alert.xml" value="0.5" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_grafic.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_habit_c.xml" value="0.5596184419713831" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_habit_e.xml" value="4.0" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/item_icone.xml" value="1.0" />
@@ -92,6 +94,7 @@
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/menu/menu_home.xml" value="0.21388888888888888" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3065" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/mipmap-anydpi-v26/ic_launcher_habi.xml" value="0.322" />
+        <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/mipmap-anydpi-v26/ic_launcher_habi_round.xml" value="0.152" />
         <entry key="..\:/Users/pedro/AndroidStudioProjects/MyApplication3/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3065" />
       </map>
     </option>

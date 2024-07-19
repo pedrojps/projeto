@@ -10,18 +10,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.entities.AlertCategori;
 import com.example.myapplication.data.entities.HabitCategoria;
 import com.example.myapplication.databinding.ActGraficoHabitBinding;
 import com.example.myapplication.di.Injection;
+import com.example.myapplication.ui.addEdithabit.adapter.AlertAdapter;
 import com.example.myapplication.ui.dialog.SimpleDateDialog;
+import com.example.myapplication.ui.graficos.adapter.AdapterGrafic;
 import com.example.myapplication.utils.DialogUtils;
 import com.example.myapplication.utils.Globals;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GraficActivity extends AppCompatActivity {
@@ -29,6 +34,8 @@ public class GraficActivity extends AppCompatActivity {
     private GraficViewModel mViewModel;
 
     private ActGraficoHabitBinding mBinding;
+
+    private AdapterGrafic mAlertAdapter = new AdapterGrafic();
 
     public static final String EXTRA_HABIT = "EXTRA_HABIT";
 
@@ -51,6 +58,7 @@ public class GraficActivity extends AppCompatActivity {
         subscribeChangeEndDate();
         subscribeChangeStartDate();
         subscribeCaregaVariaveis();
+        subscribeAlert();
 
         mBinding.title.setText(getString(R.string.habit_nome, mViewModel.getHabitName()));
     }
@@ -65,7 +73,20 @@ public class GraficActivity extends AppCompatActivity {
                 mBinding.variaveisAdicionais.setText(text);
             else
                 mBinding.infoVezes.setVisibility(View.GONE);
+
+           mAlertAdapter.setListItems(new ArrayList(mViewModel.getListGrafic()),mViewModel.startDate.get(),mViewModel.endDate.get());
+           if (!mViewModel.getTextVariabe().isEmpty()){
+               mBinding.variaveisText.setVisibility(View.VISIBLE);
+               mBinding.variaveisText.setText(mViewModel.getTextVariabe());
+           } else
+                mBinding.variaveisText.setVisibility(View.GONE);
         });
+    }
+
+    private void subscribeAlert(){
+        mBinding.listGraficItem.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.listGraficItem.setAdapter(mAlertAdapter);
+        mBinding.listGraficItem.setNestedScrollingEnabled(false);
     }
 
     private void setDate(List<Entry> list){

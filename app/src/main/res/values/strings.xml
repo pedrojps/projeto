@@ -84,6 +84,7 @@
 
     <string name="media_diaria">Media das Informações adicionais Numericas</string>
 
+    <string name="media_diaria_item">Media simple: %.2f/dia</string>
     <string name="media_diaria_variavel">%s: %s /dia</string>
 
     <string name="dialog_alert">Alerta</string>
