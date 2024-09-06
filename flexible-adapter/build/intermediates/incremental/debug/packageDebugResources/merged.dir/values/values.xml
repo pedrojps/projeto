@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FastScroller">
+		<attr format="boolean" name="fastScrollerAutoHideEnabled"/>
+		<attr format="integer" name="fastScrollerAutoHideDelayInMillis"/>
+		<attr format="boolean" name="fastScrollerBubbleEnabled"/>
+		<attr format="enum" name="fastScrollerBubblePosition">
+			<enum name="adjacent" value="0"/>
+			<enum name="center" value="1"/>
+		</attr>
+        <attr format="boolean" name="fastScrollerIgnoreTouchesOutsideHandle"/>
+    </declare-styleable>
+</resources>

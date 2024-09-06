@@ -1,0 +1,18 @@
+R_DEF: Internal format may change without notice
+local
+attr? fastScrollerAutoHideDelayInMillis
+attr? fastScrollerAutoHideEnabled
+attr? fastScrollerBubbleEnabled
+attr? fastScrollerBubblePosition
+attr? fastScrollerIgnoreTouchesOutsideHandle
+drawable fast_scroller_bubble
+drawable fast_scroller_handle
+id adjacent
+id center
+id fast_scroller_bar
+id fast_scroller_bubble
+id fast_scroller_handle
+id sticky_header_container
+layout library_fast_scroller_layout
+layout sticky_header_layout
+styleable FastScroller fastScrollerAutoHideEnabled fastScrollerAutoHideDelayInMillis fastScrollerBubbleEnabled fastScrollerBubblePosition fastScrollerIgnoreTouchesOutsideHandle

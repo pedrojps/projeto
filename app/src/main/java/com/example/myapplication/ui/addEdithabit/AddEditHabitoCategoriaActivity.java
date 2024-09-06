@@ -140,99 +140,6 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
     private void subscribeCarregaVariavel() {
         mViewModel.getVariavelCarrega().observe(this, aVoid -> carregaVariavei());
     }
-/*
-    private void subscribeCheck() {
-        mBinding.labelD.setOnClickListener((view) ->{
-            mBinding.checkboxD.setChecked(!mBinding.checkboxD.isChecked());
-            checkAll();
-        });
-        mBinding.labelQ1.setOnClickListener((view) ->{
-            mBinding.checkboxQ1.setChecked(!mBinding.checkboxD.isChecked());
-            checkAll();
-        });
-        mBinding.labelQ2.setOnClickListener((view) ->{
-            mBinding.checkboxQ2.setChecked(!mBinding.checkboxD.isChecked());
-            checkAll();
-        });
-        mBinding.labelS.setOnClickListener((view) ->{
-            mBinding.checkboxS.setChecked(!mBinding.checkboxD.isChecked());
-            checkAll();
-        });
-        mBinding.labelS2.setOnClickListener((view) ->{
-            mBinding.checkboxS2.setChecked(!mBinding.checkboxD.isChecked());
-            checkAll();
-        });
-        mBinding.labelS3.setOnClickListener((view) ->{
-            mBinding.checkboxS3.setChecked(!mBinding.checkboxD.isChecked());
-            checkAll();
-        });
-        mBinding.labelT.setOnClickListener((view) ->{
-            mBinding.checkboxT.setChecked(!mBinding.checkboxD.isChecked());
-            checkAll();
-        });
-        mBinding.checkboxD.setOnCheckedChangeListener((view,check) -> {
-            checkAll();
-            mViewModel.setDayOfWeek(DayOfWeek.SUNDAY,check);
-        });
-        mBinding.checkboxQ1.setOnCheckedChangeListener((view,check) -> {
-            checkAll();
-            mViewModel.setDayOfWeek(DayOfWeek.WEDNESDAY,check);
-        });
-        mBinding.checkboxQ2.setOnCheckedChangeListener((view,check) -> {
-            checkAll();
-            mViewModel.setDayOfWeek(DayOfWeek.THURSDAY,check);
-        });
-        mBinding.checkboxS.setOnCheckedChangeListener((view,check) -> {
-            checkAll();
-            mViewModel.setDayOfWeek(DayOfWeek.MONDAY,check);
-        });
-        mBinding.checkboxS2.setOnCheckedChangeListener((view,check) -> {
-            checkAll();
-            mViewModel.setDayOfWeek(DayOfWeek.FRIDAY,check);
-        });
-        mBinding.checkboxS3.setOnCheckedChangeListener((view,check) -> {
-            checkAll();
-            mViewModel.setDayOfWeek(DayOfWeek.SATURDAY,check);
-        });
-        mBinding.checkboxT.setOnCheckedChangeListener((view,check) -> {
-            checkAll();
-            mViewModel.setDayOfWeek(DayOfWeek.TUESDAY,check);
-        });
-        mBinding.allDay.setOnClickListener((view) -> {
-            boolean check = mBinding.allDay.isChecked();
-            mBinding.checkboxD.setChecked(check);
-            mBinding.checkboxQ1.setChecked(check);
-            mBinding.checkboxQ2.setChecked(check);
-            mBinding.checkboxS.setChecked(check);
-            mBinding.checkboxS2.setChecked(check);
-            mBinding.checkboxS3.setChecked(check);
-            mBinding.checkboxT.setChecked(check);
-        });
-        setCheck();
-    }
-
-    private void setCheck(){
-        mBinding.checkboxD.setChecked(mViewModel.containsDayOfWeek(DayOfWeek.SUNDAY));
-        mBinding.checkboxQ1.setChecked(mViewModel.containsDayOfWeek(DayOfWeek.WEDNESDAY));
-        mBinding.checkboxQ2.setChecked(mViewModel.containsDayOfWeek(DayOfWeek.THURSDAY));
-        mBinding.checkboxS.setChecked(mViewModel.containsDayOfWeek(DayOfWeek.MONDAY));
-        mBinding.checkboxS2.setChecked(mViewModel.containsDayOfWeek(DayOfWeek.FRIDAY));
-        mBinding.checkboxS3.setChecked(mViewModel.containsDayOfWeek(DayOfWeek.SATURDAY));
-        mBinding.checkboxT.setChecked(mViewModel.containsDayOfWeek(DayOfWeek.TUESDAY));
-
-    }
-
-    private void checkAll(){
-        mBinding.allDay.setChecked(
-                mBinding.checkboxD.isChecked()
-                        && mBinding.checkboxQ1.isChecked()
-                        && mBinding.checkboxQ2.isChecked()
-                        && mBinding.checkboxS.isChecked()
-                        && mBinding.checkboxS2.isChecked()
-                        && mBinding.checkboxS3.isChecked()
-                        && mBinding.checkboxT.isChecked() );
-    }
-*/
 
     private void subscribeImage() {
         mViewModel.image.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -332,7 +239,7 @@ public class AddEditHabitoCategoriaActivity extends AppCompatActivity implements
                 .withDefaultDivider(R.layout.item_variavel_c);
 
         mBinding.habitList.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.habitList.setAdapter(mAdapter);
+        mBinding.habitList.setAdapter(mAdapter);//
         mBinding.habitList.addItemDecoration(itemDecoration);
     }
 

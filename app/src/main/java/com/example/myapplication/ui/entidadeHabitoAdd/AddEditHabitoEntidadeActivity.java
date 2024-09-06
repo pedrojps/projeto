@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
+import eu.davidea.flexibleadapter.common.*;//FlexibleItemDecoration;
 
 
 public class AddEditHabitoEntidadeActivity extends AppCompatActivity implements FlexibleAdapter.OnItemClickListener  {
